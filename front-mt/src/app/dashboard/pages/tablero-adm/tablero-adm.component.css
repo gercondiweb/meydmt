@@ -1,0 +1,36 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+.mat-icon{
+  font-size: 30px;
+  height: 30px ;
+    width: 30px;
+}
+
+.valores_minicard{
+  font-size: 30px;
+  color: grey;
+}
+
+.color_icon{
+  color: blue;
+}

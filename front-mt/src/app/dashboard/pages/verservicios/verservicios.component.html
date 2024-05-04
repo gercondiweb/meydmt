@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="filtros">
+        <mat-card>
+          <form class="form-solicitar p-2 bg-grey-100" (submit)="buscar()">
+            <div class="row w-100 d-flex justify-content-between align-items-center">
+                <div class="col-auto">
+                    <mat-form-field>
+                        <mat-label>Seleccione una fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="datosBusqueda.fechainicial" name="finicial">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-auto">
+                    <mat-form-field>
+                        <mat-label>Estado</mat-label>
+                        <mat-select [(ngModel)]="datosBusqueda.estado" name="tserv">
+                            @for (tEstado of vEstados; track tEstado) {
+                            <mat-option [value]="tEstado.idE">{{tEstado.estado}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <button mat-button class="col-2" type="submit" >Buscar</button>
+            </div>
+          </form>
+        </mat-card>
+
+    </div>
+    <app-tabladinamica [dataSource]="datos" [columnas]="columnas"></app-tabladinamica>
+</div>

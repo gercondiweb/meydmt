@@ -1,0 +1,64 @@
+<div class="form-container bg-white p-3">
+  <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            <h2>Administrar Tiketes</h2>
+          </div>
+          <div class="col text-end">
+            <button mat-raised-button color="primary" (click)="crearTicket()">
+              <mat-icon>add_circle</mat-icon>
+              Crear Nuevo Ticket
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <mat-grid-list cols="5">
+          <mat-grid-tile class="tarjetas"
+            *ngFor="let card of cards"
+            [colspan]="card.cols"
+            [rowspan]="card.rows">
+            <mat-card class="dashboard-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon class="color_icon">{{ card.icon }}</mat-icon
+                  >{{ card.title }}
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="dashboard-card-content">
+                <div *ngIf="!card.ischarts">
+                  <h2 class="valores_minicard">{{ card.value }}</h2>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <div class="row" style="margin-top: -90px; margin-bottom: 20px;">
+          <div class="col-4">
+              <input type="number" class="form-control" id="" placeholder="No. Ticket">
+          </div>
+          <div class="col-4">
+            <select id="inputState" class="form-select" placeholder="Last name">
+              <option selected>Cliente...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select id="inputState" class="form-select" placeholder="Last name">
+              <option selected>Estado...</option>
+              <option>...</option>
+            </select>
+          </div>
+        </div>
+        <button mat-raised-button color="primary">
+          <mat-icon>filter_alt</mat-icon>
+          Filtrar
+        </button>
+      </div>
+    </div>
+    <!--app-tabladinamica [dataSource]="datosDetalle" [columnas]="columnas"></!app-tabladinamica-->
+    <app-tabla-detalle [datasource]="datosDetalle" [columns]="columnas"></app-tabla-detalle>
+  </span>
+</div>

@@ -1,0 +1,42 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image" routerLink="/dashboard/tablero">
+        <a mat-list-item routerLink="/principal/tablero"></a>
+      </div>
+    </mat-card-header>
+
+    <mat-toolbar>Meyd-MT</mat-toolbar>
+
+    <mat-nav-list>
+      @for(item of items; track item){
+        <app-item-navigate [itemNav]="item" />
+        <mat-divider></mat-divider>
+      }
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="w- 100 d-flex justify-content-between">
+      @if (isHandset$ | async) {
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      }
+      <span>meyd-MT</span>
+      <button type="button" class="flex-center btn btn-outline-light" (click)="logOut()">
+        <mat-icon>exit_to_app</mat-icon>
+        Logout
+      </button>
+    </mat-toolbar>
+    <ng-content/>
+  </mat-sidenav-content>
+</mat-sidenav-container>

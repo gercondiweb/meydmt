@@ -1,0 +1,27 @@
+<main class="raiz">
+  <nav>
+    <span class="content_button w-100 p-2 d-flex justify-content-between">
+      <span></span>
+      <img src="/assets/logo2.png" class="logo" alt="TR">
+      <button class="btn btn-outline-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+        Menu
+      </button>
+    </span>
+    <span class="ficture d-flex gap-2 justify-content-center">
+      <div class="card shadow flex-center bg-warning">
+        <small>2</small>
+      </div>
+      <div class="card shadow flex-center bg-info">
+        <small>5</small>
+      </div>
+      <div class="card shadow flex-center bg-success">
+        <small>6</small>
+      </div>
+
+    </span>
+  </nav>
+  <app-navbar/>
+  <div class="content-page container">
+    <router-outlet/>
+  </div>
+</main>

@@ -1,0 +1,13 @@
+.tablecontainer {
+  width: 100%;
+  height: 80dvh;
+  overflow-y: auto;
+
+}
+
+.tablecontainer table thead {
+  position: sticky;
+  top: 0px;
+  width: 100%;
+}
+

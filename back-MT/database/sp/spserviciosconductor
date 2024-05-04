@@ -1,0 +1,49 @@
+DROP PROCEDURE IF EXISTS SPSERVICIOSCONDUCTOR; 
+
+DELIMITER //
+
+CREATE PROCEDURE SPSERVICIOSCONDUCTOR (
+    IN OPC VARCHAR(2), 
+    IN VFECHAINICIAL DATE ,
+    IN VFECHAFINAL DATE,
+    IN VID_CONDUCTOR INT,
+    IN VID_PLACA INT,
+    IN VESTADO VARCHAR(10)
+)
+ BEGIN
+    IF OPC = 'SC' THEN
+        -- servicios de un conductor en un rango de fechas
+        select * 
+        from servicios
+        where id_conductor = VID_CONDUCTOR
+        and fecha BETWEEN VFECHAINICIAL AND VFECHAFINAL
+        order by fecha DESC;
+
+    ELSEIF OPC = 'SP' THEN
+        -- servicios del conductor por estado
+        select * 
+        from servicios
+        where id_conductor = VID_CONDUCTOR AND
+            ESTADO = VESTADO AND
+            fecha BETWEEN VFECHAINICIAL AND VFECHAFINAL
+        order by fecha DESC;
+        
+    ELSEIF OPC='SE' THEN
+        -- servicios de un conductor agrupado por estado
+        SELECT
+        SUM(CASE WHEN estado = 'solicitado' THEN 1 ELSE 0 END) AS servicios_solicitado,
+        SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) AS servicios_cancelados,
+        SUM(CASE WHEN estado = 'ejecutado' THEN 1 ELSE 0 END) AS servicios_ejecutados
+    FROM
+        servicios
+     WHERE  id_conductor = VID_CONDUCTOR AND 
+            fecha BETWEEN VFECHAINICIAL AND VFECHAFINAL;
+    ELSE
+        SELECT 'Opción no válida-SPSERVICIOSCONDUCTOR';
+    END IF;
+
+ END//
+ 
+ DELIMITER ;
+
+ call SPSERVICIOSCONDUCTOR('SC','2024-02-01','2024-02-29',1,0,'')

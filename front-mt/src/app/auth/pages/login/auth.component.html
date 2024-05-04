@@ -1,0 +1,23 @@
+<div class="center-content">
+
+      <!-- login.component.html-->
+      <span [hidden]="!isLoading()">Cargando...</span>
+      <form class="login-form">
+            <img mat-card-image src="../../assets/logo2.png" alt="Logo" class="logo-img">
+            <h1 class="title">Meyd MT</h1>
+                  <mat-form-field appearance="fill">
+
+                        <mat-label><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle"></mat-icon>Usuario</mat-label>
+                        <input matInput placeholder="" name="username" [(ngModel)]="usuario" required>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                        <mat-label><mat-icon aria-hidden="false" aria-label="Example password icon" fontIcon="vpn_key"></mat-icon>Contraseña</mat-label>
+                        <input matInput type="password" placeholder="" name="password" [(ngModel)]="password" required>
+                  </mat-form-field>
+
+                  <button mat-raised-button color="primary" class="login-button" (click)="login()">Ingresar</button>
+
+
+      </form>
+
+</div>
