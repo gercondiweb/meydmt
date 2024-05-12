@@ -1,15 +1,17 @@
-create table params(
-    id int primary key AUTO_INCREMENT,
-    parametro varchar(20) not null,
-    valor varchar(100) not null,
-    descripcion varchar(100),
-    usuariocrea varchar(20),
-    fechacrea varchar(10),
-    usuarioActualiza varchar(20) default CURRENT_USER,
-    fechaActualiza timestamp default CURRENT_TIMESTAMP
+CREATE TABLE params (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    parametro VARCHAR(20) NOT NULL,
+    valor VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(100),
+    usuariocrea VARCHAR(20),
+    fechacrea VARCHAR(10),
+    usuarioActualiza VARCHAR(20) DEFAULT '', -- Reemplaza 'nombre_de_usuario' con el valor real
+    fechaActualiza TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO params(parametro,valor,descripcion,usuariocrea) VALUES()
+
+
+-- INSERT INTO params(parametro,valor,descripcion,usuariocrea) VALUES()
 
 
 create table users(
@@ -54,10 +56,8 @@ create table servicios(
     activo bit,
     usuariocrea varchar(20),
     fechacrea date,
-    usuarioactualiza varchar(20) default CURRENT_USER,
-    fechaactualiza timestamp default CURRENT_TIMESTAMP,
-    
-    
+    usuarioactualiza varchar(20) not null,
+    fechaactualiza TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO `servicios` (`id`, `observaciones`, `activo`, `usuariocrea`, `fechacrea`, `usuarioactualiza`, `fechaactualiza`, `descripcion`) VALUES (NULL, 'Esto es una prueba', b'1', 'admin', '2024-04-09', 'current_user()', current_timestamp(), 'Mantenimiento de Baño');
@@ -72,12 +72,12 @@ create table clientes(
     activo int,
     usuariocrea varchar(20),
     fechacrea datetime ,
-    fechamodifica datetime DEFAULT CURRENT_DATE(),
-    usuariomodifica varchar(20) DEFAULT CURRENT_USER()
+    fechamodifica TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    usuariomodifica varchar(20) not null
 );
 
-insert into clientes(cliente,direccion,email,telefono,activo,usuariocrea,fechacrea)
-value('MEYD SOLUTIONS','Mamonal km 5','meydsolutions@gmail.com', '3174025507', 1, CURRENT_USER(),CURRENT_DATE());
+insert into clientes(cliente,direccion,email,telefono,activo,usuariocrea,fechacrea, nit,usuariomodifica)
+value('MEYD SOLUTIONS','Mamonal km 5','meydsolutions@gmail.com', '3174025507', 1, CURRENT_USER(),CURRENT_DATE(),'123',CURRENT_USER());
 
 
 -- Cabecera de contratos
@@ -93,9 +93,8 @@ create table contratos(
     usuariocrea varchar(20),
     fechacrea varchar(10),
     activo int,
-    usuarioactualiza varchar(20) default CURRENT_USER,
-    fechaactualiza timestamp default CURRENT_TIMESTAMP,
-
+    usuarioactualiza varchar(20) not null,
+    fechaactualiza TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foreign key(id_cliente) references clientes(id) on delete cascade on update cascade
 );
 
@@ -118,17 +117,16 @@ create table servicioscontrato(
     vhh decimal(10,2),
     usuariocrea varchar(20),
     fechacrea varchar(10),
-    usuarioactualiza varchar(20) default CURRENT_USER,
-    fechaactualiza timestamp default CURRENT_TIMESTAMP 
-
+    usuarioactualiza varchar(20) not null,
+    fechaactualiza timestamp default CURRENT_TIMESTAMP, 
     foreign key(id_contrato) references contratos(id) on delete cascade on update cascade,
     foreign key(id_servicio) references servicios(id) on delete cascade on update cascade
 );
 
-INSERT INTO `servicioscontrato` (`id`, `id_contrato`, `id_servicio`, `fechainicio`, `fechafin`, 
+INSERT INTO `servicioscontrato` ( `id_contrato`, `id_servicio`, `fechainicio`, `fechafin`, 
 `activo`, `ans`, `vhh`, `usuariocrea`, `fechacrea`, `usuarioactualiza`, `fechaactualiza`) 
-VALUES (NULL, '1', '5', '2024-04-01', '2025-04-30', '1', '4', '200', 'admin', '2024-04-09', 
-'current_user()', current_timestamp());
+VALUES (1, 1, '2024-04-01', '2025-04-30', '1', '4', '200', 'admin', '2024-04-09', 
+current_user(), current_timestamp());
 
 create table sucursales(
     id int primary key AUTO_INCREMENT,
@@ -140,7 +138,6 @@ create table sucursales(
     id_cliente int,
     usuariocrea varchar(20),
     fechacrea datetime ,
-
     foreign key(id_cliente) references clientes(id) on delete cascade on update cascade
 );
 
@@ -157,7 +154,6 @@ create table areas(
     telefonoautorizador varchar(20),
     usuariocrea varchar(20),
     fechacrea datetime, 
-    
     foreign key(id_sucursal) references sucursales(id) on delete cascade on update cascade
 );
 
@@ -171,6 +167,25 @@ create table usuarioscliente(
     id_cliente int not null,
     foreign key(id_usuario) references users(id) on delete cascade on update cascade,
     foreign key(id_cliente) references clientes(id) on delete cascade on update cascade
+);
+
+create table tecnicos(
+    id int primary key AUTO_INCREMENT,
+    nombre varchar(100) not null,
+    apellidos varchar(100) not null,
+    numerodocumento varchar(20),
+    numid varchar(20),
+    direccion varchar(250),
+    email varchar(100) not null,
+    telefono varchar(20) not null,
+    tiposangre varchar(3),
+    activo int,
+    foto varchar(100),
+    usuariocrea varchar(20),
+    fechacrea varchar(10),
+    usuarioactualiza varchar(20) not null,
+    fechaactualiza timestamp default CURRENT_TIMESTAMP,
+    UNIQUE (numerodocumento)
 );
 
 
@@ -187,21 +202,22 @@ create table tikets(
     prioridad varchar(10),
     usuariocrea varchar(20),
     fechacrea date,
-    usuarioactualiza varchar(20) default CURRENT_USER,
-    fechaactualiza timestamp default CURRENT_TIMESTAMP,
-    id_tiposervicio int,
-    foreign key(id_tiposervicio) references tiposervicio(id) on delete cascade on update cascade,
-
-    foreign key(id_cliente) references clientes(id) on delete cascade on update cascade,
-    foreign key(id_servicio) references servicios(id) on delete cascade on update cascade,
-    foreign key(id_tecnico) references tecnicos(id) on delete cascade on update cascade
+    usuarioactualiza varchar(20) not null,
+    fechaactualiza TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_tiposervicio int
 );
 
-INSERT INTO `tikets` (`id`, `id_cliente`, `id_tecnico`, `fecha`, `hora`, `id_servicio`, `imagen`, 
-            `descripcion`, `estado`, `usuariocrea`, `fechacrea`, `usuarioactualiza`, `fechaactualiza`,
-            `prioridad`, `id_tiposervicio`) 
-VALUES (NULL, '1', '1', '2024-04-10', '18:15:47', '5', NULL, 'esto es un tiket de prueba de desarrollo', 
-            'SOL', 'admin', '2024-04-10', 'current_user()', current_timestamp(), 'ALTA', '1');
+ALTER TABLE meydtr.tikets ADD CONSTRAINT tikets_tiposervicio_FK FOREIGN KEY (id_tiposervicio) REFERENCES meydtr.tiposervicio(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE meydtr.tikets ADD CONSTRAINT tikets_servicio_FK foreign key(id_servicio) references servicios(id) on delete cascade on update cascade;
+ALTER table meydtr.tikets ADD CONSTRAINT tikets_cliente_FK foreign key(id_cliente) references clientes(id) on delete cascade on update cascade;
+ALTER table meydtr.tikets ADD CONSTRAINT tikets_tecnico_FK  foreign key(id_tecnico) references tecnicos(id) on delete cascade on update cascade;
+
+
+-- INSERT INTO `tikets` ( `id_cliente`, `id_tecnico`, `fecha`, `hora`, `id_servicio`, `imagen`, 
+          --  `descripcion`, `estado`, `usuariocrea`, `fechacrea`, `usuarioactualiza`, `fechaactualiza`,
+           -- `prioridad`, `id_tiposervicio`) 
+-- VALUES ('1', '1', '2024-04-10', '18:15:47', '5', NULL, 'esto es un tiket de prueba de desarrollo', 
+       --     'SOL', 'admin', '2024-04-10', current_user(), current_timestamp(), 'ALTA', '1');
 
 create table tipovisitas(
     id int primary key AUTO_INCREMENT,
@@ -227,7 +243,7 @@ create table visitastiket(
     total_materiales decimal,
     usuariocrea varchar(20),
     fechacrea date,
-    usuarioactualiza varchar(20) default CURRENT_USER,
+    usuarioactualiza varchar(20) not null,
     fechaactualiza timestamp default CURRENT_TIMESTAMP,
     foreign key(id_tiket) references tikets(id) on delete cascade on update cascade,
     foreign key(id_tipovisita) references tipovisitas(id) on delete cascade on update cascade
@@ -242,29 +258,9 @@ create table materialesvisita(
     valor_venta decimal,
     usuariocrea varchar(20),
     fechacrea date,
-    usuarioactualiza varchar(20) default CURRENT_USER,
-    fechaactualiza timestamp default CURRENT_TIMESTAMP,
-    foreign key(id_visita) references visitastiket(id) on delete cascade on
-);
-
-create table tecnicos(
-    id int primary key AUTO_INCREMENT,
-    nombre varchar(100) not null,
-    apellidos varchar(100) not null,
-    numerodocumento varchar(20),
-    numid varchar(20),
-    direccion varchar(250),
-    email varchar(100) not null,
-    telefono varchar(20) not null,
-    tiposangre varchar(3),
-    activo int,
-    foto varchar(100),
-    usuariocrea varchar(20),
-    fechacrea varchar(10),
-    usuarioactualiza varchar(20) default CURRENT_USER,
-    fechaactualiza timestamp default CURRENT_TIMESTAMP,
-    UNIQUE (numerodocumento)
-);
+    usuarioactualiza varchar(20) not null,
+    fechaactualiza TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    foreign key(id_visita) references visitastiket(id) on delete cascade on update cascade);
 
 create table documentos(
     id int primary key AUTO_INCREMENT,
@@ -306,7 +302,7 @@ create table tecnicosespecialidad(
     fechavencimiento date,
     observaciones text,
     usuariocrea varchar(20),
-    foreign key(id_tecnico) references tecnicos(id) on delete cascade on update cascade
+    foreign key(id_tecnico) references tecnicos(id) on delete cascade on update cascade,
     foreign key(id_especialidad) references especialidades(id) on delete cascade on update cascade
 );
 
@@ -322,7 +318,7 @@ create table comentariostikets(
 
 CREATE VIEW CONXSERV AS
 SELECT C.ID AS IDCONTRATO, SC.fechainicio, SC.fechafin, SC.activo, SC.ans, SC.vhh, SV.descripcion, SV.observaciones 
-FROM CONTRATOS C
+FROM meydtr.contratos C
 INNER JOIN servicioscontrato SC ON C.id = SC.id_contrato AND SC.activo=1
 LEFT JOIN servicios SV ON SC.id_servicio = SV.id AND SV.activo=1
 ORDER BY C.id;

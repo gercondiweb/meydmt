@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  mysql:
+   image: mysql:5.7
+   container_name: container-mysqlDB-mt
+   restart: always
+   environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: meydtr
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123456
+   ports:
+      - '3306:3306'
+   volumes:
+      - mysql-data:/var/lib/mysql
+   networks:
+     - red_genchild
+  api:
+    container_name: backMT-content
+    restart: always
+    build:
+      context: ./back-MT
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - DB_PORT=3306
+      - DB_HOST=localhost
+      - DB_USERNAME=admin
+      - DB_PASSWORD=123456
+      - DB_NAME=meydtr
+    depends_on:
+      - mysql
+    networks:
+     - red_genchild
+volumes:
+  mysql-data:
+networks:
+  red_genchild:
+    driver: bridge
