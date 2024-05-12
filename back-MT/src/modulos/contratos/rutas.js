@@ -32,12 +32,14 @@ async function uno (req, res, next){
 async function agregar (req, res, next){
     try{
         const items = await controlador.agregar(req.body);
+        
         if(req.body.id == 0){ //si el id=0 va a crear un nuevo item
-            mensaje = 'Contrato guardado con exito';
+            mensaje = 'Contrato '+ items.insertId +' guardado con exito';
         }else{
             mensaje = 'Contrato actualizado con exito'
+
         }
-        respuesta.success(req, res, mensaje, 201);
+        respuesta.success(req, res, mensaje, 201, items.insertId);
     }catch(err){
         next(err);
     }   
