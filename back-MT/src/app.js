@@ -23,8 +23,6 @@ const crearticket = require('./modulos/operacionestikets/rutas');
 
 const consultasContrato = require('./modulos/consultacontratos/rutas');
 
-const consultaTecnicos = require('./modulos/consultatecnicos/rutas')
-
 
 const error = require('./red/errors');
 const operacionestikets = require('./modulos/operacionestikets');
@@ -59,9 +57,6 @@ app.use('/api/operacionestikets', crearticket)
 app.use('/api/consultacontratos', consultasContrato)
 app.use('/api/operacionescontrato', crearticket)
 app.use('/api/servicioscontrato', servicioscontrato)
-
-app.use('/api/consultatecnicos', consultaTecnicos)
-
 
 app.use(error);
 module.exports = app;

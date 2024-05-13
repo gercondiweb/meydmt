@@ -1,9 +1,12 @@
-# Use the official Node.js image
-FROM node:14
-WORKDIR /usr/src/app
-COPY package*.json /usr/src/app
-RUN npm install -g nodemon
-RUN npm install
+FROM node:20-alpine
+RUN mkdir -p /app
+WORKDIR /app
+COPY package.json /app
 COPY . .
-EXPOSE 3000
-CMD ["npm", "run", "dev"]
+RUN npm install
+EXPOSE 80
+CMD [ "npm","run","dev" ]
+
+# docker build -t nombre_imagen .
+# docker run -p 4000:80 --name back_tr_container back_tr
+

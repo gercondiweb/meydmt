@@ -1,0 +1,77 @@
+<div>
+  <h2 mat-dialog-title>Crear Ticket de Mantenimiento</h2>
+
+  <mat-dialog-content>
+      <form class="ticket-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Tiket</mat-label>
+          <input matInput disabled value="ticket">
+        </mat-form-field>
+
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Fecha</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="datosgrabar.fecha" name="fecha">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Hora</mat-label>
+            <input matInput type="time"[(ngModel)]="datosgrabar.hora" name="hora">
+          </mat-form-field></td>
+          <td>
+            <mat-form-field>
+              <mat-label>Prioridad</mat-label>
+              <mat-select [(ngModel)]="datosgrabar.prioridad" name="prioridad">
+                @for (prior of prioridad; track prior) {
+                  <mat-option [value]="prior.value">{{prior.viewValue}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr></table>
+
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Tipo de Servicio</mat-label>
+              <mat-select [(ngModel)]="datosgrabar.id_tiposervicio" name="id_tiposervicio">
+                @for (tserv of tiposServ; track tserv) {
+                  <mat-option [value]="tserv.ID">{{tserv.TIPOSERVICIO}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>Servicio  </mat-label>
+              <mat-select [(ngModel)]="datosgrabar.id_servicio" name="id_servicio">
+                @for (srv of servicios; track srv) {
+                  <mat-option [value]="srv.id_servicio">{{srv.Descripcion}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr></table>
+
+        <div class="row">
+          <mat-form-field >
+            <mat-label>Descripcion del Servicio</mat-label>
+            <textarea matInput [(ngModel)]="datosgrabar.descripcion" rows="4" placeholder="disabled el mantenimiento que solicita." name="descripcion"></textarea>
+          </mat-form-field>
+        </div>
+
+
+
+
+      </form>
+
+  </mat-dialog-content>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="grabar()" cdkFocusInitial>Confirmar</button>
+  </div>
+</div>

@@ -4,6 +4,3 @@
 .angular
 *.zip
 .gitignore {}
-
-.env
-

@@ -94,18 +94,6 @@ function sptikets(parametros){
     });
 }
 
-function spTecnicos(parametros){
-    const {opc, vID, vIDTECNICO, vActivo} = parametros;
-    return new Promise((resolve, reject)=>{
-        conexcion.query(`CALL SPTECNICOS (?, ?, ?, ?)`, 
-                    [opc, vID, vIDTECNICO, vActivo] ,
-                    (error, result)=>{
-            if(error) return reject(error);
-            resolve(result);
-        })
-    });
-}
-
 function spOperacionestickets(parametros){
     const {opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, estado, prioridad, id_tiposervicio, id_tecnico} = parametros;
     return new Promise((resolve, reject)=>{
@@ -141,7 +129,6 @@ module.exports = {
     spOperacionestickets,
     
     spmaestros,
-    spTecnicos,
     
     spContratos,
     spOperacionescontratos,
