@@ -1,0 +1,46 @@
+<div>
+  <h2 class="titulo" mat-dialog-title>Crear Area</h2>
+
+  <mat-dialog-content>
+      <form class="sucursal-form" [formGroup]="formAreas">
+        <div class="row g-2">
+          <div class="mb-3 col-4">
+            <label for="nitinput" class="form-label">Sucursal</label>
+            <input type="number" class="form-control" formControlName="id_sucursal" placeholder="999999999" id="nitinput">
+          </div>
+          <div class="mb-3 col-8">
+            <label for="clienteinput" class="form-label">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre"  placeholder="" id="clienteinput">
+          </div>
+
+          <div class="mb-3 col">
+            <label for="exampleFormControlInput1" class="form-label">Descipcion</label>
+            <input type="text" class="form-control" formControlName="descripcion"  placeholder="">
+          </div>
+
+          <div class="mb-3 col-3">
+            <label for="clienteinput" class="form-label">Autorizador</label>
+            <input type="text" class="form-control" formControlName="autorizador"  placeholder="" id="clienteinput">
+          </div>
+          <div class="mb-3 col-3">
+            <label for="clienteinput" class="form-label">Email</label>
+            <input type="text" class="form-control" formControlName="emailautorizador"  placeholder="" id="clienteinput">
+          </div>
+          <div class="mb-3 col-3">
+            <label for="clienteinput" class="form-label">Telefono</label>
+            <input type="text" class="form-control" formControlName="telefonoautorizador"  placeholder="" id="clienteinput">
+          </div>
+
+        </div>
+
+
+      </form>
+
+  </mat-dialog-content>
+
+  <div mat-dialog-actions class="pie justify-content-end">
+    <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="guardarArea()" cdkFocusInitial>Confirmar</button>
+  </div>
+</div>
+

@@ -1,0 +1,78 @@
+.form-container{
+  width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+}
+
+.timeline-comments{
+  margin: 60px auto;
+  width:100%;
+  border-left:2px solid #ccc;
+  padding: 0 33px 0 55px;
+}
+.comment{
+  background-color: #fff;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: 1px solid #6fcf28;
+  line-height: 1.7;
+  position: relative;
+  height: 40%;
+  margin-bottom: 20px;
+}
+
+.visits{
+  background-color: #fff;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: 1px solid #6fcf28;
+  line-height: 1.7;
+  position: relative;
+  height: 50%;
+  margin-bottom: 20px;
+}
+
+.comment:before{
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #7171ae;
+  border: 3px solid #ddd;
+  position: absolute;
+  top: 10px;
+  left: -47px;
+
+}
+.comment:after{
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent #ddd transparent transparent;
+  border-width: 18px;
+  position:absolute;
+  left:-35px;
+  top: 7px;
+}
+
+.comment h2{
+  margin:0;
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
+}
+
+.comment h3{
+  margin:0;
+  font-family: Roboto, sans-serif;
+}
+
+.comment h4{
+  margin:0;
+  font-family: Roboto, sans-serif;
+}
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}

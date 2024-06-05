@@ -15,6 +15,11 @@ import { CookieService } from 'ngx-cookie-service';
 export class NavegacionComponent {
   private breakpointObserver = inject(BreakpointObserver);
   private readonly _cookieService = inject(CookieService);
+
+  public token: string = this._cookieService.get('token');
+
+  showSubmenu: boolean = false;
+
   @Input( { required:true } ) items:ItemNavigate[] = [];
 
   constructor(
@@ -52,6 +57,10 @@ export class NavegacionComponent {
     logOut(){
       this._cookieService.delete('token', '/' );
       this.router.navigateByUrl('/login');
+    }
+
+    toggleSubmenu(): void {
+      this.showSubmenu = !this.showSubmenu;
     }
 
 

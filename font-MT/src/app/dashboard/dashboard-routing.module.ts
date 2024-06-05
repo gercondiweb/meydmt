@@ -6,10 +6,16 @@ import { TableroAdmComponent,
         TicketsComponent,
         CotizacionComponent,
         ContratosComponent,
-        AdmContratosComponent
+        AdmContratosComponent,
+        AdmClienteComponent,
+        AdmTecnicosComponent,
+        AdmTicketsComponent,
       } from './pages';
 import { userGuard } from './guard/user-guard.guard';
 import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';
+import { AdmServiciosComponent } from './pages/adm-servicios/adm-servicios.component';
+import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposervicios.component';
+import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
 
 
 const routes: Routes = [
@@ -26,16 +32,44 @@ const routes: Routes = [
         component:TicketsComponent
       },
       {
+        path:'admtickets',
+        component:AdmTicketsComponent
+      },
+      {
+        path:'admtickets/:accion',
+        component:AdmTicketsComponent
+      },
+      {
         path:'clientes',
         component:ClientesComponent
       },
       {
         path:'contratos',
-        component:ContratosComponent
+        component:ContratosComponent,
+      },
+      {
+        path:'masterservicios',
+        component:MasterserviciosComponent
+      },
+      {
+        path:'admservicios',
+        component:AdmServiciosComponent
+      },
+      {
+        path:'admtiposervicios',
+        component:AdmTiposerviciosComponent
       },
       {
         path:'admcontratos',
         component:AdmContratosComponent
+      },
+      {
+        path:'admcontratos/:accion',
+        component:AdmContratosComponent
+      },
+      {
+        path:'admclientes',
+        component:AdmClienteComponent
       },
       {
         path:'cotizacion',
@@ -46,8 +80,17 @@ const routes: Routes = [
         component: TecnicosComponent
       },
       {
-        path:'admcontratos/:accion',
-        component: AdmContratosComponent
+        path:'admtecnicos',
+        component: AdmTecnicosComponent
+      },
+      {
+        path:'admtecnicos/:accion',
+        component: AdmTecnicosComponent
+      },
+
+      {
+        path:'admclientes/:accion',
+        component: AdmClienteComponent
       },
       {
         path: '',

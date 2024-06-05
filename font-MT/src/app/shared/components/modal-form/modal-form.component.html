@@ -1,12 +1,58 @@
 <div>
-  <h2 class="titulo" mat-dialog-title>Asignar Ticket de Mantenimiento</h2>
+  <h2 class="titulo" mat-dialog-title>Asignar Tecnico - TICKET + {{this.data.data.id}}</h2>
 
   <mat-dialog-content>
       <form class="ticket-form" [formGroup]="formAsignar">
-        <mat-form-field class="example-full-width">
+
+        <div class="row g-2">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Descripcion del Servicio</label>
+            <textarea class="form-control" rows="5" [readonly]="true" formControlName="descripcion" placeholder="Detalle del servicio que solicita"></textarea>
+          </div>
+          <div class="mb-3 col-4">
+            <label for="nitinput" class="form-label">Cliente</label>
+            <input class="form-control" type="text" [value]="this.data.data.CLIENTE" [disabled]="true">
+          </div>
+
+          <div class="mb-3 col-2">
+            <label for="clienteinput" class="form-label">Fecha</label>
+            <input type="date" class="form-control" [readonly]="true" [value]="this.formattedDate">
+          </div>
+
+          <div class="mb-3 col-2">
+            <label for="exampleFormControlInput1" class="form-label">Hora</label>
+            <input type="time" class="form-control" [readonly]="true" formControlName="hora" [value]="this.data.data.hora">
+          </div>
+
+          <div class="mb-3 col-2">
+            <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
+            <input class="form-control" type="text" [value]="this.data.data.prioridad" [disabled]="true">
+          </div>         
+
+          <div class="mb-3 col-4">
+            <label for="exampleFormControlInput1" class="form-label">Tipo de Servicio</label>
+            <input class="form-control" type="text" [value]="this.data.data.TIPOSERVICIO" [disabled]="true">
+          </div>
+          
+          <div class="mb-3 col-8">
+            <label for="iserv" class="form-label">Servicio</label>
+            <input class="form-control" type="text" [value]="this.data.data.DESCRIPCION" [disabled]="true">
+          </div>
+          
+
+          <div class="row">
+            <h2>Tecnico Asignada</h2>
+            <select class="form-select" formControlName="id_tecnico" aria-label="Tecnicos Disponibles" >
+                <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{tecnico.nombre}}</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!--mat-form-field class="example-full-width">
           <mat-label>Tiket</mat-label>
           <input matInput formControlName="id">
-        </mat-form-field>
+        </!--mat-form-field>
 
         <table class="example-full-width" cellspacing="0"><tr>
           <td>
@@ -37,9 +83,9 @@
           <td>
             <mat-form-field>
               <mat-label>Tipo de Servicio</mat-label>
-              <mat-select formControlName="id_tiposervicio">
+              <mat-select formControlName="id_tiposervicio" value="this.data.id_tiposervicio">
                 @for (tiposrv of tipoServ; track tiposrv) {
-                  <mat-option [value]="tiposrv.ID">{{tiposrv.TIPOSERVICIO}}</mat-option>
+                  <mat-option [value]="tiposrv.id_tiposervicio">{{tiposrv.TIPOSERVICIO}}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
@@ -66,13 +112,13 @@
           </td>
         </tr></table>
 
-        <div class="row">
+        <div-- class="row">
             <mat-form-field class="example-full-width">
               <mat-label>Descripcion del Servicio</mat-label>
               <textarea matInput formControlName="descripcion" rows="4"
                         placeholder="Detalle del mantenimiento que solicita."></textarea>
             </mat-form-field>
-        </div>
+        </div-->
 
 
       </form>

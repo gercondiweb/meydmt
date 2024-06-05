@@ -27,14 +27,17 @@ export class ModalFormComponent implements OnInit{
   listTecnicos: any;
   tecnicos:any[]=[];
 
+  listClientes: any;
+  clientes:any[]=[];
+
   prioridad: Prioridad[] = [
     {value: 'ALTA', viewValue:'ALTA'},
     {value:'NORMAL', viewValue:'NORMAL'},
     {value: 'BAJA', viewValue:'BAJA'},
   ];
 
-  datosConsulta ={
-    opc: ''
+  datosBusquedaMaestro={
+    opc:''
   }
 
   datosTkt = {
@@ -47,6 +50,8 @@ export class ModalFormComponent implements OnInit{
 
   public formAsignar!: FormGroup;
 
+  formattedDate!: string;
+
   constructor(
     public dialogRef: MatDialogRef<ModalFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,7 +61,7 @@ export class ModalFormComponent implements OnInit{
   ngOnInit():void {
 
     this.formAsignar = this.formBuilder.group({
-      opc:[''],
+       opc:[''],
        id : [{value:'', disabled:this.data.tipo==='Crear'},Validators.required],
        fecha : ['',[Validators.required]],
        hora: ['',[Validators.required]],
@@ -79,6 +84,8 @@ export class ModalFormComponent implements OnInit{
       this.formAsignar.get('id')?.setValue('NUEVO');
 
     }
+
+    this.formattedDate = this.formatDate(this.data.data.fecha);
   }
 
   cancelar() {
@@ -166,27 +173,39 @@ export class ModalFormComponent implements OnInit{
 
   cargarMaestros(){
 
-    this.datosConsulta.opc = 'TSRV';
-    this.RestService.getMaestros(this.datosConsulta).subscribe(respuesta=>{
+    this.datosBusquedaMaestro.opc = 'TSRV';
+    this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
       this.listTiposServ=respuesta;
       this.tipoServ=this.listTiposServ.body[0];
       })
-    console.log(this.tipoServ)
 
-    this.datosConsulta.opc = 'SERV';
-    this.RestService.getMaestros(this.datosConsulta).subscribe(respuesta2=>{
+
+    this.datosBusquedaMaestro.opc = 'SERV';
+    this.RestService.getServicios(this.datosBusquedaMaestro).subscribe(respuesta2=>{
       this.listServ=respuesta2;
       this.servicios=this.listServ.body[0];
       })
-    console.log(this.servicios)
 
-    this.datosConsulta.opc = 'TCN';
-    this.RestService.getMaestros(this.datosConsulta).subscribe(respuesta3=>{
+    this.datosBusquedaMaestro.opc = 'TCN';
+    this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta3=>{
       this.listTecnicos=respuesta3;
       this.tecnicos=this.listTecnicos.body[0];
       })
-    console.log(this.tecnicos)
+
+      this.datosBusquedaMaestro.opc = 'CLI';
+      this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta3=>{
+        this.listClientes=respuesta3;
+        this.clientes=this.listClientes.body[0];
+        })
+
   }
 
+  formatDate(isoDate: string): string {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
 }

@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { ModalComponent } from './modal/modal.component';
 import { ModalFormComponent } from '../../../shared/components/modal-form/modal-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tickets',
@@ -52,7 +53,9 @@ export class TicketsComponent implements OnInit{
 
   constructor(
     private _restService:RestService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
   ){
   }
 
@@ -82,9 +85,9 @@ export class TicketsComponent implements OnInit{
       this.datos = this.listDatos.body;
 
       this.cards[0].value = this.datos[0][0].servicios_solicitados;
-      this.cards[1].value =this.datos[0][0].servicios_iniciados;
-      this.cards[2].value =this.datos[0][0].servicios_cancelados;
-      this.cards[3].value =this.datos[0][0].servicios_ejecutados;
+      this.cards[1].value = this.datos[0][0].servicios_iniciados;
+      this.cards[2].value = this.datos[0][0].servicios_cancelados;
+      this.cards[3].value = this.datos[0][0].servicios_ejecutados;
       this.cards[4].value = this.datos[0][0].servicios_asignados;
 
     });
@@ -102,7 +105,7 @@ export class TicketsComponent implements OnInit{
 
   public crearTicket(){
     // Lógica para editar el elemento
-    const dialogRef = this.dialog.open(ModalComponent, {
+    /*const dialogRef = this.dialog.open(ModalComponent, {
       disableClose: true,
       autoFocus: true,
       closeOnNavigation : false,
@@ -115,6 +118,12 @@ export class TicketsComponent implements OnInit{
     this.cargarDetalle();
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
+    });*/
+
+    const route = '/dashboard/admtickets'  ;
+      this.router.navigate([route,'crear']);
+
   }
+
+
 }

@@ -12,7 +12,7 @@ export const routes: Routes = [
         .then(m => m.DashboardModule)
       },
       {
-        path:'conductor',
+        path:'tecnico',
         loadChildren: () => import('./conductor/conductor.module')
         .then(m => m.ConductorModule)
       },

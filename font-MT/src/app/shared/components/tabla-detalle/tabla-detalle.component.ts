@@ -2,8 +2,9 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ModalService } from '../../../dashboard/services/services/modal.service';
 import { ModalFormComponent } from '../modal-form/modal-form.component';
-import { MatDialog } from '@angular/material/dialog'; 
-
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataSharingService } from '../../../dashboard/services/services/data-sharing.service';
 export interface ElementoTablaDetalle {
   nombre: string;
 
@@ -26,17 +27,19 @@ export class TablaDetalleComponent implements OnChanges {
   @Input() datasource!: any[];
   @Input() columns : any[] = [];
 
-  columnsToDisplay = ['id', 'CLIENTE','TIPOSERVICIO', 'fecha', 'hora', 'prioridad'];
+  columnsToDisplay = ['id', 'Cliente','Tipo', 'Fecha', 'Hora', 'Prioridad', 'Estado'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement!: DetalleServicio | null;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('data: ', this.datasource);
+    //console.log('data: ', this.datasource);
   }
 
-  constructor(public dialog: MatDialog){
-
-  }
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private dataSharingService: DataSharingService,
+  ){}
 
   editarElemento(elemento: ElementoTablaDetalle) {
     // Lógica para editar el elemento
@@ -54,6 +57,20 @@ export class TablaDetalleComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  addComent(element: ElementoTablaDetalle){
+
+    const param1 = 'valor1';
+    const param2 = 'valor2';
+    const data = { ticket: element };
+
+    //console.log(data)
+
+    this.dataSharingService.setParams(param1, param2, data);
+
+    const route = '/dashboard/admtickets'  ;
+    this.router.navigate([route,'editar']);
   }
 
   eliminarElemento(elemento: ElementoTablaDetalle) {

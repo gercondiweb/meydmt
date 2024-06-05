@@ -29,7 +29,19 @@ export class LayoutComponent implements OnInit{
     {
       icon: 'apps',
       ruta: '/dashboard/contratos',
-      name: 'Contratos'
+      name: 'Contratos',
+      submenu: [
+        {
+          icon: 'subdirectory_arrow_right',
+          ruta: '/dashboard/masterservicios',
+          name: 'Servicios'
+        },
+        {
+          icon: 'subdirectory_arrow_right',
+          ruta: '/dashboard/admtiposervicios',
+          name: 'Tipo Servicios'
+        }
+      ]
     },
     {
       icon: 'group',

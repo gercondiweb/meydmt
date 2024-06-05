@@ -3,7 +3,7 @@ import { RestService } from '../../services';
 import { Router } from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
-import { truncate } from 'fs';
+
 
 @Component({
   selector: 'app-tablero-adm',

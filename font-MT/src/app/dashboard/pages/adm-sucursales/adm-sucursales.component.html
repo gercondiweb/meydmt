@@ -1,0 +1,46 @@
+<div>
+  <h2 class="titulo" mat-dialog-title>Crear Sucursal</h2>
+
+  <mat-dialog-content>
+      <form class="sucursal-form" [formGroup]="formSucursales">
+        <div class="row g-2">
+          <div class="mb-3 col-4">
+            <label for="nitinput" class="form-label">Cliente</label>
+            <input type="number" class="form-control" formControlName="id_cliente" placeholder="999999999" id="nitinput">
+          </div>
+          <div class="mb-3 col-8">
+            <label for="clienteinput" class="form-label">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre"  placeholder="" id="clienteinput">
+          </div>
+
+          <div class="mb-3 col">
+            <label for="exampleFormControlInput1" class="form-label">Direccion</label>
+            <input type="text" class="form-control" formControlName="direccion"  placeholder="">
+          </div>
+
+          <div class="mb-3 col-3">
+            <label for="clienteinput" class="form-label">Pais</label>
+            <input type="text" class="form-control" formControlName="ciudad"  placeholder="" id="clienteinput">
+          </div>
+          <div class="mb-3 col-3">
+            <label for="clienteinput" class="form-label">Ciudad</label>
+            <input type="text" class="form-control" formControlName="ciudad"  placeholder="" id="clienteinput">
+          </div>
+          <div class="mb-3 col-3">
+            <label for="clienteinput" class="form-label">Zip</label>
+            <input type="text" class="form-control" formControlName="zip"  placeholder="" id="clienteinput">
+          </div>
+
+        </div>
+
+
+      </form>
+
+  </mat-dialog-content>
+
+  <div mat-dialog-actions class="pie justify-content-end">
+    <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="guardarSucursal()" cdkFocusInitial>Confirmar</button>
+  </div>
+</div>
+

@@ -4,6 +4,7 @@ import { MatTableDataSource} from '@angular/material/table';
 import { Router } from '@angular/router';
 import {SelectionModel} from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
+import { DataSharingService } from '../../services/services/data-sharing.service';
 
 export interface ElementoTabla {
   nombre: string;
@@ -23,6 +24,7 @@ export interface Contratos {
   styleUrl: './contratos.component.css'
 })
 export class ContratosComponent implements OnInit{
+  titulo = ['Contratos'];
 
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
@@ -38,7 +40,8 @@ export class ContratosComponent implements OnInit{
   }
 
   constructor(private restService: RestService,
-              private router: Router) { }
+              private router: Router,
+              private dataSharingService: DataSharingService) { }
 
   ngOnInit(){
     this.cargarContratosActivos();
@@ -63,7 +66,18 @@ export class ContratosComponent implements OnInit{
   }
 
   editarContrato(elemento: ElementoTabla){
-    this.router.navigateByUrl('/dashboard/admcontratos');
+    //todo: Aqui debe tomer los datos del contrato seleccionado y enviarlo al admcontratos
+    const param1 = 'valor1';
+    const param2 = 'valor2';
+    const data = { ticket: elemento };
+
+    //console.log(data)
+
+    this.dataSharingService.setParams(param1, param2, data);
+
+    const route = '/dashboard/admcontratos'  ;
+    this.router.navigate([route,'editar']);
+
   }
 
   mostrarAlerta(fila: Contratos) {

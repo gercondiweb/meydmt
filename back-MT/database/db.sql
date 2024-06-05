@@ -66,6 +66,8 @@ create table clientes(
     id int primary key AUTO_INCREMENT,
     nit varchar(20) not null,
     cliente varchar(100) not null,
+    ciudad varchar(100) not null,
+    pais varchar(100) not null,
     direccion varchar(250),
     email varchar(100) not null,
     telefono varchar(20) not null,

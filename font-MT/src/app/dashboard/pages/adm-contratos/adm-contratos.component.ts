@@ -1,13 +1,22 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../../services';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 import { TabladinamicaComponent } from '../../../shared/components/tabladinamica/tabladinamica.component';
+import { AdmServiciosComponent } from '../adm-servicios/adm-servicios.component';
+import { DataSharingService } from '../../services/services/data-sharing.service';
 
+export interface ElementoTablaDetalle {
+  nombre: string;
+}
+
+export interface tipoServicio {
+  nombre: string;
+}
 @Component({
   selector: 'app-adm-contratos',
   standalone: false,
@@ -16,6 +25,10 @@ import { TabladinamicaComponent } from '../../../shared/components/tabladinamica
 })
 export class AdmContratosComponent implements OnInit{
   accion : any;
+
+  param1!: string;
+  param2!: string;
+  objetoData: any;
 
   listServicios : any;
   lServicios: any[]=[];
@@ -42,9 +55,7 @@ export class AdmContratosComponent implements OnInit{
     vFECHAFIN :''
   }
 
-  @ViewChild(MatTable) table!: MatTable<any>;
-
-  columnas: string[] = ['id','Descripcion', 'fechainicio', 'fechafin', 'ans', 'vhh'];
+  columnas: string[] = ['id','descripcion', 'fechainicio', 'fechafin', 'ans', 'vhh', 'activo'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(
@@ -52,7 +63,10 @@ export class AdmContratosComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
     private restService: RestService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    private dataSharingService: DataSharingService,
+) { }
 
     public formContrato !: FormGroup;
     public formServContrato!: FormGroup;
@@ -60,10 +74,9 @@ export class AdmContratosComponent implements OnInit{
     public contratoSeleccionado : number = 0;
 
   ngOnInit(): void {
-      this.accion = this.route.snapshot.paramMap.get('accion');
+      this.accion = this.route.snapshot.paramMap.get('accion') || '';
 
-      this.cargarServicios();
-      this.cargarServiciosContrato();
+
       this.cargarClientes();
 
       this.formContrato= this.formBuilder.group({
@@ -73,40 +86,51 @@ export class AdmContratosComponent implements OnInit{
         fechafin : ['',[Validators.required]],
         responsable : ['',[Validators.required]],
         telefono: ['',[Validators.required]],
-        clausulas: ['',[Validators.required]],
-        observaciones: ['',[Validators.required]],
+        email:['',[Validators.email]],
+        clausulas: ['',[]],
+        observaciones: ['',[]],
         activo:['',[Validators.required]]
       });
 
-      this.formServContrato= this.formBuilder.group({
-        id : ['0',[Validators.required]],
-        id_contrato : ['',[Validators.required]],
-        id_servicio : ['',[Validators.required]],
-        fechainicio : [''],
-        fechafin : [''],
-        ans : ['', [Validators.required]],
-        vhh : ['', [Validators.required]],
-        activo:[0,[Validators.required]]
-      });
+      if(this.accion === "Editar"){
+        this.cargarContrato();
+        this.formContrato.controls['id'].disable();
+        this.formContrato.controls['id_cliente'].disable();
+        this.cargarServiciosContrato();
+      }
 
   }
 
-  cargarServicios(){
-    this.restService.getMaestros(this.consultaSrv).subscribe((data: any) => {
-      this.listServicios = data;
-      this.lServicios = this.listServicios.body[0];
-      //this.dataSource.data = this.listServicios.body[0];
-      console.log(this.listServicios.body[0])
+  cargarContrato(){
+    this.param1 = this.dataSharingService.getParam1();
+    this.param2 = this.dataSharingService.getParam2();
+    this.objetoData = this.dataSharingService.getData();
+
+//console.log('objetoData', this.objetoData)
+
+    this.formContrato.patchValue({
+      id: this.objetoData.data.CONTRATO,
+      id_cliente: this.objetoData.data.ID_CLIENTE,
+      fechainicio: this.objetoData.data.FECHAINICIO,
+      fechafin: this.objetoData.data.FECHAFIN,
+      responsable: this.objetoData.data.RESPONSABLE,
+      telefono: this.objetoData.data.TELEFONO,
+      clausulas: this.objetoData.data.CLAUSULAS,
+      observaciones: this.objetoData.data.OBSERVACIONES,
+      activo: this.objetoData.data.ACTIVO
     });
+
   }
 
   cargarServiciosContrato(){
-    this.restService.getContratos(this.consultaSrvContrato).subscribe((data: any) => {
+      this.consultaSrvContrato.vID=this.objetoData.data.CONTRATO;
+
+      this.restService.getContratos(this.consultaSrvContrato).subscribe((data: any) => {
       this.listServiciosContrato = data;
       this.serviciosContrato = this.listServiciosContrato.body[0];
 
       //this.dataSource.data = this.listServiciosContrato.body[0];
-      console.log(this.listServiciosContrato.body[0])
+      console.log('SERVICIOS ',this.listServiciosContrato.body[0])
     });
   }
 
@@ -115,7 +139,8 @@ export class AdmContratosComponent implements OnInit{
     this.restService.getMaestros(this.consultaSrv).subscribe((data: any) => {
       this.listClientes = data;
       this.clientes = this.listClientes.body[0];
-      console.log(this.listServicios.body[0])
+
+      console.log('CLIENTES ',this.listClientes.body[0])
     });
   }
 
@@ -162,6 +187,31 @@ export class AdmContratosComponent implements OnInit{
 
   }
 
+  agregarServicio(){
+
+    //TODO: abre el modal y recibe los datos del ervicio
+    const param1 = this.dataSharingService.getParam1();
+    const param2 = this.dataSharingService.getParam2();
+    const data = this.dataSharingService.getData();
+
+console.log(data)
+
+    const dialogRef = this.dialog.open(AdmServiciosComponent, {
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation : false,
+      width : '900px',
+      data: {
+        tipo: 'Crear',
+        data: data,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   async guardarServCont(){
   try{
     console.log(this.formServContrato.value)
@@ -179,7 +229,7 @@ export class AdmContratosComponent implements OnInit{
         showConfirmButton: false,
         timer: 1500
       });
-      this.table.renderRows();
+
     }
   }catch( e:any ){
     console.log(e);
@@ -191,6 +241,14 @@ export class AdmContratosComponent implements OnInit{
       timer: 1500
     });
   }
+}
+
+editarServicio(servicio : tipoServicio){
+
+}
+
+eliminarServicio(servicio : tipoServicio){
+
 }
 
 }

@@ -15,6 +15,21 @@ BEGIN
         ACTIVO = vActivo
         WHERE ID = vID;
 
+    ELSEIF OPC = 'ALL-CON' THEN
+	SELECT C.ID AS CONTRATO, 
+		C.FECHAINICIO,
+		CL.CLIENTE,
+		CL.NIT,
+		C.FECHAFIN,
+		C.RESPONSABLE,
+		C.CLAUSULAS,
+		C.OBSERVACIONES
+	
+	FROM CONTRATOS C
+        	INNER JOIN CLIENTES CL ON C.id_cliente = CL.id
+	WHERE C.ACTIVO=1
+	ORDER BY C.ID;
+	
     ELSEIF OPC = 'SLC-SRV' THEN
 
         SELECT C.ID AS IDCONTRATO, SC.fechainicio, SC.fechafin, SC.activo, SC.ans, SC.vhh, SV.* 

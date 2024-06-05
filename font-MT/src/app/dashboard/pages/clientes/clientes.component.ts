@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './clientes.component.css'
 })
 export class ClientesComponent implements OnInit {
-  titulo = ['Clientes **'];
+  titulo = ['Clientes'];
   columnas = ['Id','Cliente','Direccion','Email', 'Telefono','Activo'];
   frmAdmClientes = 'admClientes';
 
@@ -40,5 +40,10 @@ export class ClientesComponent implements OnInit {
 
   editar(){
     alert("Editar Cliente");
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.vDataSource.filter = filterValue.trim().toLowerCase();
   }
 }

@@ -1,0 +1,172 @@
+  <div class="form-container bg-white p-3">
+  <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+    <div class="card">
+      <div class="card-header">
+
+        <div class="row">
+          <div class="col-6">
+            <h1 *ngIf="accion === 'crear'">Solicitud de Ticket</h1>
+            <h1 *ngIf="accion != 'crear'">Ticket # {{objetoData.ticket.id}}</h1>
+          </div>
+          <div class="col-6 text-end">
+            <button mat-raised-button color="succes"  (click)="regresar()">
+              <mat-icon>reply</mat-icon>
+              Regresar
+            </button>
+            <button mat-raised-button color="primary" (click)="guardarTicket()">
+              <mat-icon>save</mat-icon>
+              Guardar
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-body  mt-3">
+
+        <div *ngIf="accion === 'editar'">
+
+              <div class="row mb-3">
+                <label><h2>Description</h2></label>
+                <h3>
+                  {{objetoData.ticket.DetalleTKT
+                  }}
+                </h3>
+
+              </div>
+
+        </div>
+
+        <div *ngIf="accion === 'crear'"><!--=======Aqui valida si la accion enviada es crear y mostrar el formulario-->
+          <form [formGroup]="formTicket">
+            <div class="row g-2">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Descripcion del Servicio</label>
+                <textarea class="form-control" rows="5"  formControlName="descripcion" placeholder="Detalle del servicio que solicita"></textarea>
+              </div>
+              <div class="mb-3 col-4">
+                <label for="nitinput" class="form-label">Cliente</label>
+                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                    <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-4">
+                <label for="nitinput" class="form-label">Sucursal</label>
+                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                    <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-4">
+                <label for="nitinput" class="form-label">Area</label>
+                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                    <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-2">
+                <label for="clienteinput" class="form-label">Fecha</label>
+                <input type="date" class="form-control" formControlName="fecha"  placeholder="">
+              </div>
+
+              <div class="mb-3 col-2">
+                <label for="exampleFormControlInput1" class="form-label">Hora</label>
+                <input type="time" class="form-control" formControlName="hora"  placeholder="">
+              </div>
+
+              <div class="mb-3 col-2">
+                <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
+                <select class="form-select" formControlName="prioridad" aria-label="Tipo Servicio">
+                    <option *ngFor="let priori of prioridad" [value]="priori.value">{{priori.viewValue}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-6">
+                <label for="exampleFormControlInput1" class="form-label">Tipo de Servicio</label>
+                <select class="form-select" formControlName="id_tiposervicio" aria-label="Tipo Servicio">
+                    <option *ngFor="let ts of tipoServ" [value]="ts.ID">{{ts.TIPOSERVICIO}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-12">
+                <label for="exampleFormControlInput1" class="form-label">Servicio</label>
+                <select class="form-select" formControlName="id_servicio" aria-label="Tipo Servicio">
+                    <option *ngFor="let serv of servicios" [value]="serv.id_servicio">{{serv.Descripcion}}</option>
+                </select>
+              </div>
+
+
+
+            </div>
+          </form>
+        </div>
+
+        <mat-tab-group animationDuration="0ms">
+          <mat-tab label="Comentarios">           <!--=======Comentarios-->
+            <div class="row mt-3" *ngIf="accion==='editar'">
+              <nav class="navbar sticky-top bg-body-tertiary">
+                <div class="container-fluid">
+                  <a class="navbar-brand">Comentarios</a>
+                  <button mat-raised-button color="primary" (click)="agregarComentario(objetoData.ticket)">
+                    <mat-icon>add_circle</mat-icon>
+                    Agregar Comentario
+                  </button>
+                </div>
+
+              </nav>
+              <div class="row">
+                <section class="timeline-comments">
+                @for (comentario of comentarios; track comentario) {
+                  <div class="comment">
+                    <h2>{{comentario.usuario}}</h2>
+                    <h3>{{comentario.comentario}}</h3>
+                    <h4>{{comentario.fecha}}</h4>
+                    <h4>{{comentario.hora}}</h4>
+                  </div>
+                }
+                </section>
+              </div>
+            </div>
+
+
+          </mat-tab>
+          <mat-tab label="Visitas">          <!--=======Visitas-->
+
+            <div class="row mt-3" *ngIf="accion==='editar'" >
+              <nav class="navbar sticky-top bg-body-tertiary">
+                <div class="container-fluid">
+                  <a class="navbar-brand">Visitas</a>
+
+                </div>
+
+              </nav>
+              <div class="row">
+                <section class="timeline-comments">
+                  @for (visita of visitas; track visita) {
+                    <div class="visits">
+                      <h2>{{visita.descripcion}}</h2>
+                      <h3>Usuario: {{visita.usuariocrea}} - Inicio: {{visita.fechainicio}} - {{visita.horainicio}} | Fin: {{visita.fechafin}} - {{visita.horafin}}</h3>
+                      <h3>{{visita.observaciones}}</h3>
+                      <div class="row">
+                        <div class="bd-example m-0 border-0">
+
+                          <svg class="bd-placeholder-img img-thumbnail" width="200" height="200" xmlns="http://www.w3.org/2000/svg"
+                              role="img" aria-label="A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera: 200x200"
+                              preserveAspectRatio="xMidYMid slice" focusable="false"><title>A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">200x200</text></svg>
+
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  </section>
+              </div>
+            </div>
+
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+    </div>
+
+  </span>
+</div>

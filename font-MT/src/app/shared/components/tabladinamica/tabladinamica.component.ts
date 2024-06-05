@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ModalService } from '../../../dashboard/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
+import { DataSharingService } from '../../../dashboard/services/services/data-sharing.service';
 
 export interface ElementoTabla {
   nombre: string;
@@ -24,12 +24,22 @@ export class TabladinamicaComponent {
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    constructor(private route: ActivatedRoute, private router: Router){}
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private dataSharingService: DataSharingService){}
 
     editarElemento(elemento: ElementoTabla) {
       // Lógica para editar el elemento
-      const route = '/' + this.formMaestro + '/' + elemento ;
-      this.router.navigate([route]);
+      const param1 = 'valor1';
+      const param2 = 'valor2';
+      const data = { data: elemento };
+
+      console.log(data)
+
+      this.dataSharingService.setParams(param1, param2, data);
+
+      const route = '/' + this.formMaestro + '/';
+      this.router.navigate([route,'Editar']);
 
       console.log('Editar:', elemento);
     }

@@ -16,6 +16,12 @@
       @for(item of items; track item){
         <app-item-navigate [itemNav]="item" />
         <mat-divider></mat-divider>
+        @if(item.submenu){
+          @for(subitem of item.submenu; track subitem){
+            <app-item-navigate class="submenu" [itemNav]="subitem"></app-item-navigate>
+            <mat-divider></mat-divider>
+          }
+        }
       }
     </mat-nav-list>
 
@@ -31,7 +37,7 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       }
-      <span>meyd-MT</span>
+
       <button type="button" class="flex-center btn btn-outline-light" (click)="logOut()">
         <mat-icon>exit_to_app</mat-icon>
         Logout

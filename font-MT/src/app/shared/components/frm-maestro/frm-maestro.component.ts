@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
+export interface registroSeleccionado {
+  nombre: string;
+}
 @Component({
   selector: 'app-frm-maestro',
   templateUrl: './frm-maestro.component.html',
@@ -22,5 +25,11 @@ export class FrmMaestroComponent implements OnInit{
 
     abrirFormMaestro(){
 
+    }
+
+    crearElemento() {
+      // Lógica para editar el elemento
+      const route = '/' + this.formAdm + '/'  ;
+      this.router.navigate([route]);
     }
 }

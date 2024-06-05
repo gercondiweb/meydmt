@@ -8,7 +8,8 @@ import { NavegacionComponent,
           GraficoTortaComponent,
           FrmMaestroComponent,
           ModalFormComponent,
-          FrmdinamicmodalComponent } from '../../components';
+          FrmdinamicmodalComponent,
+           } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
