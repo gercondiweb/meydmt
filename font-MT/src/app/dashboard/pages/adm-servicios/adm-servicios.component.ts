@@ -109,8 +109,7 @@ console.log(this.data)
     this.restService.getMaestros(this.consultaSrv).subscribe((datacs: any) => {
       this.listServicios = datacs;
       this.lServicios = this.listServicios.body[0];
-      //this.dataSource.data = this.listServicios.body[0];
-      //console.log(this.listServicios.body[0])
+
     });
   }
 
@@ -151,7 +150,7 @@ console.log(this.data)
   }
 
   cancelar() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.formServicio.value);
   }
 
 }

@@ -11,7 +11,7 @@ router.get('/:id', uno);
 router.put('/', eliminar);
 router.post('/savecontract',seguridad(), agregar);
 
-async function todos (req, res, next){
+async function todos (req, res, next){ 
     try{
     const items = await controlador.todos();
         respuesta.success(req, res, items, 200); 

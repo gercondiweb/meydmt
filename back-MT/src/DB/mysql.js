@@ -106,6 +106,31 @@ function spOperacionestickets(parametros){
     });
 }
 
+function sptecnicocontrato(parametros){
+    const {opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, estado, prioridad, id_tiposervicio, id_tecnico} = parametros;
+    return new Promise((resolve, reject)=>{
+        conexcion.query(`CALL SPTECNICOCONTRATO (?, ?, ?, ?,?)`, 
+                    [opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, estado, prioridad, id_tiposervicio, id_tecnico] ,
+                    (error, result)=>{
+            if(error) return reject(error);
+            resolve(result);
+        })
+    });
+}
+
+function spComentarios(parametros){
+    const {opc, vID, vIDCONTRATO, vIDTECNICO, vACTIVO} = parametros;
+    return new Promise((resolve, reject)=>{
+        conexcion.query(`CALL SPCOMENTARIOS (?, ?, ?, ?,?,?,?,?)`, 
+                    [opc, vID, vIDCONTRATO, vIDTECNICO, vACTIVO] ,
+                    (error, result)=>{
+            if(error) return reject(error);
+            resolve(result);
+        })
+    });
+}
+
+
 function query(tabla, consulta){
     return new Promise((resolve, reject)=>{
         conexcion.query(`SELECT * FROM ${tabla} where ?`, consulta ,(error, result)=>{
@@ -132,6 +157,9 @@ module.exports = {
     
     spContratos,
     spOperacionescontratos,
+    sptecnicocontrato,
+    spComentarios,
+
     query,
     agregar
 }

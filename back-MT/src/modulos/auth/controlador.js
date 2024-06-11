@@ -1,6 +1,7 @@
 const db = require("../../DB/mysql");
 const bcrypt = require('bcrypt');
 const auth = require('../../autenticacion');
+
 const TABLA = "auth";
 
 module.exports = function (dbInyectada) {
@@ -14,12 +15,19 @@ module.exports = function (dbInyectada) {
   async function login(username, password){
     //console.log('ANTES DE EJECUTAR')
     const data = await db.query(TABLA, {usuario:username});
+
     //console.log('AQUI ESTA LA DATA: '+ data.password)
     return bcrypt.compare(password, data.password)
         .then(resultado =>{
           if(resultado === true){
             //generar token
-            return auth.asignarToken({...data})
+           //return auth.asignarToken({...data})
+           // Clonar el objeto data y eliminar el campo password antes de generar el token
+           const { password, ...dataWithoutPassword } = data;
+
+           // Generar el token usando los datos sin el campo password
+           return auth.asignarToken({ ...dataWithoutPassword });
+            
           }else{
             //generar error
             throw new Error('Informacion Invalida');

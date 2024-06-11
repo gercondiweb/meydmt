@@ -6,6 +6,9 @@ import { DatePipe } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
 
 export interface InfoTecnico {
   id: number;
@@ -24,18 +27,31 @@ export interface InfoTecnico {
 export class AdmTecnicocontratoComponent implements OnInit{
   titulo: string = 'Agregar Tecnicos al Contrato';
 
-  colTecnicos:string[] = ['select', 'foto','numerodocumento','nombre','telefono'];
+  colTecnicos:string[] = ['foto','numerodocumento','nombre','telefono'];
   lTecnicos:any;
-  dsTecnicos = new MatTableDataSource<InfoTecnico>();
-  selection = new SelectionModel<InfoTecnico>(true, []);
+  dsTecnicos:  any[]=[];
+
+  response: any;
+
+  public formTecnicoContrato !: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<AdmTecnicocontratoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private restService:RestService) {}
+    private restService:RestService,
+    private formBuilder: FormBuilder,
+  ) {}
 
   ngOnInit(): void {
     this.cargarTecnicos();
+
+    this.formTecnicoContrato= this.formBuilder.group({
+          opc:[''],
+          id : [0,[Validators.required]],
+          id_contrato : ['',[Validators.required]],
+          id_tecnico : ['',[Validators.required]],
+          activo : [0]
+    })
   }
 
   consultaTec = {
@@ -43,45 +59,59 @@ export class AdmTecnicocontratoComponent implements OnInit{
   }
 
   cargarTecnicos() {
-    this.restService.getMaestros(this.consultaTec).subscribe(respuesta=>{
+    this.restService.getMaestros(this.consultaTec).subscribe((respuesta:any)=>{
     this.lTecnicos = respuesta;
     this.dsTecnicos = this.lTecnicos.body[0];
-    //this.dataSource.data = this.listServicios.body[0];
+
+    this.formTecnicoContrato.get('id_contrato')?.setValue(this.data.data.CONTRATO);
+    this.formTecnicoContrato.get('id_contrato')?.disable();
+
+    //console.log( this.dsTecnicos)
 
   });
 
-  }
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dsTecnicos.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dsTecnicos.data);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   cancelar() {
     this.dialogRef.close();
   }
 
-  guardarTecnicoCont(){
+  async guardarTecnicoCont(){
+    //Guardar Servicios Contrato
+    if(this.formTecnicoContrato.get('id')?.value == ''){
+      this.formTecnicoContrato.get('activo')?.setValue('1');
+    }
+
+    this.formTecnicoContrato.get('opc')?.setValue('ADD');
+
+    try{
+
+      //console.log(this.formContrato.value)
+      const res = await lastValueFrom(this.restService.
+                        tecnicosContratos(this.formTecnicoContrato.value));
+
+      //console.log(res)
+      this.response = res;
+      if(!this.response.error){
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: this.response.body,
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+      }
+    }catch( e:any ){
+      console.log(e);
+      await Swal.fire({
+        position: "center",
+        icon: "error",
+        title: e.message,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
 
   }
 

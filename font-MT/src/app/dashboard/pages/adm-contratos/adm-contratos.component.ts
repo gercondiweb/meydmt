@@ -36,7 +36,7 @@ export class AdmContratosComponent implements OnInit{
 
   listServiciosContrato : any;
   //serviciosContrato: any[] = [];
-  serviciosContrato!: MatTableDataSource<any,any>;
+  serviciosContrato!: any[];
 
   columnasTecnicos : string[]=['foto','Id','numerodocumento','email', 'telefono'];
   listTecnicosContrato : any;
@@ -236,8 +236,9 @@ console.log(this.formContrato.value)
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe( (data) => {
+      this.serviciosContrato.push(data)
+      console.log( this.serviciosContrato)
     });
   }
 
@@ -296,7 +297,7 @@ editarServicio(servicio : tipoServicio){
 agregarTecnico(){
   const data = this.dataSharingService.getData();
 
-//console.log(data)
+console.log(data)
 
     const dialogRef = this.dialog.open(AdmTecnicocontratoComponent, {
       disableClose: true,

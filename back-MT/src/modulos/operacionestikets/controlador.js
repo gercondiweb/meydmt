@@ -15,7 +15,12 @@ module.exports = function (dbInyectada) {
     return db.spOperacionestickets(consulta);
   }
 
+  function comentariostkt(consulta) {
+    return db.spComentarios(consulta);
+  }
+
   return {
     operaciontkt,
+    comentariostkt
   };
 };

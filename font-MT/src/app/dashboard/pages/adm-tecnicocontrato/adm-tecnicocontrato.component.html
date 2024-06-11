@@ -2,56 +2,20 @@
   <h2 class="titulo" mat-dialog-title>{{titulo}}</h2>
 
   <mat-dialog-content>
-    <table mat-table [dataSource]="dsTecnicos" class="mat-elevation-z8">
-
-      <!-- Checkbox Column -->
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                        [aria-label]="checkboxLabel()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)"
-                        [aria-label]="checkboxLabel(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
-
-      <!-- Foto Column -->
-      <ng-container matColumnDef="foto">
-        <th mat-header-cell *matHeaderCellDef> Foto </th>
-        <td mat-cell *matCellDef="let element"> <img [src]="element.foto" alt="Foto" class="img-thumbnail" width="100"> </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="numerodocumento">
-        <th mat-header-cell *matHeaderCellDef> Documento </th>
-        <td mat-cell *matCellDef="let element"> {{element.numerodocumento}} </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-      </ng-container>
-
-      <!-- Apellido Column -->
-      <ng-container matColumnDef="telefono">
-        <th mat-header-cell *matHeaderCellDef> Telefono </th>
-        <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="colTecnicos"></tr>
-      <tr mat-row *matRowDef="let row; columns: colTecnicos;"
-          (click)="selection.toggle(row)">
-      </tr>
-    </table>
-
+    <form class="addSrvForm row g-3" [formGroup]="formTecnicoContrato">
+      <div class="row">
+        <div class="col-md-2  d-flex flex-column">
+          <label for="exampleFormControlInput1" class="form-label">No. Contrato</label>
+          <input type="number" class="form-control" formControlName="id_contrato" >
+        </div>
+        <div class="col-md-5 d-flex flex-column">
+          <label for="nitinput" class="form-label">Tecnicos</label>
+          <select class="form-select" formControlName="id_tecnico">
+              <option *ngFor="let tecnico of dsTecnicos" [value]="tecnico.id">{{tecnico.nombre}}</option>
+          </select>
+        </div>
+      </div>
+    </form>
 
   </mat-dialog-content>
 

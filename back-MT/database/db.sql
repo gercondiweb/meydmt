@@ -11,6 +11,34 @@ create table params(
 
 INSERT INTO params(parametro,valor,descripcion,usuariocrea) VALUES()
 
+create table pais(
+    id int primary key AUTO_INCREMENT,
+    pais varchar(50) not null
+);
+
+create table departamentos(
+    id int primary key AUTO_INCREMENT,
+    id_pais int not null,
+    departamento varchar(50) not null,
+    UNIQUE (id_pais,departamento),
+    foreign key (id_pais) references pais(id) on delete cascade on update cascade
+
+);
+create table ciudad(
+    id int primary key AUTO_INCREMENT,
+    id_departamento int not null,
+    ciudad varchar(50) not null,
+    UNIQUE (id_departamento,ciudad),
+    foreign key (id_departamento) references departamentos(id) on delete cascade on update cascade
+);
+
+create table zip(
+    id int primary key AUTO_INCREMENT,
+    id_ciudad int not null,
+    zip varchar(20) not null,
+    UNIQUE (id_ciudad,zip),
+    foreign key (id_ciudad) references ciudad(id) on delete cascade on update cascade
+);
 
 create table users(
     id int primary key AUTO_INCREMENT,
@@ -23,6 +51,17 @@ create table users(
     role varchar(20),
     UNIQUE (email)
 );
+
+create table roles(
+    id int primary key AUTO_INCREMENT,
+    role varchar(20),
+    descripcion varchar(100),
+    activo int,
+    UNIQUE (role)
+);
+
+ALTER TABLE meydmt.users ADD CONSTRAINT users_unique UNIQUE KEY (usuario);
+
 
 create table auth(
     id int primary key,
@@ -66,8 +105,6 @@ create table clientes(
     id int primary key AUTO_INCREMENT,
     nit varchar(20) not null,
     cliente varchar(100) not null,
-    ciudad varchar(100) not null,
-    pais varchar(100) not null,
     direccion varchar(250),
     email varchar(100) not null,
     telefono varchar(20) not null,
@@ -268,6 +305,15 @@ create table tecnicos(
     UNIQUE (numerodocumento)
 );
 
+create table tecnicoscontrato(
+    id int primary key AUTO_INCREMENT,
+    id_tecnico int not null,
+    id_contrato int not null,
+    activo int not null,
+    foreign key(id_tecnico) references tecnicos(id) on delete cascade on update cascade, 
+    foreign key(id_contrato) references contratos(id) on delete cascade on update cascade
+);
+
 create table documentos(
     id int primary key AUTO_INCREMENT,
     nombre varchar(100) not null,
@@ -315,11 +361,13 @@ create table tecnicosespecialidad(
 create table comentariostikets(
     id int primary key AUTO_INCREMENT,
     id_tiket int not null,
-    tipo varchar(2),
+    visible boolean,
     comentario text,
     fecha date,
+    hora time,
     usuario varchar(20),
-    imagen varchar(200)
+    imagen varchar(200),
+    foreign key(id_tiket) references tikets(id) on delete cascade on update cascade
 );
 
 CREATE VIEW CONXSERV AS
@@ -327,5 +375,5 @@ SELECT C.ID AS IDCONTRATO, SC.fechainicio, SC.fechafin, SC.activo, SC.ans, SC.vh
 FROM CONTRATOS C
 INNER JOIN servicioscontrato SC ON C.id = SC.id_contrato AND SC.activo=1
 LEFT JOIN servicios SV ON SC.id_servicio = SV.id AND SV.activo=1
-ORDER BY C.id;
+ORDER BY C.id; 
 

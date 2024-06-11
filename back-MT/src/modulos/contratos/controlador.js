@@ -30,7 +30,11 @@ module.exports = function (dbInyectada) {
       observaciones: body.observaciones,
       activo: body.activo,
       usuariocrea: body.usuariocrea,
-      fechacrea: body.fechacrea
+      fechacrea: body.fechacrea,
+      fechaactualiza: body.fechaactualiza,
+      usuarioactualiza: body.usuarioactualiza,
+      tope: body.tope,
+      valtope: body.valtope
    
     }
 

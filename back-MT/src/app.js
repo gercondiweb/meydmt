@@ -20,13 +20,15 @@ const consultasTikets =require('./modulos/consultastikets/rutas')
 const getserv = require('./modulos/consultaservicio/rutas');
 const crearticket = require('./modulos/operacionestikets/rutas');
 
+const comentsticket = require('./modulos/operacionestikets/rutas');
 
 const consultasContrato = require('./modulos/consultacontratos/rutas');
 
+const operacionescontrato = require('./modulos/operacionecontratos/rutas');
+
 
 const error = require('./red/errors');
-const operacionestikets = require('./modulos/operacionestikets');
-const { spoperacionestickets } = require('./DB/mysql');
+
 const app = express();
 
 //Middleware
@@ -53,10 +55,12 @@ app.use('/api/contratos', contratos)
 app.use('/api/cantktest', getCountTikets)
 app.use('/api/consultatkt', consultasTikets)
 app.use('/api/operacionestikets', crearticket)
+app.use('/api/ticketcoments', comentsticket)
+
 
 app.use('/api/consultacontratos', consultasContrato)
-app.use('/api/operacionescontrato', crearticket)
-app.use('/api/servicioscontrato', servicioscontrato)
+app.use('/api/operacionescontrato', operacionescontrato)
+app.use('/api/servicioscontrato', servicioscontrato) 
 
 app.use(error);
 module.exports = app;
