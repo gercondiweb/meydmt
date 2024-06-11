@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { TabladinamicaComponent } from '../../../shared/components/tabladinamica/tabladinamica.component';
 import { AdmServiciosComponent } from '../adm-servicios/adm-servicios.component';
 import { DataSharingService } from '../../services/services/data-sharing.service';
+import { AdmTecnicocontratoComponent } from '../adm-tecnicocontrato/adm-tecnicocontrato.component';
 
 export interface ElementoTablaDetalle {
   nombre: string;
@@ -35,7 +36,11 @@ export class AdmContratosComponent implements OnInit{
 
   listServiciosContrato : any;
   //serviciosContrato: any[] = [];
-  serviciosContrato!: MatTableDataSource<any,any>;;
+  serviciosContrato!: MatTableDataSource<any,any>;
+
+  columnasTecnicos : string[]=['foto','Id','numerodocumento','email', 'telefono'];
+  listTecnicosContrato : any;
+  tecnicosContrato!: MatTableDataSource<any,any>;
 
   listClientes : any;
   clientes: any[] = [];
@@ -55,7 +60,16 @@ export class AdmContratosComponent implements OnInit{
     vFECHAFIN :''
   }
 
-  columnas: string[] = ['id','descripcion', 'fechainicio', 'fechafin', 'ans', 'vhh', 'activo'];
+  consultaTecnicosContrato={
+    opc:'SLC-TEC',
+    vID: '',
+    vIDCLIENTE : null,
+    vActivo : null,
+    vFECHAINI :'',
+    vFECHAFIN :''
+  }
+
+  columnas: string[] = ['Id','descripcion', 'fechainicio', 'fechafin', 'ans', 'vhh', 'activo'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(
@@ -66,10 +80,11 @@ export class AdmContratosComponent implements OnInit{
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private dataSharingService: DataSharingService,
-) { }
+  ) { }
 
     public formContrato !: FormGroup;
     public formServContrato!: FormGroup;
+    idContrato!: number;
 
     public contratoSeleccionado : number = 0;
 
@@ -89,14 +104,18 @@ export class AdmContratosComponent implements OnInit{
         email:['',[Validators.email]],
         clausulas: ['',[]],
         observaciones: ['',[]],
-        activo:['',[Validators.required]]
+        activo:['',[Validators.required]],
+        tope:[0],
+        valtope:[0]
       });
+
+      this.formContrato.controls['id'].disable();
 
       if(this.accion === "Editar"){
         this.cargarContrato();
-        this.formContrato.controls['id'].disable();
         this.formContrato.controls['id_cliente'].disable();
         this.cargarServiciosContrato();
+        this.cargarTecnicosContrato();
       }
 
   }
@@ -106,20 +125,20 @@ export class AdmContratosComponent implements OnInit{
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
 
-//console.log('objetoData', this.objetoData)
-
+console.log('objetoData', this.objetoData)
+    this.idContrato = this.objetoData.data.CONTRATO;
     this.formContrato.patchValue({
-      id: this.objetoData.data.CONTRATO,
+      id: this.idContrato,
       id_cliente: this.objetoData.data.ID_CLIENTE,
-      fechainicio: this.objetoData.data.FECHAINICIO,
-      fechafin: this.objetoData.data.FECHAFIN,
+      fechainicio: this.objetoData.data.FECHAINICIO.split('T')[0],
+      fechafin: this.objetoData.data.FECHAFIN.split('T')[0],
       responsable: this.objetoData.data.RESPONSABLE,
       telefono: this.objetoData.data.TELEFONO,
       clausulas: this.objetoData.data.CLAUSULAS,
       observaciones: this.objetoData.data.OBSERVACIONES,
       activo: this.objetoData.data.ACTIVO
     });
-
+console.log(this.formContrato.value)
   }
 
   cargarServiciosContrato(){
@@ -133,6 +152,18 @@ export class AdmContratosComponent implements OnInit{
       console.log('SERVICIOS ',this.listServiciosContrato.body[0])
     });
   }
+
+  cargarTecnicosContrato(){
+    this.consultaTecnicosContrato.vID=this.objetoData.data.CONTRATO;
+
+    this.restService.getContratos(this.consultaTecnicosContrato).subscribe((data: any) => {
+    this.listTecnicosContrato = data;
+    this.tecnicosContrato = this.listTecnicosContrato.body[0];
+
+
+    console.log('TECNICOS ',this.listTecnicosContrato.body[0])
+  });
+}
 
   cargarClientes(){
     this.consultaSrv.opc = 'CLI';
@@ -149,9 +180,7 @@ export class AdmContratosComponent implements OnInit{
   }
 
   async guardar(){
-    if(this.formContrato.get('id')?.value == ''){
-      this.formContrato.get('activo')?.setValue('1');
-    }
+      this.formContrato.get('id')?.setValue(this.idContrato);
 
     try{
 
@@ -162,13 +191,13 @@ export class AdmContratosComponent implements OnInit{
       this.formContrato.get('id')?.setValue(res.insertId);
       this.formContrato.get('id')?.enabled;
 
-      //console.log(res)
+      console.log(res)
       this.response = res;
       if(!this.response.error){
         await Swal.fire({
           position: "center",
           icon: "success",
-          title: this.response.body,
+          title: this.response.body + ' - ' +  this.contratoSeleccionado,
           showConfirmButton: false,
           timer: 1500
         });
@@ -194,7 +223,7 @@ export class AdmContratosComponent implements OnInit{
     const param2 = this.dataSharingService.getParam2();
     const data = this.dataSharingService.getData();
 
-console.log(data)
+//console.log(data)
 
     const dialogRef = this.dialog.open(AdmServiciosComponent, {
       disableClose: true,
@@ -245,6 +274,44 @@ console.log(data)
 
 editarServicio(servicio : tipoServicio){
 
+  console.log(servicio)
+
+   const dialogRef = this.dialog.open(AdmServiciosComponent, {
+     disableClose: true,
+     autoFocus: true,
+     closeOnNavigation : false,
+     width : '900px',
+     data: {
+       tipo: 'Editar',
+       data: servicio,
+     }
+   });
+
+   dialogRef.afterClosed().subscribe(result => {
+     console.log(`Dialog result: ${result}`);
+   });
+
+}
+
+agregarTecnico(){
+  const data = this.dataSharingService.getData();
+
+//console.log(data)
+
+    const dialogRef = this.dialog.open(AdmTecnicocontratoComponent, {
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation : false,
+      width : '900px',
+      data: {
+        tipo: 'Crear',
+        data: data,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
 }
 
 eliminarServicio(servicio : tipoServicio){

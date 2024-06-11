@@ -22,7 +22,7 @@ export class TicketsComponent implements OnInit{
   public listDatos: any;
   public datos: any[] = [];
 
-  public columnas = ['id','TIPOSERVICIO', 'fecha', 'hora', 'prioridad','descipcion', 'estado'];
+  public columnas = ['Id','Tipo', 'Fecha', 'Hora', 'Prioridad','Descipcion', 'Estado'];
   public listDatosDetalle: any;
   public datosDetalle! : any;
 

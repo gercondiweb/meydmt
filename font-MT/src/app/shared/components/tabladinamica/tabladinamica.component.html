@@ -1,10 +1,10 @@
 <div class="tablecontainer">
-  <div class="tabla" *ngIf="filtro">
-    <mat-form-field>
-      <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Escribe algo que describa lo que buscas" #input>
-    </mat-form-field>
-
+    <div class="tabla" *ngIf="filtro">
+      <mat-form-field class="filtro">
+        <mat-label>Filtrar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Escribe algo que describa lo que buscas" #input>
+      </mat-form-field>
+    </div>
     <table mat-table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
       matSortDirection="desc">
       <ng-container *ngFor="let column of columnas" [matColumnDef]="column">
@@ -12,13 +12,20 @@
         <!--td mat-cell *matCellDef="let element">{{ element[column] }}</!--td-->
         <td mat-cell *matCellDef="let element">
           <!-- Validar si el nombre de la columna contiene "fecha" y aplicar el formato adecuado -->
-          <span *ngIf="column.includes('fecha')">
-            {{ element[column] | date:'yyyy-MM-dd' }}
-          </span>
-          <!-- Validar si el nombre de la columna no contiene "fecha" y mostrar el contenido normal -->
-          <span *ngIf="!column.includes('fecha')">
-            {{ element[column] !== undefined && element[column] !== null ? element[column] : 'N/A' }}
-          </span>
+      <ng-container *ngIf="column.includes('fecha'); else defaultCell">
+        {{ element[column] | date: 'yyyy-MM-dd' }}
+      </ng-container>
+      <!-- Validar si el nombre de la columna es "foto" y mostrar la imagen -->
+      <ng-template #defaultCell>
+        <ng-container *ngIf="column === 'foto'; else textCell">
+          <img [src]="element[column]" alt="Foto" class="img-thumbnail" width="100">
+        </ng-container>
+        <!-- Mostrar el contenido normal si no es una columna de fecha ni de foto -->
+        <ng-template #textCell>
+          {{ element[column] !== undefined && element[column] !== null ? element[column] : 'N/A' }}
+        </ng-template>
+      </ng-template>
+
         </td>
       </ng-container>
       <!-- Columna de opciones -->
@@ -39,7 +46,7 @@
       <tr mat-row *matRowDef="let row; columns: columnas.concat('opciones');"></tr>
 
     </table>
-  </div>
+
   <!--mat-paginator [length]="resultsLength" [pageSize]="30"
     aria-label="Select page of GitHub search results"></mat-paginator-->
 </div>

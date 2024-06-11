@@ -1,5 +1,5 @@
 <div>
-  <h2 class="titulo" mat-dialog-title>Agregar Servicio</h2>
+  <h2 class="titulo" mat-dialog-title>{{titulo}}</h2>
 
   <mat-dialog-content>
     <form class="addSrvForm row g-3" [formGroup]="formServicio">
@@ -10,8 +10,8 @@
       </div>
       <div class="col-md-5 d-flex flex-column">
         <label for="nitinput" class="form-label">Servicio</label>
-        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-            <option *ngFor="let servicio of lServicios" [value]="servicio.Id">{{servicio.Cliente}}</option>
+        <select class="form-select" formControlName="id_servicio">
+            <option *ngFor="let servicio of lServicios" [value]="servicio.id_servicio">{{servicio.Descripcion}}</option>
         </select>
 
       </div>
@@ -29,11 +29,10 @@
       </div>
       <div class="col-md-4 d-flex flex-column">
         <label for="clienteinput" class="form-label">Valor Hora</label>
-        <input type="date" class="form-control" formControlName="vhh"  placeholder="">
+        <input type="number" class="form-control" formControlName="vhh"  placeholder="">
       </div>
       <div class="col-md-2 d-flex flex-column">
-        <mat-label>Activo  </mat-label>
-        <mat-checkbox class="example-margin" formControlName="activo" checked="true"></mat-checkbox>
+        <mat-checkbox class="example-margin" formControlName="activo" checked="true">Activo</mat-checkbox>
       </div>
 
       </div>

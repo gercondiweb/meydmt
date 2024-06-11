@@ -174,16 +174,20 @@ export class AdmTicketsComponent implements OnInit{
 
     this.datosBusquedaTicket.opc='SEL';
 
-    this.datosBusquedaTicket.vIDTICKET = this.objetoData.ticket.id;
+    this.datosBusquedaTicket.vIDTICKET = this.objetoData.ticket.Id;
+
+      //console.log(this.objetoData.ticket)
 
      this.restService.getTicketComents(this.datosBusquedaTicket).subscribe(respuesta=>{
         this.listComentarios=respuesta;
         this.comentarios=this.listComentarios.body[0];
-        //console.log(this.comentarios)
-        this.visitas=this.listComentarios.body[1];
-        //console.log(this.visitas)
-        })
 
+        //console.log(this.comentarios)
+
+        this.visitas=this.listComentarios.body[1];
+
+        //console.log(this.visitas)
+      })
 
   }
 

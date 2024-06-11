@@ -10,12 +10,14 @@ import { TableroAdmComponent,
         AdmClienteComponent,
         AdmTecnicosComponent,
         AdmTicketsComponent,
+        AdmTecnicocontratoComponent
       } from './pages';
 import { userGuard } from './guard/user-guard.guard';
 import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';
 import { AdmServiciosComponent } from './pages/adm-servicios/adm-servicios.component';
 import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposervicios.component';
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
+
 
 
 const routes: Routes = [

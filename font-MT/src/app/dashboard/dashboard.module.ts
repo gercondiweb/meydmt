@@ -25,9 +25,8 @@ import { AdmClienteComponent } from './pages/adm-cliente/adm-cliente.component';
 import { AdmServiciosComponent } from './pages/adm-servicios/adm-servicios.component';
 import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposervicios.component';
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
-
-
-
+import { DatePipe } from '@angular/common';
+import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tecnicocontrato.component';
 
 
 @NgModule({
@@ -49,7 +48,8 @@ import { MasterserviciosComponent } from './pages/masterservicios/masterservicio
     AdmTicketsComponent,
     AdmComentsComponent,
     AdmServiciosComponent,
-    MasterserviciosComponent
+    MasterserviciosComponent,
+    AdmTecnicocontratoComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +58,7 @@ import { MasterserviciosComponent } from './pages/masterservicios/masterservicio
     DashboardRoutingModule,
     FormsModule,
     SharedModule,
-
-  ]
+  ],
+  providers: [DatePipe],
 })
 export class DashboardModule { }
