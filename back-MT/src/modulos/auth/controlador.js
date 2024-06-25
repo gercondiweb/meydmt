@@ -2,6 +2,12 @@ const db = require("../../DB/mysql");
 const bcrypt = require('bcrypt');
 const auth = require('../../autenticacion');
 
+const respuesta = require('../../red/respuestas');
+const jwt = require('jsonwebtoken');
+config = require('../../config');
+
+const secret = config.jwt.secret;
+
 const TABLA = "auth";
 
 module.exports = function (dbInyectada) {
@@ -23,10 +29,10 @@ module.exports = function (dbInyectada) {
             //generar token
            //return auth.asignarToken({...data})
            // Clonar el objeto data y eliminar el campo password antes de generar el token
-           const { password, ...dataWithoutPassword } = data;
+           const {id } = data;
 
            // Generar el token usando los datos sin el campo password
-           return auth.asignarToken({ ...dataWithoutPassword });
+           return auth.asignarToken({ id });
             
           }else{
             //generar error
@@ -52,10 +58,25 @@ module.exports = function (dbInyectada) {
     return db.agregar(TABLA, authData);
   }
 
+  async function checkToken({headers}){
+    try {
+      const [,token] = headers.authorization.split(' ');
+      const decodedToken = jwt.decode(token, secret);
+      if(!decodedToken) throw new Error('Invalid token');
+
+      const {id} = decodedToken;
+      const data = await db.query('auth_user', {id});
+    
+      return respuesta.toClient('',data);
+    } catch (error) {
+        return respuesta.toClient('Token inválido');
+    }
+  }
 
   return {
 
     agregar,
-    login
+    login,
+    checkToken
   };
 };
