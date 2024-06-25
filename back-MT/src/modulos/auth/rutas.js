@@ -7,6 +7,7 @@ const router = express.Router();
 
 //router.get('/login', login);
 router.post('/login', login);
+router.get('/check', checkToken);
 
 async function login (req, res, next){
     try{
@@ -16,5 +17,19 @@ async function login (req, res, next){
         next(err);
     }   
 };
+
+
+async function checkToken (req,res, next) {
+    try {
+       const response = await controlador.checkToken(req,res,next);
+       console.log({response})
+        respuesta.success(req, res,response,200)
+        next();
+    } catch (error) {
+        const response = new Response(error);
+        console.log({error})
+      respuesta.error(req, res,response,401)
+    }
+}
 
 module.exports = router;
