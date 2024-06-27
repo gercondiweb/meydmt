@@ -125,7 +125,7 @@ export class AdmTicketsComponent implements OnInit{
        sucursal:[''],
        id_cliente:['']
     });
-
+console.log(this.accion)
     if ( this.accion === 'editar'){
       //llenar datos del ticket y buscar comentarios
       this.cargarDatosTicket();
@@ -186,7 +186,7 @@ export class AdmTicketsComponent implements OnInit{
 
         this.visitas=this.listComentarios.body[1];
 
-        //console.log(this.visitas)
+        console.log(this.visitas)
       })
 
   }

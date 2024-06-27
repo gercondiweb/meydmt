@@ -13,6 +13,8 @@ export class AdmSucursalesComponent {
 
   public clientes: any;
 
+  titulo : string ='';
+
   public formSucursales!: FormGroup;
 
   constructor(
@@ -34,12 +36,44 @@ export class AdmSucursalesComponent {
       id_cliente : ['',[Validators.required]],
       activo : [1,[Validators.required]],
     });
+
+console.log(this.data.tipo)
+
+    if(this.data.tipo === 'Editar'){
+      this.titulo = 'Editar Sucursal';
+      this.cargarDatosSucursal();
+    }else{
+      this.titulo = 'Agregar Sucursal';
+      this.cargarDatosCliente();
+    }
+
   }
 
-  cargarClientes(){
-    this.RestService.getAllClientes().subscribe((data: any) => {
-      this.clientes = data;
+  cargarDatosSucursal(){
+
+    console.log(this.data.data)
+
+    this.formSucursales.patchValue({
+      id: this.data.data.Id,
+      nombre : this.data.data.nombre,
+      ciudad : this.data.data.ciudad,
+      direccion : this.data.data.direccion,
+      pais : this.data.data.pais,
+      zip : this.data.data.zip,
+      telefono : this.data.data.vhh,
+      id_cliente : this.data.data.id_cliente,
+      activo:this.data.data.activo
     });
+  }
+
+  cargarDatosCliente(){
+    console.log(this.data.data)
+
+    this.formSucursales.patchValue({
+      id : 0,
+      id_cliente : this.data.data.id,
+      activo:1
+    })
   }
 
   regresar() {

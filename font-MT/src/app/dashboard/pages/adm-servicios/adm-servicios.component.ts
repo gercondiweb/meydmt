@@ -57,7 +57,7 @@ export class AdmServiciosComponent {
       vhh : [0, [Validators.required]],
       activo:[0,[Validators.required]]
     });
-console.log(this.data)
+
     if(this.data.tipo === 'Editar'){
       this.titulo = 'Editar Servicio';
       this.cargarDatosServicio();
@@ -77,6 +77,8 @@ console.log(this.data)
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+  
+  
   cargarDatosContrato(){
 
     this.formServicio.patchValue({
@@ -89,7 +91,7 @@ console.log(this.data)
 
   cargarDatosServicio(){
 
-    console.log(this.data)
+    
 
     this.formServicio.patchValue({
       id: this.data.data.Id,

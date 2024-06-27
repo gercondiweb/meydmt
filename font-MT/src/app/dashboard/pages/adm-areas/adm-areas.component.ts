@@ -36,9 +36,7 @@ export class AdmAreasComponent {
   }
 
   cargarSucursales(){
-    this.RestService.getAllClientes().subscribe((data: any) => {
-      this.clientes = data;
-    });
+
   }
 
   regresar() {

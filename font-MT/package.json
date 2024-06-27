@@ -25,6 +25,7 @@
     "@angular/router": "^17.0.0",
     "@angular/ssr": "^17.0.9",
     "@canvasjs/angular-charts": "^1.2.0",
+    "@capacitor/camera": "^6.0.1",
     "apexcharts": "^3.46.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",

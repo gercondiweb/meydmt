@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -12,8 +12,12 @@ export class RestService {
 
   constructor(private http: HttpClient) { }
 
-  public getAllClientes(): Observable<any>{
-    return this.http.get('clientes'); // GET http://localhost:4000/api/clientes
+  public getClientes(datosConsulta:any): Observable<any>{
+    return this.http.post('consultaclientes', datosConsulta);; // GET http://localhost:4000/api/clientes
+  }
+
+  public crearCliente(datosConsulta:any):Observable<any>{
+    return this.http.post('clientes',datosConsulta);
   }
 
   public getAllTikets(datosConsulta:any): Observable<any>{

@@ -125,7 +125,8 @@ export class AdmContratosComponent implements OnInit{
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
 
-console.log('objetoData', this.objetoData)
+    //console.log('objetoData', this.objetoData)
+
     this.idContrato = this.objetoData.data.CONTRATO;
     this.formContrato.patchValue({
       id: this.idContrato,
@@ -138,7 +139,7 @@ console.log('objetoData', this.objetoData)
       observaciones: this.objetoData.data.OBSERVACIONES,
       activo: this.objetoData.data.ACTIVO
     });
-console.log(this.formContrato.value)
+
   }
 
   cargarServiciosContrato(){
@@ -180,7 +181,7 @@ console.log(this.formContrato.value)
   }
 
   async guardar(){
-      this.formContrato.get('id')?.setValue(this.idContrato);
+    this.formContrato.get('id')?.setValue(this.idContrato);
 
     try{
 

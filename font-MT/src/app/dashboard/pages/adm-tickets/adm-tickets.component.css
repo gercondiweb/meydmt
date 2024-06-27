@@ -76,3 +76,8 @@
 .mat-tab-group {
   margin-bottom: 48px;
 }
+
+img, svg {
+  vertical-align: middle;
+  width: 300px;
+}
