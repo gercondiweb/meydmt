@@ -3,6 +3,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "@environments/*": ["./src/environments/*"],
+      "@/*": ["./src/*"]
+    },
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,

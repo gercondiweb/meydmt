@@ -1,9 +1,10 @@
 <div class="center-content">
 
       <!-- login.component.html-->
-      <span [hidden]="!isLoading()">Cargando...</span>
+    <!--   <span [hidden]="!isLoading()">Cargando...</span> -->
+      <app-loading-full [isShow]="isLoading()"/>
       <form class="login-form">
-            <img mat-card-image src="../../assets/logo2.png" alt="Logo" class="logo-img">
+            <img mat-card-image src="assets/logo2.png" alt="Logo" class="logo-img">
             <h1 class="title">Meyd MT</h1>
                   <mat-form-field appearance="fill">
 

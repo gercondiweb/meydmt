@@ -15,6 +15,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { LoadingFullComponent } from '../../components/loading-full/loading-full.component';
 
 
 
@@ -28,7 +29,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     FrmMaestroComponent,
     TablaDetalleComponent,
     ModalFormComponent,
-    FrmdinamicmodalComponent
+    FrmdinamicmodalComponent,
+    LoadingFullComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     GoogleMapsModule,
     ModalFormComponent,
     ReactiveFormsModule,
-    FrmdinamicmodalComponent
+    FrmdinamicmodalComponent,
+    LoadingFullComponent
   ]
 })
 export class SharedModule { }
