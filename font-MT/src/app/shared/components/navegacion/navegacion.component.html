@@ -27,7 +27,7 @@
 
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="w- 100 d-flex justify-content-between">
+    <mat-toolbar color="primary" class="w- 100 d-flex justify-content-end">
       @if (isHandset$ | async) {
         <button
           type="button"
@@ -40,7 +40,7 @@
 
       <button type="button" class="flex-center btn btn-outline-light" (click)="logOut()">
         <mat-icon>exit_to_app</mat-icon>
-        Logout
+        Salir
       </button>
     </mat-toolbar>
     <ng-content/>

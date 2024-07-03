@@ -57,6 +57,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng2-charts-schematics": "^0.1.7",
+    "tailwindcss": "^3.4.4",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "~5.2.2"
   }
 }

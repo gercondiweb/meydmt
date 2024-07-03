@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ItemNavigate } from '../../types/interfaces';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '@/app/auth/services/auth.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class NavegacionComponent {
   private breakpointObserver = inject(BreakpointObserver);
+  private authService = inject(AuthService);
   private readonly _cookieService = inject(CookieService);
 
   public token: string = this._cookieService.get('token');
@@ -55,8 +57,7 @@ export class NavegacionComponent {
     }
 
     logOut(){
-      this._cookieService.delete('token', '/' );
-      this.router.navigateByUrl('/login');
+      this.authService.logout();
     }
 
     toggleSubmenu(): void {

@@ -1,0 +1,52 @@
+.content{
+  min-width: 100dvw;
+  min-height: 100dvh;
+  justify-content: center;
+  aling-items: center;
+  display: flex;
+  background-color: red;
+  position: absolute;
+  background: rgba( 255 255 255 / .9);
+  top: 0;
+  left: 0;
+  z-index: 300;
+
+
+  .loading{
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    img{
+      width: 100%;
+      height: 100%;
+    }
+
+
+      &:after{
+        content: "";
+        width: 180%;
+        height: 180%;
+        border: 3px solid var(--principal);
+        border-radius: 50%;
+        border-top-color: var(--secundario);
+        border-bottom-color: var(--secundario);
+        top: -40%;
+        left: -40%;
+        position: absolute;
+        animation: circular 1.5s linear infinite;
+    }
+  }
+
+
+}
+
+@keyframes circular {
+  0% {
+    transform: rotatez(0deg) ;
+  }
+  100% {
+    transform: rotatez(360deg);
+  }
+}
+

@@ -10,25 +10,23 @@ router.post('/login', login);
 router.get('/check', checkToken);
 
 async function login (req, res, next){
-    try{
-        const token = await controlador.login(req.body.usuario, req.body.password);
-        respuesta.success(req, res, token, 200);
-    }catch(err){
-        next(err);
-    }   
+    console.log(req.body)
+        const response = await controlador.login(req.body.usuario, req.body.password);
+        const status = response.message ? 401 : 200;
+        respuesta.success(req, res,response,status)
+        next();
 };
 
 
 async function checkToken (req,res, next) {
     try {
        const response = await controlador.checkToken(req,res,next);
-       console.log({response})
-        respuesta.success(req, res,response,200)
+       if(response.message) respuesta.error(req, res,{body: response},401)
+       else respuesta.success(req, res,response,200)
+        
         next();
     } catch (error) {
-        const response = new Response(error);
-        console.log({error})
-      respuesta.error(req, res,response,401)
+      respuesta.error(req, res,{ message: error },401)
     }
 }
 

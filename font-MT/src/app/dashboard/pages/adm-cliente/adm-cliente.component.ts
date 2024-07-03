@@ -45,7 +45,7 @@ export class AdmClienteComponent implements OnInit {
   listSucursales: any[]=[];
 
   vArea: any;
-  listAreas!: any[]=[];
+  listAreas: any[]=[];
   columnAreas: string[] = ['id', 'nombre', 'autorizador', 'email', 'activo'];
 
   vCiudad: any;

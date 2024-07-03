@@ -21,22 +21,20 @@ module.exports = function (dbInyectada) {
   async function login(username, password){
     //console.log('ANTES DE EJECUTAR')
     const data = await db.query(TABLA, {usuario:username});
+    if(!data) return {message : 'Usuario/contraseña incorrectos'};
 
     //console.log('AQUI ESTA LA DATA: '+ data.password)
-    return bcrypt.compare(password, data.password)
-        .then(resultado =>{
+    return await bcrypt.compare(password, data.password)
+        .then( async (resultado) =>{
           if(resultado === true){
-            //generar token
-           //return auth.asignarToken({...data})
-           // Clonar el objeto data y eliminar el campo password antes de generar el token
            const {id } = data;
-
-           // Generar el token usando los datos sin el campo password
-           return auth.asignarToken({ id });
+           const user = await db.query('auth_user', {id})
+           const token = auth.asignarToken({ id });
+           return { user, token };
             
           }else{
             //generar error
-            throw new Error('Informacion Invalida');
+            return {message : 'Usuario/contraseña incorrectos'};
           }
         })
   }
@@ -67,14 +65,13 @@ module.exports = function (dbInyectada) {
       const {id} = decodedToken;
       const data = await db.query('auth_user', {id});
     
-      return respuesta.toClient('',data);
+      return data;
     } catch (error) {
-        return respuesta.toClient('Token inválido');
+        return { message : 'Token inválido' };
     }
   }
 
   return {
-
     agregar,
     login,
     checkToken

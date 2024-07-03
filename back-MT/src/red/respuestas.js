@@ -11,7 +11,7 @@ exports.error = function(req, res, body = { message: 'Error Interno' }, status =
     res.status(status).send({
         error : true,
         status,
-        body
+        ...body
         
     });
 }
