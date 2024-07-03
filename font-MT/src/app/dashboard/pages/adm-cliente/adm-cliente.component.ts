@@ -45,7 +45,7 @@ export class AdmClienteComponent implements OnInit {
   listSucursales: any[]=[];
 
   vArea: any;
-  listAreas!: any[]=[];
+  listAreas: any[]=[];
   columnAreas: string[] = ['id', 'nombre', 'autorizador', 'email', 'activo'];
 
   vCiudad: any;
@@ -123,7 +123,7 @@ export class AdmClienteComponent implements OnInit {
       id_cliente: this.objetoData.data.Id,
       activo: this.objetoData.data.ACTIVO
     });
-console.log(this.consultaCliente)
+//console.log(this.consultaCliente)
 
   }
 

@@ -219,12 +219,9 @@ export class AdmContratosComponent implements OnInit{
 
   agregarServicio(){
 
-    //TODO: abre el modal y recibe los datos del ervicio
     const param1 = this.dataSharingService.getParam1();
     const param2 = this.dataSharingService.getParam2();
     const data = this.dataSharingService.getData();
-
-//console.log(data)
 
     const dialogRef = this.dialog.open(AdmServiciosComponent, {
       disableClose: true,

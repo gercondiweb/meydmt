@@ -88,12 +88,24 @@ export class RestService {
     return this.http.post('servicioscontrato/saveSC',datosConsulta);
   }
 
+  public crearTecnicos(datosConsulta:any):Observable<any>{
+    return this.http.post('tecnicos',datosConsulta);
+  }
+
   public tecnicosContratos(datosConsulta:any):Observable<any>{
     return this.http.post('operacionescontrato/addTecCont',datosConsulta);
   }
 
+  public consultaEspTecnico(datosConsulta:any): Observable<any>{
+    return this.http.post('sptecnicos/consultaEsp', datosConsulta); // GET http://localhost:4000/api/consultaservicio
+  }
+
   public updTecnicosContratos(datosConsulta:any):Observable<any>{
     return this.http.post('operacionescontrato/updateTecCont',datosConsulta);
+  }
+
+  public saveEspTecnico(datosEspTec:any): Observable<any>{
+    return this.http.post('especialidadestecnico', datosEspTec); // GET http://localhost:4000/api/clientes
   }
 
   public getEspecialidadesTecnico(datosServicio:any): Observable<any>{

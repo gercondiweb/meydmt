@@ -77,8 +77,8 @@ export class AdmServiciosComponent {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
-  
-  
+
+
   cargarDatosContrato(){
 
     this.formServicio.patchValue({
@@ -91,7 +91,7 @@ export class AdmServiciosComponent {
 
   cargarDatosServicio(){
 
-    
+
 
     this.formServicio.patchValue({
       id: this.data.data.Id,
@@ -115,9 +115,14 @@ export class AdmServiciosComponent {
     });
   }
 
+  cancelar() {
+    this.dialogRef.close(this.formServicio.value);
+  }
+
   async guardarServCont(){
+
     //Guardar Servicios Contrato
-    if(this.formServicio.get('id')?.value == ''){
+    if(this.formServicio.get('id')?.value === 0){
       this.formServicio.get('activo')?.setValue('1');
     }
 
@@ -138,6 +143,7 @@ export class AdmServiciosComponent {
         });
 
       }
+
     }catch( e:any ){
       console.log(e);
       await Swal.fire({
@@ -149,10 +155,11 @@ export class AdmServiciosComponent {
       });
     }
 
+    //Cerramos el dialogo
+    this.cancelar();
+
   }
 
-  cancelar() {
-    this.dialogRef.close(this.formServicio.value);
-  }
+
 
 }

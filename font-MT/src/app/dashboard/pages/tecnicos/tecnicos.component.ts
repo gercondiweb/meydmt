@@ -45,6 +45,7 @@ export class TecnicosComponent implements OnInit{
 
 
   ngOnInit(): void {
+
     this.cargarTecnicos();
 
     this.formTecnicos = this.formBuilder.group({
