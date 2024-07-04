@@ -23,16 +23,10 @@ export class AuthComponent {
     this.isLoading.update( l => true);
     try {
 
-      const response = await lastValueFrom(this.authService.login(this.usuario, this.password));
+      const isAuthtenticate = await lastValueFrom(this.authService.login(this.usuario, this.password));
       this.isLoading.update( l => false)
-      if(!response.error){
-        this.authService.setToken(response.body);
-        this._cookieService.set('token',response.body,{path:'/'});
-        this.router.navigateByUrl('dashboard');
-      }else{
-        console.error('Authentication failed');
-        this.router.navigateByUrl('login');
-      }
+       if(isAuthtenticate) this.router.navigateByUrl('/dashboard');
+
     } catch (error) {
       this.isLoading.update( l => false)
       console.log(error);

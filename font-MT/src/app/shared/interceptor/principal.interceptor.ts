@@ -1,14 +1,15 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { environment } from '@environments/environment';
 import { CookieService } from 'ngx-cookie-service';
-import { catchError, tap } from 'rxjs';
-import Swal from 'sweetalert2';
+import { catchError, tap, throwError } from 'rxjs';
+import Swal from 'sweetalert2'
 
 export const principalInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log('°__° interceptado')
   const cookie = inject(CookieService);
   const token: string = cookie.get('token');
-  const urlBase = 'http://localhost:4002/api';
+  const { apiUrl } = environment;
+  const urlBase = apiUrl.base;
   let url = req.url;
 
   url = `${urlBase}/${url}`;
@@ -28,17 +29,34 @@ export const principalInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req)
   .pipe(
-    tap( (res) => {
-   /*    Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Petición con exito!!!",
-        showConfirmButton: false,
-        timer: 1500
-      }); */
-    } ),
-    /* catchError( (e:any) => {
+    tap((event: HttpEvent<any>) =>{
+    //  if(res)
+      if (event instanceof HttpResponse && event.body.body.message  ) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: event.body.body.message ,
+          showConfirmButton: false,
+          timer: 1500
+        });
 
-    } ) */
+      }
+
+    } ),
+     catchError( ( error : HttpErrorResponse ) => {
+
+      const message =  error.error.body.message;
+      if(message){
+        Swal.fire({
+          position: "center",
+          icon: "error",
+       /*    title: "", */
+          text: message,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+        return throwError(()=>error);
+    } )
   );
 };
