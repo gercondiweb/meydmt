@@ -45,22 +45,24 @@
               </div>
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Cliente</label>
-                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                <select class="form-select" formControlName="id_cliente"
+                        aria-label="CLiente" (change)="onSelectChange($event)">
                     <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
                 </select>
               </div>
 
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Sucursal</label>
-                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                    <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                <select class="form-select" formControlName="id_cliente"
+                        aria-label="CLiente">
+                    <option *ngFor="let sucur of cSucursales" [value]="sucur.Id">{{sucur.nombre}}</option>
                 </select>
               </div>
 
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Area</label>
                 <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                    <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                    <option *ngFor="let area of cArea" [value]="area.Id">{{area.nombre}}</option>
                 </select>
               </div>
 
@@ -83,7 +85,8 @@
 
               <div class="mb-3 col-6">
                 <label for="exampleFormControlInput1" class="form-label">Tipo de Servicio</label>
-                <select class="form-select" formControlName="id_tiposervicio" aria-label="Tipo Servicio">
+                <select class="form-select" formControlName="id_tiposervicio"
+                      aria-label="Tipo Servicio" (change)="onServicioChange($event)">
                     <option *ngFor="let ts of tipoServ" [value]="ts.ID">{{ts.TIPOSERVICIO}}</option>
                 </select>
               </div>

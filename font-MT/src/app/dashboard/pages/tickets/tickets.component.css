@@ -24,8 +24,10 @@ margin: 0;
 font-size: 14px;
 }
 
-.tarjetas{
-
+.filtro{
+  background: #989898;
+  heigth: 50px;
+  padding: 5px;
 }
 
 .example-element-description{

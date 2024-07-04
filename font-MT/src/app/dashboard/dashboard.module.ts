@@ -30,6 +30,7 @@ import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tec
 import { AdmEspecialidadComponent } from './pages/adm-especialidad/adm-especialidad.component';
 import { AdmDocumentosComponent } from './pages/adm-documentos/adm-documentos.component';
 import { TecnicoEspecialidadComponent } from './pages/tecnico-especialidad/tecnico-especialidad.component';
+import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { TecnicoEspecialidadComponent } from './pages/tecnico-especialidad/tecni
     AdmTecnicocontratoComponent,
     AdmEspecialidadComponent,
     AdmDocumentosComponent,
-    TecnicoEspecialidadComponent
+    TecnicoEspecialidadComponent,
+    AdmMasterserviciosComponent
   ],
   imports: [
     CommonModule,

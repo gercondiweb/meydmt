@@ -39,6 +39,11 @@ export class AdmTicketsComponent implements OnInit{
     opc:''
   }
 
+  datosCli={
+    opc:'',
+    vIDCLIENTE: ''
+  }
+
   datosBusquedaTicket={
 
       opc :'',
@@ -77,6 +82,12 @@ export class AdmTicketsComponent implements OnInit{
 
   listClientes: any;
   clientes:any[]=[];
+
+  listSucursales: any;
+  cSucursales:any[]=[];
+
+  listAreas: any;
+  cArea:any[]=[];
 
   listComentarios: any;
   comentarios:any[]=[];
@@ -125,12 +136,33 @@ export class AdmTicketsComponent implements OnInit{
        sucursal:[''],
        id_cliente:['']
     });
-console.log(this.accion)
+
     if ( this.accion === 'editar'){
       //llenar datos del ticket y buscar comentarios
       this.cargarDatosTicket();
     }
 
+  }
+
+  onSelectChange(event: any) {
+    const selectedValue = event.target.value;
+    this.selSucursales(selectedValue);
+  }
+
+  selSucursales(value: string){
+    this.datosCli.opc='SUCUR';
+
+      this.datosCli.vIDCLIENTE = value;
+      this.restService.getClientes(this.datosCli).subscribe(res=>{
+      this.listSucursales = res;
+      this.cSucursales = this.listSucursales.body[0];
+    });
+
+    this.datosCli.opc='AREAS';
+    this.restService.getClientes(this.datosCli).subscribe(res2=>{
+      this.listAreas = res2;
+      this.cArea = this.listAreas.body[0];
+    });
   }
 
   regresar(){

@@ -47,7 +47,7 @@ export class RestService {
     return this.http.post('consultaservicio/serv', datosServicio);; // GET http://localhost:4000/api/clientes
   }
   public createServicios(datosServ:any):Observable<any>{
-    return this.http.post<any>(this.url, datosServ); // POST http://localhost:4000/api/servicios
+    return this.http.post('servicios', datosServ); // POST http://localhost:4000/api/servicios
   }
 
   public updateServicios(datosServ:any):Observable<any>{

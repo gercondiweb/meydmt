@@ -17,6 +17,7 @@ import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';
 import { AdmServiciosComponent } from './pages/adm-servicios/adm-servicios.component';
 import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposervicios.component';
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
+import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
 
 
 
@@ -60,6 +61,14 @@ const routes: Routes = [
       {
         path:'admtiposervicios',
         component:AdmTiposerviciosComponent
+      },
+      {
+        path:'admmasterservicios',
+        component:AdmMasterserviciosComponent
+      },
+      {
+        path:'admmasterservicios/:accion',
+        component:AdmMasterserviciosComponent
       },
       {
         path:'admcontratos',
