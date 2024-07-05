@@ -28,8 +28,11 @@ module.exports = function (dbInyectada) {
       telefono: body.telefono,
       activo: body.activo,
       usuariocrea: body.usuariocrea,
-      fechacrea: body.fechacrea
-   
+      fechacrea: body.fechacrea,
+      id_pais: body.id_pais,
+      id_ciudad: body.id_ciudad,
+      id_departamento: body.id_departamento,
+      zip: body.zip 
     }
 
     const respuesta = await db.agregar(TABLA, sucursal);
