@@ -1,22 +1,24 @@
 <div>
-  <h2 class="titulo" mat-dialog-title>Asignar Tecnico - TICKET + {{this.data.data.id}}</h2>
+  <h2 class="titulo" mat-dialog-title>Asignar Tecnico - TICKET {{tiketSeleccionado}}</h2>
 
   <mat-dialog-content>
       <form class="ticket-form" [formGroup]="formAsignar">
 
         <div class="row g-2">
           <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Descripcion del Servicio</label>
+            <label for="exInput1" class="form-label">Descripcion del Servicio</label>
             <textarea class="form-control" rows="5" [readonly]="true" formControlName="descripcion" placeholder="Detalle del servicio que solicita"></textarea>
           </div>
-          <div class="mb-3 col-4">
+          <div class="mb-3 col-6">
             <label for="nitinput" class="form-label">Cliente</label>
-            <input class="form-control" type="text" [value]="this.data.data.CLIENTE" [disabled]="true">
+            <select class="form-select" formControlName="id_cliente" aria-label="CLiente" [disabled]="true">
+                <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+            </select>
           </div>
 
           <div class="mb-3 col-2">
             <label for="clienteinput" class="form-label">Fecha</label>
-            <input type="date" class="form-control" [readonly]="true" [value]="this.formattedDate">
+            <input type="date" class="form-control" formControlName="fecha" [readonly]="true">
           </div>
 
           <div class="mb-3 col-2">
@@ -25,20 +27,35 @@
           </div>
 
           <div class="mb-3 col-2">
-            <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
-            <input class="form-control" type="text" [value]="this.data.data.prioridad" [disabled]="true">
-          </div>         
+            <label for="prioridad" class="form-label">Prioridad</label>
+            <select class="form-select" formControlName="prioridad" aria-label="prioridad" [disabled]="true">
+              <option *ngFor="let priori of prioridad" [value]="priori.value" >{{priori.viewValue}}</option>
+          </select>
+          </div>
 
-          <div class="mb-3 col-4">
+          <div class="mb-3 col-6">
+            <label for="tipotiketinput" class="form-label">Tipo de Ticket</label>
+            <select class="form-select" formControlName="tipo_tiket"
+                  aria-label="Tipo Ticket" [disabled]="true">
+                <option *ngFor="let tt of tipoTiket" [value]="tt.id">{{tt.descripcion}}</option>
+            </select>
+          </div>
+
+          <div class="mb-3 col-6">
             <label for="exampleFormControlInput1" class="form-label">Tipo de Servicio</label>
-            <input class="form-control" type="text" [value]="this.data.data.TIPOSERVICIO" [disabled]="true">
+            <select class="form-select" formControlName="id_tiposervicio"
+                  aria-label="Tipo Servicio" [disabled]="true">
+                <option *ngFor="let ts of tipoServ" [value]="ts.id">{{ts.TIPOSERVICIO}}</option>
+            </select>
           </div>
-          
-          <div class="mb-3 col-8">
-            <label for="iserv" class="form-label">Servicio</label>
-            <input class="form-control" type="text" [value]="this.data.data.DESCRIPCION" [disabled]="true">
+
+          <div class="mb-3 col-12">
+            <label for="exampleFormControlInput1" class="form-label">Servicio</label>
+            <select class="form-select" formControlName="id_servicio" aria-label="Tipo Servicio" [disabled]="true">
+                <option *ngFor="let serv of servicios" [value]="serv.id_servicio">{{serv.Descripcion}}</option>
+            </select>
           </div>
-          
+
 
           <div class="row">
             <h2>Tecnico Asignada</h2>

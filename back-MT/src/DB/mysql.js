@@ -58,6 +58,18 @@ function spmaestros(parametros){
     });
 }
 
+function spvisitas(parametros){
+    const {OPC, vID, vIDTIKET, vIDCLIENTE, vIDTECNICO} = parametros;
+    return new Promise((resolve, reject)=>{
+        conexcion.query(`CALL SPVISITAS (?,?,?,?,?)`,   
+                    [OPC, vID, vIDTIKET, vIDCLIENTE, vIDTECNICO] ,
+                    (error, result)=>{
+            if(error) return reject(error);
+            resolve(result);
+        })
+    });
+}
+
 function spContratos(parametros){
     const {opc, vID, vIDCLIENTE, vActivo, vFechaini, vFechafin} = parametros;
     return new Promise((resolve, reject)=>{
@@ -95,10 +107,11 @@ function sptikets(parametros){
 }
 
 function spOperacionestickets(parametros){
-    const {opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, estado, prioridad, id_tiposervicio, id_tecnico} = parametros;
+    const {opc, id_tkt, fecha, hora, id_servicio, id_cliente, 
+            descripcion, estado, prioridad, id_tiposervicio, id_tecnico, tipo_tiket} = parametros;
     return new Promise((resolve, reject)=>{
-        conexcion.query(`CALL OPERACIONES_TICKETS (?, ?, ?, ?,?,?,?,?,?,?,?)`, 
-                    [opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, estado, prioridad, id_tiposervicio, id_tecnico] ,
+        conexcion.query(`CALL OPERACIONES_TICKETS (?, ?, ?, ?,?,?,?,?,?,?,?,?)`, 
+                    [opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, estado, prioridad, id_tiposervicio, id_tecnico,tipo_tiket] ,
                     (error, result)=>{
             if(error) return reject(error);
             resolve(result);
@@ -118,11 +131,35 @@ function sptecnicocontrato(parametros){
     });
 }
 
+function spClientes(parametros){
+    const {opc, vIDCLIENTE, vNIT, vNOMBRE} = parametros;
+    return new Promise((resolve, reject)=>{
+        conexcion.query(`CALL SPCLIENTES (?, ?, ?, ?)`, 
+                    [opc, vIDCLIENTE, vNIT, vNOMBRE] ,
+                    (error, result)=>{
+            if(error) return reject(error);
+            resolve(result);
+        })
+    });
+}
+
 function spComentarios(parametros){
-    const {opc, vID, vIDCONTRATO, vIDTECNICO, vACTIVO} = parametros;
+    const {opc, vIDTICKET, vFecha, vHora, vUsuario,vComentario,vVisible,vIdComentario} = parametros;
     return new Promise((resolve, reject)=>{
         conexcion.query(`CALL SPCOMENTARIOS (?, ?, ?, ?,?,?,?,?)`, 
-                    [opc, vID, vIDCONTRATO, vIDTECNICO, vACTIVO] ,
+                    [opc,vIDTICKET, vFecha, vHora, vUsuario,vComentario,vVisible,vIdComentario] ,
+                    (error, result)=>{
+            if(error) return reject(error);
+            resolve(result);
+        })
+    });
+}
+
+function spTecnicos(parametros){ 
+    const {opc, vID, vIDTECNICO, vActivo} = parametros;
+    return new Promise((resolve, reject)=>{
+        conexcion.query(`CALL SPTECNICOS(?, ?, ?, ?)`, 
+                    [opc, vID, vIDTECNICO, vActivo] ,
                     (error, result)=>{
             if(error) return reject(error);
             resolve(result);
@@ -151,10 +188,14 @@ module.exports = {
     spservicios,
     
     sptikets,
+    spvisitas,
+
     spOperacionestickets,
     
     spmaestros,
-    
+
+    spClientes,
+    spTecnicos,
     spContratos,
     spOperacionescontratos,
     sptecnicocontrato,

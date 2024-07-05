@@ -27,6 +27,7 @@ export interface ElementoTicket {
 })
 export class AdmTicketsComponent implements OnInit{
 
+
   accion!: string;
 
   prioridad: Prioridad[] = [
@@ -42,6 +43,11 @@ export class AdmTicketsComponent implements OnInit{
   datosCli={
     opc:'',
     vIDCLIENTE: ''
+  }
+
+  datosConsutaServicios={
+    opc:'',
+    id_tiposervicio:''
   }
 
   datosBusquedaTicket={
@@ -73,6 +79,9 @@ export class AdmTicketsComponent implements OnInit{
 
   listTiposServ: any;
   tipoServ:any[]=[];
+
+  listTipoTiket: any;
+  tipoTiket:any[]=[];
 
   listServ: any;
   servicios:any[]=[];
@@ -134,7 +143,8 @@ export class AdmTicketsComponent implements OnInit{
        estado: ['SOL',[Validators.required]],
        prioridad: ['',[Validators.required]],
        sucursal:[''],
-       id_cliente:['']
+       id_cliente:[''],
+       tipo_tiket:[0]
     });
 
     if ( this.accion === 'editar'){
@@ -144,16 +154,23 @@ export class AdmTicketsComponent implements OnInit{
 
   }
 
-  onSelectChange(event: any) {
+  onSelectChange(event: any, selectName: string) {
     const selectedValue = event.target.value;
-    this.selSucursales(selectedValue);
+
+    //console.log(`Select ${selectName} cambió a: `, event.target.value);
+
+    if (selectName==='selectCliente') {
+      this.selSucursales(selectedValue);
+    }else if (selectName==='selectServicio'){
+      this.selServicios(selectedValue);
+    }
   }
 
   selSucursales(value: string){
     this.datosCli.opc='SUCUR';
+    this.datosCli.vIDCLIENTE = value;
 
-      this.datosCli.vIDCLIENTE = value;
-      this.restService.getClientes(this.datosCli).subscribe(res=>{
+    this.restService.getClientes(this.datosCli).subscribe(res=>{
       this.listSucursales = res;
       this.cSucursales = this.listSucursales.body[0];
     });
@@ -165,36 +182,42 @@ export class AdmTicketsComponent implements OnInit{
     });
   }
 
+  selServicios(value: string){
+    console.log(value)
+    this.datosConsutaServicios.opc='SRVxTPO';
+    this.datosConsutaServicios.id_tiposervicio = value;
+
+    this.restService.crearTkt(this.datosConsutaServicios).subscribe(res3=>{
+      this.listServ = res3;
+      this.servicios = this.listServ.body[0];
+    });
+
+
+  }
+
   regresar(){
     this.router.navigateByUrl('/dashboard/tickets');
   }
 
   cargarMaestros(){
 
-    this.datosBusquedaMaestro.opc = 'TSRV';
-    this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
-      this.listTiposServ=respuesta;
-      this.tipoServ=this.listTiposServ.body[0];
-      })
-
-
-    this.datosBusquedaMaestro.opc = 'SERV';
-    this.restService.getServicios(this.datosBusquedaMaestro).subscribe(respuesta2=>{
-      this.listServ=respuesta2;
-      this.servicios=this.listServ.body[0];
-      })
-
-    this.datosBusquedaMaestro.opc = 'TECN';
-    this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta3=>{
-      this.listTecnicos=respuesta3;
-      this.tecnicos=this.listTecnicos.body[0];
-      })
-
       this.datosBusquedaMaestro.opc = 'CLI';
-      this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta3=>{
-        this.listClientes=respuesta3;
+      this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
+        this.listClientes=respuesta;
         this.clientes=this.listClientes.body[0];
-        })
+      })
+
+      this.datosBusquedaMaestro.opc = 'TPOTKT';
+      this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta2=>{
+        this.listTipoTiket=respuesta2;
+        this.tipoTiket=this.listTipoTiket.body[0];
+      })
+
+      this.datosBusquedaMaestro.opc = 'TSRV';
+      this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
+        this.listTiposServ=respuesta;
+        this.tipoServ=this.listTiposServ.body[0];
+      })
 
   }
 
@@ -208,13 +231,13 @@ export class AdmTicketsComponent implements OnInit{
 
     this.datosBusquedaTicket.vIDTICKET = this.objetoData.ticket.Id;
 
-      //console.log(this.objetoData.ticket)
+      console.log(this.objetoData.ticket)
 
      this.restService.getTicketComents(this.datosBusquedaTicket).subscribe(respuesta=>{
         this.listComentarios=respuesta;
         this.comentarios=this.listComentarios.body[0];
 
-        //console.log(this.comentarios)
+        console.log(this.comentarios)
 
         this.visitas=this.listComentarios.body[1];
 
@@ -289,4 +312,5 @@ export class AdmTicketsComponent implements OnInit{
   agregarVisita(){
 
   }
+
 }
