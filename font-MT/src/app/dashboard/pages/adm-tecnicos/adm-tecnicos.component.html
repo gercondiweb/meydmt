@@ -9,10 +9,10 @@
           </div>
           <div class="col-6 text-end">
             <button mat-raised-button color="primary" (click)="regresar()">
-              <mat-icon>add_circle</mat-icon>
+              <mat-icon>reply</mat-icon>
               Regresar
             </button>
-            <button mat-raised-button class="btn btn-success" (click)="guardarTecnico()">
+            <button class="btnGuardar" mat-raised-button color="Success" (click)="guardarTecnico()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
@@ -34,15 +34,15 @@
 
             <div class="mb-3 col-4">
               <label for="clienteinput" class="form-label">Apellido</label>
-              <input type="text" class="form-control" formControlName="apellido"  placeholder="" id="clienteinput">
+              <input type="text" class="form-control" formControlName="apellidos"  placeholder="" id="clienteinput">
             </div>
 
-            <div class="mb-3 col">
+            <div class="mb-3 col-10">
               <label for="exampleFormControlInput1" class="form-label">Direccion</label>
               <input type="text" class="form-control" formControlName="direccion"  placeholder="">
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 col-10">
               <label for="exampleFormControlInput1" class="form-label">Email</label>
               <input type="email" class="form-control" formControlName="email" placeholder="example@yourcompany.com">
             </div>
@@ -54,6 +54,11 @@
               <label for="exampleFormControlInput1" class="form-label">Tipo Sangre</label>
               <input type="text" class="form-control" formControlName="tiposangre" placeholder="">
             </div>
+
+            <div class="foto">
+              <img class="imagen" [src]="formTecnico.get('foto')?.value" alt="Imagen" *ngIf="formTecnico.get('foto')?.value">
+            </div>
+
             <div class="mb-3 col-3">
               <label for="exampleFormControlInput1" class="form-label">Foto</label>
               <input type="text" class="form-control" formControlName="foto"  placeholder="">
@@ -73,9 +78,9 @@
 
           </div>
         </form>
-        <div class="row">
+        <div class="row" *ngIf="activarBotones">
           <nav class="navbar sticky-top bg-body-tertiary">
-            <div class="container-fluid">
+            <div class="containerEspc" >
               <a class="navbar-brand">Especialidades</a>
               <button mat-raised-button color="primary" (click)="agregarEspecialidad()">
                 <mat-icon>add_circle</mat-icon>
@@ -84,8 +89,13 @@
             </div>
 
           </nav>
-          <div class="row">
-            <table class="table table-hover">
+
+            <app-tabladinamica
+                  [columnas]="columnEspecialidades"
+                  [dataSource]="listEspecialidades"
+                  [filtro]="false"
+                  ></app-tabladinamica>
+            <!--table class="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">Id</th>
@@ -149,10 +159,10 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
-          </div>
+            </!--table-->
+
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3"  *ngIf="activarBotones">
           <nav class="navbar sticky-top bg-body-tertiary">
             <div class="container-fluid">
               <a class="navbar-brand">Documentos del Tecnico</a>

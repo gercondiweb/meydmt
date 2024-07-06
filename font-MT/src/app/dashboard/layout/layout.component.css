@@ -1,5 +1,5 @@
 .container-content {
   padding: 0px 0px 0px 0px;
   height: calc(100dvh - 65px);
-  overflow: hidden;
+  overflow-y: auto;
 }

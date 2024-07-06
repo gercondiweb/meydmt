@@ -1,62 +1,39 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, input, signal, OnInit } from '@angular/core';
-import { lastValueFrom, map } from 'rxjs';
-import { environment } from '@environments/environment';
-import { LoadingService } from '@/app/shared/services/loading.service';
-
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { RestService } from '../../services';
 @Component({
   selector: 'app-masterservicios',
   standalone: false,
   templateUrl: './masterservicios.component.html',
   styleUrl: './masterservicios.component.css'
 })
-export class MasterserviciosComponent {
+export class MasterserviciosComponent implements OnInit{
+    titulo: string[]=["Servicios"];
 
-  private readonly _hhtp = inject(HttpClient);
-  private readonly loadingService = inject(LoadingService);
-  list = signal([]);
-  opc = input<string>('TSRV');
-  cabecera: { name : string, campo: string, isShow : boolean }[] = [];
+    colServicios: string[]=["id","Descripcion","observaciones","tiposervicio"];
+    dsServicios = new MatTableDataSource<any>();
+    vServicio: any;
 
-  constructor(){
+    listTipoServicio: any;
+    lsTipoServicio : any[]= [];
 
-    this.cabecera = [
-      {
-        name: 'id_tiposervicio',
-        isShow: false,
-        campo: 'id_tiposervicio'
-      },
-      {
-        name: 'TIPO',
-        isShow: true,
-        campo: 'TIPOSERVICIO'
-      },
-      {
-        name: 'DESCRIPCION',
-        isShow: true,
-        campo: 'DESCRIPCION'
-      },
-     {
-       name: 'ID',
-       isShow: false,
-       campo: 'id'
-     }
-    ];
+    datosBusquedaMaestro={
+      opc: 'SERV'
+    }
 
-    this.getData();
-  }
+    constructor(
+      private resService: RestService,
+    ) { }
 
-  async getData(){
-    this.loadingService.show();
-    const { error, body } = await lastValueFrom(this._hhtp.post<Response>(environment.apiUrl.consultaservicio, { opc : this.opc() }));
-    const [list] = body;
-    this.list.update( listOld => list );
-    this.loadingService.hidden();
-  }
-}
+    ngOnInit(): void {
+        this.getServicios();
+    }
 
-interface Response{
-   error: boolean,
-  status: number,
-  body: any
+    getServicios(){
+      this.datosBusquedaMaestro.opc = 'SERV';
+      this.resService.getServicios(this.datosBusquedaMaestro).subscribe(respuesta=>{
+        this.vServicio=respuesta;
+        this.dsServicios=this.vServicio.body[0];
+        })
+    }
 }

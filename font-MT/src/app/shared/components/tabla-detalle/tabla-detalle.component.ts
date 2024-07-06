@@ -24,6 +24,7 @@ export interface ElementoTablaDetalle {
 })
 export class TablaDetalleComponent implements OnChanges {
 
+
   @Input() datasource!: any[];
   @Input() columns : any[] = [];
 
@@ -76,6 +77,11 @@ export class TablaDetalleComponent implements OnChanges {
   eliminarElemento(elemento: ElementoTablaDetalle) {
     // Lógica para eliminar el elemento
     alert('Eliminar:'+ elemento);
+  }
+
+  editarTiket(element: any) {
+    const route = '/dashboard/admtickets'  ;
+      this.router.navigate([route,'editar']);
   }
 }
 export interface DetalleServicio {

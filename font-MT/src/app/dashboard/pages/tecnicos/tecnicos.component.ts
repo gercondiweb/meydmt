@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../../services';
 import { MatTableDataSource } from '@angular/material/table';
-import { ModalComponent } from '../tickets/modal/modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FrmdinamicmodalComponent } from '../../../shared/components/frmdinamicmodal/frmdinamicmodal.component';
 
@@ -45,6 +44,7 @@ export class TecnicosComponent implements OnInit{
 
 
   ngOnInit(): void {
+
     this.cargarTecnicos();
 
     this.formTecnicos = this.formBuilder.group({

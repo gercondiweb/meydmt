@@ -18,6 +18,8 @@ interface Prioridad {
 })
 export class ModalFormComponent implements OnInit{
 
+  tiketSeleccionado: any;
+
   listTiposServ: any;
   tipoServ:any[]=[];
 
@@ -29,6 +31,9 @@ export class ModalFormComponent implements OnInit{
 
   listClientes: any;
   clientes:any[]=[];
+
+  listTipoTiket: any;
+  tipoTiket:any[]=[];
 
   prioridad: Prioridad[] = [
     {value: 'ALTA', viewValue:'ALTA'},
@@ -72,7 +77,8 @@ export class ModalFormComponent implements OnInit{
        estado: ['SOL',[Validators.required]],
        prioridad: ['',[Validators.required]],
        sucursal:[''],
-       id_cliente:['']
+       id_cliente:[''],
+       tipo_tiket:[0]
     });
 
     this.cargarMaestros();
@@ -158,16 +164,18 @@ export class ModalFormComponent implements OnInit{
 
   cargarDatos(){
     console.log(this.data)
-      this.formAsignar.patchValue({
-        id: this.data.data.id,
-        fecha: this.data.data.fecha,
-        hora: this.data.data.hora,
-        tiposervicio: this.data.data.TIPOSERVICIO,
-        servicio: this.data.data.DESCRIPCION,
+    this.tiketSeleccionado = this.data.data.Id;
+
+    this.formAsignar.patchValue({
+        id: this.data.data.Id,
+        fecha: this.data.data.Fecha,
+        hora: this.data.data.Hora,
+        tiposervicio: this.data.data.Tipo,
+        servicio: this.data.data.Descripcion,
         descripcion: this.data.data.DetalleTKT,
         id_tecnico: this.data.data.id_tecnico,
         estado: this.data.data.estado,
-        prioridad: this.data.data.prioridad
+        prioridad: this.data.data.Prioridad
       });
   }
 
@@ -197,6 +205,12 @@ export class ModalFormComponent implements OnInit{
         this.listClientes=respuesta3;
         this.clientes=this.listClientes.body[0];
         })
+
+      this.datosBusquedaMaestro.opc = 'TPOTKT';
+      this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta4=>{
+        this.listTipoTiket=respuesta4;
+        this.tipoTiket=this.listTipoTiket.body[0];
+      })
 
   }
 

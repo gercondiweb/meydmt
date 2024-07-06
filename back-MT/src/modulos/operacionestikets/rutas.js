@@ -18,7 +18,7 @@ async function consultaTiketes (req, res, next){
         respuesta.success(req, res, items, 200); 
     }catch(err){
         next(err);
-    }
+    } 
 };
 
 async function tktagrupadosxestado (req, res, next){

@@ -28,8 +28,7 @@
               <div class="row mb-3">
                 <label><h2>Description</h2></label>
                 <h3>
-                  {{objetoData.ticket.DetalleTKT
-                  }}
+                  {{objetoData.ticket.DetalleTKT}}
                 </h3>
 
               </div>
@@ -45,22 +44,24 @@
               </div>
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Cliente</label>
-                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                <select class="form-select" formControlName="id_cliente"
+                        aria-label="CLiente" (change)="onSelectChange($event, 'selectCliente')">
                     <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
                 </select>
               </div>
 
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Sucursal</label>
-                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                    <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                <select class="form-select" formControlName="id_cliente"
+                        aria-label="CLiente">
+                    <option *ngFor="let sucur of cSucursales" [value]="sucur.Id">{{sucur.nombre}}</option>
                 </select>
               </div>
 
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Area</label>
                 <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                    <option *ngFor="let cliente of clientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                    <option *ngFor="let area of cArea" [value]="area.Id">{{area.nombre}}</option>
                 </select>
               </div>
 
@@ -82,13 +83,22 @@
               </div>
 
               <div class="mb-3 col-6">
-                <label for="exampleFormControlInput1" class="form-label">Tipo de Servicio</label>
-                <select class="form-select" formControlName="id_tiposervicio" aria-label="Tipo Servicio">
-                    <option *ngFor="let ts of tipoServ" [value]="ts.ID">{{ts.TIPOSERVICIO}}</option>
+                <label for="tipotiketinput" class="form-label">Tipo de Ticket</label>
+                <select class="form-select" formControlName="tipo_tiket"
+                      aria-label="Tipo Ticket">
+                    <option *ngFor="let tt of tipoTiket" [value]="tt.id">{{tt.descripcion}}</option>
                 </select>
               </div>
 
-              <div class="mb-3 col-12">
+              <div class="mb-3 col-4">
+                <label for="exampleFormControlInput1" class="form-label">Tipo de Servicio</label>
+                <select class="form-select" formControlName="id_tiposervicio"
+                      aria-label="Tipo Servicio" (change)="onSelectChange($event, 'selectServicio')">
+                    <option *ngFor="let ts of tipoServ" [value]="ts.id">{{ts.TIPOSERVICIO}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-8">
                 <label for="exampleFormControlInput1" class="form-label">Servicio</label>
                 <select class="form-select" formControlName="id_servicio" aria-label="Tipo Servicio">
                     <option *ngFor="let serv of servicios" [value]="serv.id_servicio">{{serv.Descripcion}}</option>

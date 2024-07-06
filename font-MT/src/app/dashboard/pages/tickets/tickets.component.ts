@@ -104,22 +104,7 @@ export class TicketsComponent implements OnInit{
   }
 
   public crearTicket(){
-    // Lógica para editar el elemento
-    /*const dialogRef = this.dialog.open(ModalComponent, {
-      disableClose: true,
-      autoFocus: true,
-      closeOnNavigation : false,
-      width : '900px',
-      data: {
-        tipo: 'Crear',
-      }
-
-    });
-    this.cargarDetalle();
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });*/
-
+    
     const route = '/dashboard/admtickets'  ;
       this.router.navigate([route,'crear']);
 

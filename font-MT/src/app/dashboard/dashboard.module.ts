@@ -15,7 +15,7 @@ import {
   AdmTecnicosComponent,
   TecnicosComponent,
   AdmTicketsComponent,
-  AdmComentsComponent
+  AdmComentsComponent,
 } from './pages';
 import { SharedModule } from '../shared/modules/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +27,6 @@ import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposer
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
 import { DatePipe } from '@angular/common';
 import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tecnicocontrato.component';
-import { MaterialModulModule } from '../shared/modules/material-modul/material-modul.module';
 
 
 @NgModule({
@@ -50,7 +49,11 @@ import { MaterialModulModule } from '../shared/modules/material-modul/material-m
     AdmComentsComponent,
     AdmServiciosComponent,
     MasterserviciosComponent,
-    AdmTecnicocontratoComponent
+    AdmTecnicocontratoComponent,
+    AdmEspecialidadComponent,
+    AdmDocumentosComponent,
+    TecnicoEspecialidadComponent,
+    AdmMasterserviciosComponent
   ],
   imports: [
     CommonModule,

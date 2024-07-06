@@ -14,3 +14,7 @@
   width: 100%;
 }
 
+.img-thumbnail{
+  border-radius : 50%;
+}
+
