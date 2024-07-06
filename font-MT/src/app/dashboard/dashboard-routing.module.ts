@@ -10,7 +10,8 @@ import { TableroAdmComponent,
         AdmClienteComponent,
         AdmTecnicosComponent,
         AdmTicketsComponent,
-        AdmTecnicocontratoComponent
+        AdmTecnicocontratoComponent,
+        AdmSucursalesComponent
       } from './pages';
 import { userGuard } from './guard/user-guard.guard';
 import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';

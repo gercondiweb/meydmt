@@ -1,8 +1,6 @@
 .content{
   min-width: 100dvw;
   min-height: 100dvh;
-  justify-content: center;
-  aling-items: center;
   display: flex;
   background-color: red;
   position: absolute;

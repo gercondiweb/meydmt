@@ -27,6 +27,7 @@ import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposer
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
 import { DatePipe } from '@angular/common';
 import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tecnicocontrato.component';
+import { MaterialModulModule } from '../shared/modules/material-modul/material-modul.module';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tec
     DashboardRoutingModule,
     FormsModule,
     SharedModule,
+    MaterialModulModule
   ],
   providers: [DatePipe],
 })

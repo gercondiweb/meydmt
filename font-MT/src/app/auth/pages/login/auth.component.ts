@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { response } from 'express';
 import { CookieService } from 'ngx-cookie-service';
 import { lastValueFrom } from 'rxjs';
+import { LoadingService } from '@/app/shared/services/loading.service';
 
 
 @Component({
@@ -12,23 +13,23 @@ import { lastValueFrom } from 'rxjs';
   styleUrl: './auth.component.css',
 })
 export class AuthComponent {
+  private readonly loadingService = inject(LoadingService);
   usuario: string = '';
   password: string = '';
-  isLoading = signal(false);
   private readonly _cookieService = inject(CookieService)
 
   constructor(private router: Router, private authService : AuthService) {}
 
   async login(){
-    this.isLoading.update( l => true);
+    this.loadingService.show();
     try {
 
       const isAuthtenticate = await lastValueFrom(this.authService.login(this.usuario, this.password));
-      this.isLoading.update( l => false)
+      this.loadingService.hidden();
        if(isAuthtenticate) this.router.navigateByUrl('/dashboard');
 
     } catch (error) {
-      this.isLoading.update( l => false)
+      this.loadingService.hidden();
       console.log(error);
     }
 

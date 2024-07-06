@@ -7,6 +7,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { principalInterceptor } from './shared/interceptor/principal.interceptor';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [

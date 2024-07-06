@@ -22,38 +22,28 @@ interface Area {
 
 @Component({
   selector: 'app-adm-cliente',
-  standalone: false,
   templateUrl: './adm-cliente.component.html',
   styleUrl: './adm-cliente.component.css'
 })
 export class AdmClienteComponent implements OnInit {
 
   accion : any;
-
   response: any;
-
   param1!: string;
   param2!: string;
   objetoData: any;
-
   public idCliente:any;
-
   vCliente: any;
   listClientes: any[]=[];
-
   vSucursal: any;
   listSucursales: any[]=[];
-
   vArea: any;
   listAreas: any[]=[];
   columnAreas: string[] = ['id', 'nombre', 'autorizador', 'email', 'activo'];
-
   vCiudad: any;
   listCiudades: any[]=[];
-
   vPais: any;
   listPaises: any[]=[];
-
   consultaCliente={
     opc:'SUCUR',
     vIDCLIENTE: 1,
@@ -105,12 +95,7 @@ export class AdmClienteComponent implements OnInit {
     this.param1 = this.dataSharingService.getParam1();
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
-
-   console.log('objetoData', this.objetoData)
-
     this.idCliente = this.objetoData.data.id;
-
-
 
     this.formCliente.patchValue({
       nit: this.objetoData.data.Nit,
@@ -123,7 +108,6 @@ export class AdmClienteComponent implements OnInit {
       id_cliente: this.objetoData.data.Id,
       activo: this.objetoData.data.ACTIVO
     });
-console.log(this.consultaCliente)
 
   }
 

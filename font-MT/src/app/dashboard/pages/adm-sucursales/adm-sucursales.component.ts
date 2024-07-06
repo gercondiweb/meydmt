@@ -1,25 +1,27 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {  } from '@angular/material';
 import { RestService } from '../../../dashboard/services/services/rest.service';
+import { SucursalService } from './service/sucursal.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-adm-sucursales',
-  standalone: false,
   templateUrl: './adm-sucursales.component.html',
   styleUrl: './adm-sucursales.component.css'
 })
 export class AdmSucursalesComponent {
 
   public clientes: any;
-
+  readonly dialogRef = inject(MatDialogRef<AdmSucursalesComponent>);
+  readonly sucursalService = inject(SucursalService);
+  public data = inject<any>(MAT_DIALOG_DATA);
   titulo : string ='';
 
   public formSucursales!: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<AdmSucursalesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private RestService:RestService,
   ){}
@@ -37,7 +39,6 @@ export class AdmSucursalesComponent {
       activo : [1,[Validators.required]],
     });
 
-console.log(this.data.tipo)
 
     if(this.data.tipo === 'Editar'){
       this.titulo = 'Editar Sucursal';
@@ -50,8 +51,6 @@ console.log(this.data.tipo)
   }
 
   cargarDatosSucursal(){
-
-    console.log(this.data.data)
 
     this.formSucursales.patchValue({
       id: this.data.data.Id,
@@ -67,8 +66,6 @@ console.log(this.data.tipo)
   }
 
   cargarDatosCliente(){
-    console.log(this.data.data)
-
     this.formSucursales.patchValue({
       id : 0,
       id_cliente : this.data.data.id,
@@ -80,8 +77,8 @@ console.log(this.data.tipo)
     this.dialogRef.close();
   }
 
-  guardarSucursal(){
-
+  async guardarSucursal(){
+    await lastValueFrom(this.sucursalService.save(this.formSucursales.value));
   }
 
 }
