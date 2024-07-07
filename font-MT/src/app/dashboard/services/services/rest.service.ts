@@ -114,4 +114,8 @@ export class RestService {
   public getDocumentosTecnico(datosServicio:any): Observable<any>{
     return this.http.post('consultatecnico/docs', datosServicio); // GET http://localhost:4000/api/clientes
   }
+
+  public comentarios(datosComentario:any): Observable<any>{
+    return this.http.post('comentarios', datosComentario); // GET http://localhost:4000/api/clientes
+  }
 }

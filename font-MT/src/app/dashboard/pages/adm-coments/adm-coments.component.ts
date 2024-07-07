@@ -2,6 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestService } from '../../../dashboard/services/services/rest.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { lastValueFrom } from 'rxjs';
+import { response } from 'express';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-adm-coments',
@@ -22,17 +25,51 @@ export class AdmComentsComponent implements OnInit{
   ngOnInit(): void {
 
      this.frmComents = this.formBuilder.group({
-      opc:[''],
-      id_ticket:['',[Validators.required]]
+      id:[0],
+      id_ticket:[0,[Validators.required]],
+      comentario:['',[Validators.required]],
+      usuario:[''],
+      fecha:[''],
+      hora:[''],
+      visible:['']
+
      });
 
   }
 
-  grabar(){
+  async grabar(){
+
+    console.log(this.data)
+
+    this.frmComents.get('id')?.setValue(0);
+
+    try{
+      const res = await lastValueFrom(this.RestService.comentarios(this.frmComents.value));
+      if(!res.error){
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: 'Comentario creado satisfactoriamente!',
+          showConfirmButton: false,
+          timer: 2000
+        });
+
+      }
+    }catch( e:any ){
+      console.log(e);
+      await Swal.fire({
+        position: "center",
+        icon: "error",
+        title: e.message,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+    this.regresar();
 
   }
 
-  cancelar() {
+  regresar() {
     this.dialogRef.close();
   }
 

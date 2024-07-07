@@ -104,14 +104,16 @@ function sptikets(parametros){
             resolve(result);
         })
     });
-}
+}  
 
 function spOperacionestickets(parametros){
     const {opc, id_tkt, fecha, hora, id_servicio, id_cliente, 
-            descripcion, estado, prioridad, id_tiposervicio, id_tecnico, tipo_tiket} = parametros;
+            descripcion, estado, prioridad, id_tiposervicio, id_tecnico, tipo_tiket,
+            id_sucursal, id_area} = parametros;
     return new Promise((resolve, reject)=>{
-        conexcion.query(`CALL OPERACIONES_TICKETS (?, ?, ?, ?,?,?,?,?,?,?,?,?)`, 
-                    [opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, estado, prioridad, id_tiposervicio, id_tecnico,tipo_tiket] ,
+        conexcion.query(`CALL OPERACIONES_TICKETS (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?)`, 
+                    [opc, id_tkt, fecha, hora, id_servicio, id_cliente, descripcion, 
+                        estado, prioridad, id_tiposervicio, id_tecnico,tipo_tiket,id_sucursal, id_area] ,
                     (error, result)=>{
             if(error) return reject(error);
             resolve(result);

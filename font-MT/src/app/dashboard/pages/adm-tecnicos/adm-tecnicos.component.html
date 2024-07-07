@@ -12,7 +12,7 @@
               <mat-icon>reply</mat-icon>
               Regresar
             </button>
-            <button class="btnGuardar" mat-raised-button color="Success" (click)="guardarTecnico()">
+            <button class="btnGuardar" mat-raised-button color="success" (click)="guardarTecnico()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
@@ -77,10 +77,12 @@
             </div>
 
           </div>
+
         </form>
-        <div class="row" *ngIf="activarBotones">
+      </div>
+        <div class="row especialidades" *ngIf="activarBotones">
           <nav class="navbar sticky-top bg-body-tertiary">
-            <div class="containerEspc" >
+            <div class="container-fluid titulobarra bg-slate-700" >
               <a class="navbar-brand">Especialidades</a>
               <button mat-raised-button color="primary" (click)="agregarEspecialidad()">
                 <mat-icon>add_circle</mat-icon>
@@ -95,76 +97,10 @@
                   [dataSource]="listEspecialidades"
                   [filtro]="false"
                   ></app-tabladinamica>
-            <!--table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Autorizador</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Activo</th>
-                  <th scope="col">Opciones</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Produccion</td>
-                  <td>Juan E Salinas</td>
-                  <td>Gerencia</td>
-                  <td>1</td>
-                  <td>
-                    <button mat-icon-button
-                    type="button" class="btn btn-primary" >
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                    type="button" class="btn btn-danger" >
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Secretaria General</td>
-                  <td>Thornton</td>
-                  <td>fat</td>
-                  <td>1</td>
-                  <td>
-                    <button mat-icon-button
-                    type="button" class="btn btn-primary" >
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                    type="button" class="btn btn-danger" >
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td colspan="2">Mantenimiento</td>
-                  <td>twitter</td>
-                  <td>1</td>
-                  <td>
-                    <button mat-icon-button
-                    type="button" class="btn btn-primary" >
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                    type="button" class="btn btn-danger" >
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </!--table-->
-
         </div>
-        <div class="row mt-3"  *ngIf="activarBotones">
-          <nav class="navbar sticky-top bg-body-tertiary">
-            <div class="container-fluid">
+        <div class="row documentos titulobarra mt-3"  *ngIf="activarBotones">
+          <nav class="navbar sticky-top">
+            <div class="container-fluid bg-slate-700">
               <a class="navbar-brand">Documentos del Tecnico</a>
               <button mat-raised-button color="primary" (click)="agregarEspecialidad()">
                 <mat-icon>add_circle</mat-icon>
@@ -222,7 +158,7 @@
             </table>
           </div>
         </div>
-      </div>
+
     </div>
   </span>
 </div>

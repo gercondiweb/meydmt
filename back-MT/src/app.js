@@ -42,6 +42,8 @@ const ticketvisits = require('./modulos/consultastikets/rutas');
 
 const servicios = require('./modulos/servicios/rutas');
 
+const consultadb = require('./modulos/consultasdb/rutas')
+
 const error = require('./red/errors');
 
 const app = express();
@@ -57,6 +59,8 @@ app.set('port', config.app.port);
 
 //rutas
 app.use('/api/usuarios', usuarios);
+
+app.use('/api/consultadb', consultadb);
 
 app.use('/api/clientes', clientes);
 app.use('/api/sucursales', sucursales);

@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-6">
             <h1 *ngIf="accion === 'crear'">Solicitud de Ticket</h1>
-            <h1 *ngIf="accion != 'crear'">Ticket # {{objetoData.ticket.id}}</h1>
+            <h1 *ngIf="accion != 'crear'">Ticket # {{ticketSeleccionado}}</h1>
           </div>
           <div class="col-6 text-end">
             <button mat-raised-button color="succes"  (click)="regresar()">
@@ -23,7 +23,7 @@
       </div>
       <div class="card-body  mt-3">
 
-        <div *ngIf="accion === 'editar'">
+        <!--div *ngIf="accion === 'editar'">
 
               <div class="row mb-3">
                 <label><h2>Description</h2></label>
@@ -33,9 +33,9 @@
 
               </div>
 
-        </div>
+        </div-->
 
-        <div *ngIf="accion === 'crear'"><!--=======Aqui valida si la accion enviada es crear y mostrar el formulario-->
+        <div ><!--=======Aqui valida si la accion enviada es crear y mostrar el formulario-->
           <form [formGroup]="formTicket">
             <div class="row g-2">
               <div class="mb-3">
@@ -52,7 +52,7 @@
 
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Sucursal</label>
-                <select class="form-select" formControlName="id_cliente"
+                <select class="form-select" formControlName="id_sucursal"
                         aria-label="CLiente">
                     <option *ngFor="let sucur of cSucursales" [value]="sucur.Id">{{sucur.nombre}}</option>
                 </select>
@@ -60,14 +60,14 @@
 
               <div class="mb-3 col-4">
                 <label for="nitinput" class="form-label">Area</label>
-                <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                <select class="form-select" formControlName="id_area" aria-label="Area">
                     <option *ngFor="let area of cArea" [value]="area.Id">{{area.nombre}}</option>
                 </select>
               </div>
 
               <div class="mb-3 col-2">
                 <label for="clienteinput" class="form-label">Fecha</label>
-                <input type="date" class="form-control" formControlName="fecha"  placeholder="">
+                <input type="date" class="form-control" formControlName="fecha" placeholder="">
               </div>
 
               <div class="mb-3 col-2">
@@ -77,7 +77,7 @@
 
               <div class="mb-3 col-2">
                 <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
-                <select class="form-select" formControlName="prioridad" aria-label="Tipo Servicio">
+                <select class="form-select" formControlName="prioridad" aria-label="Prioridad">
                     <option *ngFor="let priori of prioridad" [value]="priori.value">{{priori.viewValue}}</option>
                 </select>
               </div>
@@ -100,7 +100,7 @@
 
               <div class="mb-3 col-8">
                 <label for="exampleFormControlInput1" class="form-label">Servicio</label>
-                <select class="form-select" formControlName="id_servicio" aria-label="Tipo Servicio">
+                <select class="form-select" formControlName="id_servicio" aria-label="Servicio">
                     <option *ngFor="let serv of servicios" [value]="serv.id_servicio">{{serv.Descripcion}}</option>
                 </select>
               </div>

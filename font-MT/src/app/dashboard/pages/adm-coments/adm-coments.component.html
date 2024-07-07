@@ -7,11 +7,11 @@
         <div class="row g-2">
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Comentario</label>
-            <textarea class="form-control" rows="5"  formControlName="descripcion" placeholder="Escriba un comentario"></textarea>
+            <textarea class="form-control" rows="5"  formControlName="comentario" placeholder="Escriba un comentario"></textarea>
           </div>
           <div class="mb-3 col-4">
             <label for="nitinput" class="form-label">Cliente</label>
-            <input class="form-control" type="text" [value]="this.data.data.CLIENTE" >
+            <input type="text" class="form-control" formControlName="id_cliente"  formControlName="" >
           </div>
 
         </div>
@@ -22,7 +22,7 @@
   </mat-dialog-content>
 
   <div mat-dialog-actions class="pie justify-content-end">
-    <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
     <button mat-raised-button color="primary" (click)="grabar()" cdkFocusInitial>Confirmar</button>
   </div>
 </div>
