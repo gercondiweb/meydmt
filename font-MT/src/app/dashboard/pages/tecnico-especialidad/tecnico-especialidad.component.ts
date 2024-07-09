@@ -58,10 +58,9 @@ export class TecnicoEspecialidadComponent implements OnInit{
     //TODO: validar si el tecnico esta recien creado, que no haga la consulta al servicio de datos compartidos
 
     this.objetoData = this.dataSharingService.getData();
-    //console.log(this.objetoData);
     this.formTecEsp.get('id_tecnico')?.setValue(this.objetoData.data.id);
 
-    console.log(this.formTecEsp.value)
+    //console.log(this.formTecEsp.value)
 
     try{
 

@@ -98,11 +98,16 @@
                   [filtro]="false"
                   ></app-tabladinamica>
         </div>
+
+        <div class="">
+          <app-cargardocs></app-cargardocs>
+        </div>
+
         <div class="row documentos titulobarra mt-3"  *ngIf="activarBotones">
           <nav class="navbar sticky-top">
             <div class="container-fluid bg-slate-700">
               <a class="navbar-brand">Documentos del Tecnico</a>
-              <button mat-raised-button color="primary" (click)="agregarEspecialidad()">
+              <button mat-raised-button color="primary" (click)="agregarDocumentos()">
                 <mat-icon>add_circle</mat-icon>
                 Agregar Documentos
               </button>
@@ -110,7 +115,13 @@
 
           </nav>
           <div class="row">
-            <table class="table table-hover">
+            <app-tabladinamica
+                  [columnas]="columnDocumentos"
+                  [dataSource]="listDocs"
+                  [filtro]="false"
+                  [manejaDoc]="true"
+                  ></app-tabladinamica>
+            <!--table class="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">Id</th>
@@ -155,7 +166,7 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table-->
           </div>
         </div>
 

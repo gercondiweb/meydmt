@@ -18,6 +18,7 @@ import { AdmServiciosComponent } from './pages/adm-servicios/adm-servicios.compo
 import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposervicios.component';
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
 import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
+import { InformesComponent } from './pages/informes/informes.component';
 
 
 
@@ -102,6 +103,10 @@ const routes: Routes = [
       {
         path:'admclientes/:accion',
         component: AdmClienteComponent
+      },
+      {
+        path:'informes',
+        component: InformesComponent
       },
       {
         path: '',

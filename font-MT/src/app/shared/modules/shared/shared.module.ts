@@ -9,6 +9,7 @@ import { NavegacionComponent,
           FrmMaestroComponent,
           ModalFormComponent,
           FrmdinamicmodalComponent,
+          CargardocsComponent
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -30,7 +31,8 @@ import { LoadingFullComponent } from '../../components/loading-full/loading-full
     TablaDetalleComponent,
     ModalFormComponent,
     FrmdinamicmodalComponent,
-    LoadingFullComponent
+    LoadingFullComponent,
+    CargardocsComponent,
   ],
   imports: [
     CommonModule,
@@ -58,7 +60,9 @@ import { LoadingFullComponent } from '../../components/loading-full/loading-full
     ModalFormComponent,
     ReactiveFormsModule,
     FrmdinamicmodalComponent,
-    LoadingFullComponent
+    LoadingFullComponent,
+    ReactiveFormsModule,
+    CargardocsComponent,
   ]
 })
 export class SharedModule { }

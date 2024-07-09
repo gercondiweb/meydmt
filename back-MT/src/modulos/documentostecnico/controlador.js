@@ -1,6 +1,6 @@
 const db = require("../../DB/mysql");
 
-const TABLA = "tecnicos";
+const TABLA = "documentostecnico";
 
 module.exports = function (dbInyectada) {
 
@@ -8,15 +8,6 @@ module.exports = function (dbInyectada) {
 
   if(!db){
     db=require('../../DB/mysql');
-  }
-
-  function consultaEsp(consulta){
-    return db.spTecnicos(consulta);
-
-  }
-
-  function consultaDocs(consulta){
-    return db.spTecnicos(consulta);
   }
 
   function todos() {
@@ -28,22 +19,18 @@ module.exports = function (dbInyectada) {
   }
 
   async function agregar(body) {
-    const tecnico = {
+    const espcTecnico = {
       id: body.id,
+      id_tecnico: body.id_tecnico,
+      id_documento: body.id_especialidad,
+      fechaemision: body.fechaemision,
+      fechavencimiento: body.fechavencimiento,
       numerodocumento: body.numerodocumento,
-      nombre: body.nombre,
-      apellidos: body.apellidos,
-      numid: body.numid,
-      direccion: body.direccion,
-      email: body.email,
-      telefono: body.telefono,
-      tiposangre: body.tiposangre,
-      foto:body.foto,
-      activo: body.activo
-   
+      observaciones: body.observaciones,
+      rutadocumento: body.rutadocumento,
     }
 
-    const respuesta = await db.agregar(TABLA, tecnico);
+    const respuesta = await db.agregar(TABLA, espcTecnico);
     
     var insertId = 0;
     
@@ -64,7 +51,5 @@ module.exports = function (dbInyectada) {
     uno,
     agregar,
     eliminar,
-    consultaEsp,
-    consultaDocs
   };
 };

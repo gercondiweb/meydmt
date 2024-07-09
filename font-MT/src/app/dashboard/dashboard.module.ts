@@ -31,6 +31,7 @@ import { AdmEspecialidadComponent } from './pages/adm-especialidad/adm-especiali
 import { AdmDocumentosComponent } from './pages/adm-documentos/adm-documentos.component';
 import { TecnicoEspecialidadComponent } from './pages/tecnico-especialidad/tecnico-especialidad.component';
 import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
+import { InformesComponent } from './pages/informes/informes.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-mas
     AdmEspecialidadComponent,
     AdmDocumentosComponent,
     TecnicoEspecialidadComponent,
-    AdmMasterserviciosComponent
+    AdmMasterserviciosComponent,
+    InformesComponent
   ],
   imports: [
     CommonModule,

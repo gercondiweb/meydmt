@@ -50,7 +50,7 @@ export class LayoutComponent implements OnInit{
     },
     {
       icon: 'monitoring',
-      ruta: '/dashboard/verservicios',
+      ruta: '/dashboard/informes',
       name: 'Informes'
     },
     {

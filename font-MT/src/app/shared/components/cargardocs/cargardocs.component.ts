@@ -12,7 +12,7 @@ export class CargardocsComponent {
 
   selectedFiles: File[] = [];
   uploadedFiles: { url: string, name: string, type: string }[] = [];
-  uploadUrl = 'https://tu-servidor.com/api/upload'; // URL del backend para subir archivos
+  uploadUrl = 'upload'; // URL del backend para subir archivos
 
   constructor(private http: HttpClient) {}
 
