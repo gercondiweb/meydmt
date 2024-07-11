@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../../services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,9 +6,10 @@ import { AdmSucursalesComponent } from '../adm-sucursales/adm-sucursales.compone
 import { MatDialog } from '@angular/material/dialog';
 import { AdmAreasComponent } from '../adm-areas/adm-areas.component';
 import { DataSharingService } from '../../services/services/data-sharing.service';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, catchError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoadingService } from '@/app/shared/services/loading.service';
 
 interface Area {
   id: number;
@@ -26,7 +27,7 @@ interface Area {
   styleUrl: './adm-cliente.component.css'
 })
 export class AdmClienteComponent implements OnInit {
-
+  private readonly loadingServer = inject(LoadingService);
   accion : any;
   response: any;
   param1!: string;
@@ -83,6 +84,7 @@ export class AdmClienteComponent implements OnInit {
       this.formCliente.get('id')?.setValue(this.objetoData.data.id);
       this.cargarSucursalesCliente();
       this.cargarAreasSucursal();
+
     }else{
       this.formCliente.get('id')?.setValue(0);
     }
@@ -138,8 +140,8 @@ export class AdmClienteComponent implements OnInit {
   async guardarCliente(){
 
     try{
-
       //console.log(this.formCliente.value)
+      this.loadingServer.show();
       const res = await lastValueFrom(this.restService.crearCliente(this.formCliente.value));
 
       this.clienteSeleccionado = res.insertId;
@@ -148,7 +150,7 @@ export class AdmClienteComponent implements OnInit {
 
       //console.log(res)
       this.response = res;
-      if(!this.response.error){
+     /*  if(!this.response.error){
         await Swal.fire({
           position: "center",
           icon: "success",
@@ -156,17 +158,11 @@ export class AdmClienteComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-
-      }
-    }catch( e:any ){
+      } */
+    }catch(e){
       console.log(e);
-      await Swal.fire({
-        position: "center",
-        icon: "error",
-        title: e.message,
-        showConfirmButton: false,
-        timer: 1500
-      });
+    }finally{
+      this.loadingServer.hidden();
     }
   }
 

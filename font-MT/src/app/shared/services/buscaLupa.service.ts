@@ -12,6 +12,7 @@ export class BuscaLupaService {
   private readonly loadingService = inject(LoadingService);
   private readonly _hhtp = inject(HttpClient);
   public _endPoint = signal('');
+  public isShow = signal(false);
   public body = signal<{ opc : string }>({ opc: 'TSRV'});
   public procces : ( params : any) => void = () => {};
   cabecera : ICabecera[] = [];

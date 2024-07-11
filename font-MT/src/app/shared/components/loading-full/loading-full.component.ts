@@ -8,7 +8,7 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class LoadingFullComponent {
   private readonly loadingService = inject(LoadingService);
-  isShow = computed<boolean>( () => this.loadingService.isShow());
+  isShow = computed<boolean>( () => this.loadingService.isShow() );
   size = computed<string>( () => this.loadingService.size());
 
 }

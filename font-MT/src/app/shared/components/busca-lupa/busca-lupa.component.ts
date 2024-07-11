@@ -1,5 +1,6 @@
-import { Component,signal } from '@angular/core';
+import { Component, computed, signal, inject } from '@angular/core';
 import { ICabecera } from '../../types/interfaces/ICabecera';
+import { BuscaLupaService } from '../../services/buscaLupa.service';
 
 @Component({
   selector: 'busca-lupa',
@@ -7,8 +8,10 @@ import { ICabecera } from '../../types/interfaces/ICabecera';
   styleUrls: ['./busca-lupa.component.css']
 })
 export class BuscaLupaComponent {
+  private readonly buscaLupaService = inject(BuscaLupaService);
   list = signal([]);
   cabecera: ICabecera [] = [];
+  isShow = computed( () => this.buscaLupaService.isShow() )
 
   constructor(){
 
@@ -37,5 +40,5 @@ export class BuscaLupaComponent {
 
   }
 
- 
+
 }
