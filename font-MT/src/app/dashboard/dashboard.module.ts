@@ -27,6 +27,10 @@ import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposer
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
 import { DatePipe } from '@angular/common';
 import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tecnicocontrato.component';
+import { AdmEspecialidadComponent } from './pages/adm-especialidad/adm-especialidad.component';
+import { AdmDocumentosComponent } from './pages/adm-documentos/adm-documentos.component';
+import { TecnicoEspecialidadComponent } from './pages/tecnico-especialidad/tecnico-especialidad.component';
+import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
 
 
 @NgModule({
@@ -53,7 +57,8 @@ import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tec
     AdmEspecialidadComponent,
     AdmDocumentosComponent,
     TecnicoEspecialidadComponent,
-    AdmMasterserviciosComponent
+    AdmMasterserviciosComponent,
+    AdmTiposerviciosComponent
   ],
   imports: [
     CommonModule,
@@ -61,8 +66,7 @@ import { AdmTecnicocontratoComponent } from './pages/adm-tecnicocontrato/adm-tec
     GoogleMapsModule,
     DashboardRoutingModule,
     FormsModule,
-    SharedModule,
-    MaterialModulModule
+    SharedModule
   ],
   providers: [DatePipe],
 })

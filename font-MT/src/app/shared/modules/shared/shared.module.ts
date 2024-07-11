@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LoadingFullComponent } from '../../components/loading-full/loading-full.component';
+import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.component';
 
 
 
@@ -30,7 +31,8 @@ import { LoadingFullComponent } from '../../components/loading-full/loading-full
     TablaDetalleComponent,
     ModalFormComponent,
     FrmdinamicmodalComponent,
-    LoadingFullComponent
+    LoadingFullComponent,
+    BuscaLupaComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +60,8 @@ import { LoadingFullComponent } from '../../components/loading-full/loading-full
     ModalFormComponent,
     ReactiveFormsModule,
     FrmdinamicmodalComponent,
-    LoadingFullComponent
+    LoadingFullComponent,
+    BuscaLupaComponent
   ]
 })
 export class SharedModule { }

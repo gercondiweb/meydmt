@@ -16,8 +16,6 @@ export class AuthComponent {
   private readonly loadingService = inject(LoadingService);
   usuario: string = '';
   password: string = '';
-  private readonly _cookieService = inject(CookieService)
-
   constructor(private router: Router, private authService : AuthService) {}
 
   async login(){
