@@ -59,6 +59,7 @@ import { InformesComponent } from './pages/informes/informes.component';
     AdmDocumentosComponent,
     TecnicoEspecialidadComponent,
     AdmMasterserviciosComponent,
+    AdmTiposerviciosComponent,
     InformesComponent
   ],
   imports: [
@@ -67,7 +68,7 @@ import { InformesComponent } from './pages/informes/informes.component';
     GoogleMapsModule,
     DashboardRoutingModule,
     FormsModule,
-    SharedModule,
+    SharedModule
   ],
   providers: [DatePipe],
 })

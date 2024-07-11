@@ -16,6 +16,7 @@ async function todos (req, res, next){
     const items = await controlador.todos();
         respuesta.success(req, res, items, 200); 
     }catch(err){
+        respuesta.error(req, res, { body: { message: 'Error al guardar datos' } }, 402);
         next(err);
     }
 };

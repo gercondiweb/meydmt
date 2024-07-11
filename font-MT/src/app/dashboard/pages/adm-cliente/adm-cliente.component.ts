@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../../services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,9 +6,10 @@ import { AdmSucursalesComponent } from '../adm-sucursales/adm-sucursales.compone
 import { MatDialog } from '@angular/material/dialog';
 import { AdmAreasComponent } from '../adm-areas/adm-areas.component';
 import { DataSharingService } from '../../services/services/data-sharing.service';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, catchError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoadingService } from '@/app/shared/services/loading.service';
 
 interface Area {
   id: number;
@@ -22,38 +23,28 @@ interface Area {
 
 @Component({
   selector: 'app-adm-cliente',
-  standalone: false,
   templateUrl: './adm-cliente.component.html',
   styleUrl: './adm-cliente.component.css'
 })
 export class AdmClienteComponent implements OnInit {
-
+  private readonly loadingServer = inject(LoadingService);
   accion : any;
-
   response: any;
-
   param1!: string;
   param2!: string;
   objetoData: any;
-
   public idCliente:any;
-
   vCliente: any;
   listClientes: any[]=[];
-
   vSucursal: any;
   listSucursales: any[]=[];
-
   vArea: any;
   listAreas: any[]=[];
   columnAreas: string[] = ['id', 'nombre', 'autorizador', 'email', 'activo'];
-
   vCiudad: any;
   listCiudades: any[]=[];
-
   vPais: any;
   listPaises: any[]=[];
-
   consultaCliente={
     opc:'SUCUR',
     vIDCLIENTE: 1,
@@ -93,6 +84,7 @@ export class AdmClienteComponent implements OnInit {
       this.formCliente.get('id')?.setValue(this.objetoData.data.id);
       this.cargarSucursalesCliente();
       this.cargarAreasSucursal();
+
     }else{
       this.formCliente.get('id')?.setValue(0);
     }
@@ -105,12 +97,7 @@ export class AdmClienteComponent implements OnInit {
     this.param1 = this.dataSharingService.getParam1();
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
-
-   console.log('objetoData', this.objetoData)
-
     this.idCliente = this.objetoData.data.id;
-
-
 
     this.formCliente.patchValue({
       nit: this.objetoData.data.Nit,
@@ -123,7 +110,6 @@ export class AdmClienteComponent implements OnInit {
       id_cliente: this.objetoData.data.Id,
       activo: this.objetoData.data.ACTIVO
     });
-//console.log(this.consultaCliente)
 
   }
 
@@ -154,8 +140,8 @@ export class AdmClienteComponent implements OnInit {
   async guardarCliente(){
 
     try{
-
       //console.log(this.formCliente.value)
+      this.loadingServer.show();
       const res = await lastValueFrom(this.restService.crearCliente(this.formCliente.value));
 
       this.clienteSeleccionado = res.insertId;
@@ -164,7 +150,7 @@ export class AdmClienteComponent implements OnInit {
 
       //console.log(res)
       this.response = res;
-      if(!this.response.error){
+     /*  if(!this.response.error){
         await Swal.fire({
           position: "center",
           icon: "success",
@@ -172,17 +158,11 @@ export class AdmClienteComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-
-      }
-    }catch( e:any ){
+      } */
+    }catch(e){
       console.log(e);
-      await Swal.fire({
-        position: "center",
-        icon: "error",
-        title: e.message,
-        showConfirmButton: false,
-        timer: 1500
-      });
+    }finally{
+      this.loadingServer.hidden();
     }
   }
 

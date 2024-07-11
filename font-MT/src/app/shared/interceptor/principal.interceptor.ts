@@ -45,13 +45,22 @@ export const principalInterceptor: HttpInterceptorFn = (req, next) => {
     } ),
      catchError( ( error : HttpErrorResponse ) => {
 
-      const message =  error.error.body.message;
+      const message =  error.error?.body?.message;
+      console.log( message );
       if(message){
         Swal.fire({
           position: "center",
           icon: "error",
        /*    title: "", */
           text: message,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }else{
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Ocorreu um erro inesperado",
           showConfirmButton: false,
           timer: 1500
         });
