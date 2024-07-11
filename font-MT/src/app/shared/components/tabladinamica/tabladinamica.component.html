@@ -36,6 +36,12 @@
           type="button" class="btn btn-primary" >
             <mat-icon>edit</mat-icon>
           </button>
+
+          <button mat-icon-button (click)="eliminarElemento(element)"
+          type="button" class="btn btn-danger" *ngIf="manejaDoc" >
+            <mat-icon>attach_file</mat-icon>
+          </button>
+
           <button mat-icon-button (click)="eliminarElemento(element)"
           type="button" class="btn btn-danger" >
             <mat-icon>delete</mat-icon>

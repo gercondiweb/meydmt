@@ -9,6 +9,7 @@ import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 import { AdmEspecialidadComponent } from '../adm-especialidad/adm-especialidad.component';
 import { TecnicoEspecialidadComponent } from '../tecnico-especialidad/tecnico-especialidad.component';
+import { AdmDocumentosComponent } from '../adm-documentos/adm-documentos.component';
 
 @Component({
   selector: 'app-adm-tecnicos',
@@ -35,6 +36,10 @@ export class AdmTecnicosComponent implements OnInit{
   columnEspecialidades: string[] = ['id', 'nombre','descripcion'];
   listEspecialidades= new MatTableDataSource<any>();
   vEspecialidad:any;
+
+  columnDocumentos: string[] = ['id', 'nombre','numerodocumento','fechaemision','fechavencimiento'];
+  listDocs= new MatTableDataSource<any>();
+  vDoc:any;
 
   consultaEspecialidades={
     opc:'',
@@ -100,6 +105,8 @@ export class AdmTecnicosComponent implements OnInit{
     });
 //console.log(this.consultaCliente)
   this.cargarEspecialidades();
+
+  this.cargarDocumentos();
 
   }
 
@@ -170,8 +177,34 @@ export class AdmTecnicosComponent implements OnInit{
     });
   }
 
-  agregarDocumento(){
+  cargarDocumentos(){
+    this.consultaEspecialidades.opc='SLC-DOC';
+    this.consultaEspecialidades.vIDTECNICO= this.objetoData.data.id;
 
+    this.restService.consultaDocTecnico(this.consultaEspecialidades).subscribe((data: any) => {
+      this.vDoc = data.body[0];
+      this.listDocs = this.vEspecialidad;
+    })
+  }
+
+  agregarDocumentos(){
+    const data = this.dataSharingService.getData();
+
+    const dialogRef = this.dialog.open(AdmDocumentosComponent, {
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation : false,
+      width : '900px',
+      data: {
+        tipo: 'Crear',
+        data: data,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe( (data) => {
+      this.vEspecialidad.push(data)
+      console.log( this.vEspecialidad)
+    });
   }
 
   regresar(){

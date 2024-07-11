@@ -80,6 +80,13 @@ export class TablaDetalleComponent implements OnChanges {
   }
 
   editarTiket(element: any) {
+    const param3 = 'valor1';
+    const param4 = 'valor2';
+    const data2 = { ticket: element };
+
+    //console.log(data)
+
+    this.dataSharingService.setParams(param3, param4, data2);
     const route = '/dashboard/admtickets'  ;
       this.router.navigate([route,'editar']);
   }

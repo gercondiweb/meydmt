@@ -100,6 +100,10 @@ export class RestService {
     return this.http.post('sptecnicos/consultaEsp', datosConsulta); // GET http://localhost:4000/api/consultaservicio
   }
 
+  public consultaDocTecnico(datosConsulta:any): Observable<any>{
+    return this.http.post('sptecnicos/consultaDocs', datosConsulta); // GET http://localhost:4000/api/consultaservicio
+  }
+
   public updTecnicosContratos(datosConsulta:any):Observable<any>{
     return this.http.post('operacionescontrato/updateTecCont',datosConsulta);
   }
@@ -108,10 +112,18 @@ export class RestService {
     return this.http.post('especialidadestecnico', datosEspTec); // GET http://localhost:4000/api/clientes
   }
 
+  public saveDocTecnico(datosDocTec:any): Observable<any>{
+    return this.http.post('documentostecnico', datosDocTec); // GET http://localhost:4000/api/documentostecnico
+  }
+
   public getEspecialidadesTecnico(datosServicio:any): Observable<any>{
     return this.http.post('consultatecnicos/esp', datosServicio); // GET http://localhost:4000/api/clientes
   }
   public getDocumentosTecnico(datosServicio:any): Observable<any>{
     return this.http.post('consultatecnico/docs', datosServicio); // GET http://localhost:4000/api/clientes
+  }
+
+  public comentarios(datosComentario:any): Observable<any>{
+    return this.http.post('comentarios', datosComentario); // GET http://localhost:4000/api/clientes
   }
 }

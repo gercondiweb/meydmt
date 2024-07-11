@@ -41,13 +41,13 @@ export class TecnicoEspecialidadComponent implements OnInit{
         fechaemision:['2024-07-01'],
         fechavencimiento:['2024-12-31'],
         observaciones:[''],
-        activo:[0]
+        activo:[1]
 
     });
   }
 
   cargarEspecialidades(){
-    
+
     this.restService.getMaestros(this.consulta).subscribe(respuesta=>{
       this.listEspecialidades=respuesta;
       this.vEspecialidad=this.listEspecialidades.body[0];
@@ -58,9 +58,9 @@ export class TecnicoEspecialidadComponent implements OnInit{
     //TODO: validar si el tecnico esta recien creado, que no haga la consulta al servicio de datos compartidos
 
     this.objetoData = this.dataSharingService.getData();
-    //console.log(this.objetoData);
     this.formTecEsp.get('id_tecnico')?.setValue(this.objetoData.data.id);
 
+    //console.log(this.formTecEsp.value)
 
     try{
 
@@ -80,7 +80,7 @@ export class TecnicoEspecialidadComponent implements OnInit{
           timer: 1500
         });
       }
-      
+
     }catch( e:any ){
       console.log(e);
       await Swal.fire({

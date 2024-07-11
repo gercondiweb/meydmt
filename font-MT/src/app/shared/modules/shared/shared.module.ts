@@ -9,6 +9,7 @@ import { NavegacionComponent,
           FrmMaestroComponent,
           ModalFormComponent,
           FrmdinamicmodalComponent,
+          CargardocsComponent
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -32,6 +33,7 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     ModalFormComponent,
     FrmdinamicmodalComponent,
     LoadingFullComponent,
+    CargardocsComponent,
     BuscaLupaComponent
   ],
   imports: [
@@ -61,6 +63,9 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     ReactiveFormsModule,
     FrmdinamicmodalComponent,
     LoadingFullComponent,
+    BuscaLupaComponent,
+    ReactiveFormsModule,
+    CargardocsComponent,
     BuscaLupaComponent
   ]
 })

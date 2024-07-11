@@ -1,4 +1,8 @@
 const express = require('express');
+
+const multer = require('multer');
+const path = require('path');
+
 const cors = require('cors');
 const morgan = require('morgan');   //visualiza las peticiones
 const config = require('./config');
@@ -17,6 +21,7 @@ const auth = require('./modulos/auth/rutas');
 const tecnicos = require('./modulos/tecnicos/rutas');
 const sptecnicos = require('./modulos/tecnicos/rutas');
 const especialidadestecnico= require('./modulos/especialidadestecnico/rutas');
+const documentostecnico=require('./modulos/documentostecnico/rutas');
 
 const tiposervicio = require('./modulos/tiposervicio/rutas');
 const usuarioscliente = require('./modulos/usuarioscliente/rutas');
@@ -42,6 +47,8 @@ const ticketvisits = require('./modulos/consultastikets/rutas');
 
 const servicios = require('./modulos/servicios/rutas');
 
+const consultadb = require('./modulos/consultasdb/rutas')
+
 const error = require('./red/errors');
 
 const app = express();
@@ -55,8 +62,35 @@ app.use(cors());
 //Configuracion
 app.set('port', config.app.port);
 
+//multer consig de subir archivo
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    }
+  });
+
+  const upload = multer({ storage });
+
+  app.post('/api/upload', upload.array('files'), (req, res) => {
+  const files = req.files.map(file => ({
+    url: `http://localhost:${app.get('port')}/uploads/${file.filename}`,
+    name: file.originalname,
+    type: file.mimetype
+  }));
+
+  res.json({body:files});
+});
+
 //rutas
+
+app.use('/uploads', express.static('uploads')); //multer
+//--------------------------------------------------------------------
 app.use('/api/usuarios', usuarios);
+
+app.use('/api/consultadb', consultadb);
 
 app.use('/api/clientes', clientes);
 app.use('/api/sucursales', sucursales);
@@ -93,6 +127,7 @@ app.use('/api/servicios', servicios);
 app.use('/api/tecnicos', tecnicos);
 app.use('/api/sptecnicos', sptecnicos);
 app.use('/api/especialidadestecnico', especialidadestecnico);
+app.use('/api/documentostecnico', documentostecnico);
 
 app.use(error);
 module.exports = app;

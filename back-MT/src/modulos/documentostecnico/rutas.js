@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post('/consult/',seguridad(), todos);
 router.post('/:id',seguridad(), uno);
-router.put('/', seguridad(), eliminar);
-router.post('/', seguridad(), agregar);
+router.put('/',seguridad(), eliminar);
+router.post('/',seguridad(), agregar);
 
 async function todos (req, res, next){
     try{

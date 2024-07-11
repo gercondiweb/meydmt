@@ -1,0 +1,12 @@
+<div class="file-upload-container">
+  <input type="file" (change)="onFileSelected($event)" accept=".pdf,.png" multiple>
+  <button (click)="onUpload()">Subir Archivos</button>
+
+  <div *ngFor="let file of uploadedFiles">
+    <a [href]="file.url" target="_blank">
+      <img *ngIf="file.type === 'image/png'" [src]="file.url" alt="Icono de imagen">
+      <i *ngIf="file.type === 'application/pdf'" class="fas fa-file-pdf"></i>
+      {{ file.name }}
+    </a>
+  </div>
+</div>

@@ -17,7 +17,7 @@ module.exports = function (dbInyectada) {
   if(!db){
     db=require('../../DB/mysql');
   }
-  
+   
   async function login(username, password){
     //console.log('ANTES DE EJECUTAR')
     const data = await db.query(TABLA, {usuario:username});

@@ -24,24 +24,10 @@ module.exports = function (dbInyectada) {
   async function agregar(body) {
     const servicio = {
       id: body.id,
-      fecha: body.fecha,
-      hora: body.hora,
       id_tiposervicio: body.id_tiposervicio,
-      id_placa: body.id_placa,
-      id_conductor: body.id_conductor,
-      id_cliente:body.id_cliente,
-      origen: body.origen,
-      destino: body.destino,
-      usuarios:body.usuarios,
-      id_zona:body.id_zona,
-      estado:body.estado,
-      valor:body.valor,
-      costo:body.costo,
-      distancia:body.distancia,
-      duracion:body.duracion,
-      pesoinicial:body.pesoinicial,
-      pesofinal:body.pesofinal,
-      observaciones:body.observaciones
+      descripcion : body.descripcion,
+      observaciones: body.observaciones,
+      activo : body.activo
     }
     
     const respuesta = await db.agregar(TABLA, servicio);

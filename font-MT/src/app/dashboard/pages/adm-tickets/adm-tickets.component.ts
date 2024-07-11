@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { RestService } from '../../services/services/rest.service';
 import { MatDialog } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataSharingService } from '../../services/services/data-sharing.service';
 
@@ -104,6 +105,8 @@ export class AdmTicketsComponent implements OnInit{
   listVisitas: any;
   visitas:any[]=[];
 
+  ticketSeleccionado : any;
+
   public formTicket !: FormGroup;
   public formVisita !: FormGroup;
   public formComentario !: FormGroup;
@@ -123,7 +126,7 @@ export class AdmTicketsComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
     private dataSharingService: DataSharingService,
-
+    private datePipe : DatePipe
   ){}
 
   ngOnInit(): void {
@@ -142,7 +145,8 @@ export class AdmTicketsComponent implements OnInit{
        id_tecnico: ['',[Validators.required]],
        estado: ['SOL',[Validators.required]],
        prioridad: ['',[Validators.required]],
-       sucursal:[''],
+       id_sucursal:[''],
+       id_area:[''],
        id_cliente:[''],
        tipo_tiket:[0]
     });
@@ -167,9 +171,10 @@ export class AdmTicketsComponent implements OnInit{
   }
 
   selSucursales(value: string){
+
     this.datosCli.opc='SUCUR';
     this.datosCli.vIDCLIENTE = value;
-
+console.log(this.datosCli)
     this.restService.getClientes(this.datosCli).subscribe(res=>{
       this.listSucursales = res;
       this.cSucursales = this.listSucursales.body[0];
@@ -180,6 +185,9 @@ export class AdmTicketsComponent implements OnInit{
       this.listAreas = res2;
       this.cArea = this.listAreas.body[0];
     });
+
+    console.log(this.cSucursales)
+    console.log(this.cArea)
   }
 
   selServicios(value: string){
@@ -219,6 +227,14 @@ export class AdmTicketsComponent implements OnInit{
         this.tipoServ=this.listTiposServ.body[0];
       })
 
+      this.datosBusquedaMaestro.opc = 'SERV';
+      this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
+        this.listServ=respuesta;
+        this.servicios=this.listServ.body[0];
+      })
+
+      this.selSucursales('1');
+
   }
 
   cargarDatosTicket(){
@@ -228,20 +244,35 @@ export class AdmTicketsComponent implements OnInit{
     this.objetoData = this.dataSharingService.getData();
 
     this.datosBusquedaTicket.opc='SEL';
-
     this.datosBusquedaTicket.vIDTICKET = this.objetoData.ticket.Id;
-
-      console.log(this.objetoData.ticket)
+    this.ticketSeleccionado = this.objetoData.ticket.Id;
 
      this.restService.getTicketComents(this.datosBusquedaTicket).subscribe(respuesta=>{
         this.listComentarios=respuesta;
         this.comentarios=this.listComentarios.body[0];
 
-        console.log(this.comentarios)
+        //console.log(this.comentarios)
 
         this.visitas=this.listComentarios.body[1];
 
-        console.log(this.visitas)
+        //console.log(this.visitas)
+        console.log(this.objetoData)
+       
+        this.formTicket.patchValue({
+          id: this.objetoData.ticket.Id,
+          fecha: this.objetoData.ticket.Fecha.split('T')[0],
+          hora: this.objetoData.ticket.Hora,
+          id_tiposervicio: this.objetoData.ticket.id_tiposervicio,
+          id_servicio: this.objetoData.ticket.id_servicio,
+          descripcion: this.objetoData.ticket.DetalleTKT,
+          id_tecnico: this.objetoData.ticket.id_tecnico,
+          estado: this.objetoData.ticket.Estado,
+          prioridad: this.objetoData.ticket.Prioridad,
+          id_sucursal: this.objetoData.ticket.id_sucursal,
+          id_area: this.objetoData.ticket.id_area,
+          id_cliente: this.objetoData.ticket.id_cliente,
+          tipo_tiket: this.objetoData.ticket.tipo_tiket
+        });
       })
 
   }
@@ -253,7 +284,7 @@ export class AdmTicketsComponent implements OnInit{
       this.formTicket.get('opc')?.setValue('NEW');
       this.formTicket.get('id')?.setValue('0');
       this.formTicket.get('id_cliente')?.setValue('1');
-
+    }
      // console.log(this.formTicket.value)
 
       try{
@@ -284,11 +315,7 @@ export class AdmTicketsComponent implements OnInit{
         });
       }
       this.regresar();
-    }
-    else{
-    // actualizar valores del ticket
-
-    }
+    
   }
 
   agregarComentario(elemento: ElementoTicket) {
