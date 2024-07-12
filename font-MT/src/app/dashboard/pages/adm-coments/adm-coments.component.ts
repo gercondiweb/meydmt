@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { response } from 'express';
 import Swal from 'sweetalert2';
+import { formatDate } from '@angular/common';
+import { AuthService } from '@/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-adm-coments',
@@ -20,19 +22,23 @@ export class AdmComentsComponent implements OnInit{
     public dialogRef: MatDialogRef<AdmComentsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private RestService:RestService) {}
+    private RestService:RestService,
+    private authService : AuthService) {}
 
   ngOnInit(): void {
+
+    const now = new Date();
+    const formattedTime = formatDate(now, 'HH:mm', 'en-US');
+    const currentUser = this.authService.getCurrentUser();
 
      this.frmComents = this.formBuilder.group({
       id:[0],
       id_ticket:[0,[Validators.required]],
       comentario:['',[Validators.required]],
-      usuario:[''],
-      fecha:[''],
-      hora:[''],
+      usuario:['currentUser'],
+      fecha:[now],
+      hora:[formattedTime],
       visible:['']
-
      });
 
   }

@@ -20,6 +20,10 @@ export class RestService {
     return this.http.post('clientes',datosConsulta);
   }
 
+  public saveTickets(datosTiket:any): Observable<any>{
+    return this.http.post('tikets', datosTiket); // GET http://localhost:4000/api/documentostecnico
+  }
+
   public getAllTikets(datosConsulta:any): Observable<any>{
     return this.http.post('consultatkt', datosConsulta); // GET http://localhost:4002/api/tikest
   }
@@ -64,12 +68,10 @@ export class RestService {
   }
 
   public crearTkt(datosConsulta:any):Observable<any>{
-    //console.log('DATOS CONSULTA ', datosConsulta)
     return this.http.post('operacionestikets/creartkt', datosConsulta);
   }
 
   public asignarTecnicoTkt(datosConsulta:any):Observable<any>{
-    //console.log('DATOS CONSULTA ', datosConsulta)
     return this.http.post('operacionestikets/creartkt', datosConsulta);
   }
 

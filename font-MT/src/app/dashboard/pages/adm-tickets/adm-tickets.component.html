@@ -51,17 +51,16 @@
               </div>
 
               <div class="mb-3 col-4">
-                <label for="nitinput" class="form-label">Sucursal</label>
-                <select class="form-select" formControlName="id_sucursal"
-                        aria-label="CLiente">
-                    <option *ngFor="let sucur of cSucursales" [value]="sucur.Id">{{sucur.nombre}}</option>
+                <label for="sucursalinput" class="form-label">Sucursal</label>
+                <select class="form-select" formControlName="id_sucursal" aria-label="Sucursal">
+                    <option *ngFor="let sucur of cSucursales" [value]="sucur.id">{{sucur.nombre}}</option>
                 </select>
               </div>
 
               <div class="mb-3 col-4">
-                <label for="nitinput" class="form-label">Area</label>
+                <label for="areainput" class="form-label">Area</label>
                 <select class="form-select" formControlName="id_area" aria-label="Area">
-                    <option *ngFor="let area of cArea" [value]="area.Id">{{area.nombre}}</option>
+                    <option *ngFor="let area of cArea" [value]="area.id">{{area.nombre}}</option>
                 </select>
               </div>
 

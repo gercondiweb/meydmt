@@ -22,17 +22,19 @@ module.exports = function (dbInyectada) {
     const tiket = {
       id: body.id,
       id_cliente: body.id_cliente,
-      id_tecnico: body.id_tecnico,
       fecha: body.fecha,
       hora: body.hora,
       prioridad: body.prioridad,
       id_servicio: body.id_servicio,
       id_tiposervicio: body.id_tiposervicio,
       imagen: body.imagen,
-      descripcion: body.descipcion,
+      descripcion: body.descripcion,
       estado: body.estado,
       usuariocrea: body.usuariocrea,
-      fechacrea: body.fechacrea
+      fechacrea: body.fechacrea,
+      tipo_tiket: body.tipo_tiket,
+      id_sucursal : body.id_sucursal,
+      id_area : body.id_area
    
     }
 

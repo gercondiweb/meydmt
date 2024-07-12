@@ -47,8 +47,8 @@ export class ModalFormComponent implements OnInit{
 
   datosTkt = {
     opc: 'UTC',
-    id_tkt : null,
-    id_tecnico : null
+    id_tkt : 0,
+    id_tecnico : 0
   }
 
   public response:any;
@@ -70,20 +70,22 @@ export class ModalFormComponent implements OnInit{
        id : [{value:'', disabled:this.data.tipo==='Crear'},Validators.required],
        fecha : ['',[Validators.required]],
        hora: ['',[Validators.required]],
-       id_tiposervicio: ['',[Validators.required]],
-       id_servicio: ['',[Validators.required]],
+       tiposervicio: ['',[Validators.required]],
+       servicio: ['',[Validators.required]],
        descripcion: ['',[Validators.required]],
        id_tecnico: ['',[Validators.required]],
        estado: ['SOL',[Validators.required]],
        prioridad: ['',[Validators.required]],
        sucursal:[''],
        id_cliente:[''],
+       cliente:[''],
        tipo_tiket:[0]
     });
 
     this.cargarMaestros();
 
-    if (this.data.tipo == 'EDITAR'){
+    if (this.data.tipo === 'EDITAR'){
+      this.formAsignar.controls['id_cliente'].disable();
       this.cargarDatos();
     }else{
 
@@ -99,7 +101,10 @@ export class ModalFormComponent implements OnInit{
   }
 
   async grabar(){
-    if (this.data.tipo == 'Crear'){ //------------ Crear Tiket ---------------------------
+
+    console.log(this.data.tipo)
+
+    if (this.data.tipo === 'Crear'){ //------------ Crear Tiket ---------------------------
       this.formAsignar.get('opc')?.setValue('NEW');
       this.formAsignar.get('id')?.setValue('0');
       // TODO: hacer el procedimiento para capturar el la empresa del usuario conectado
@@ -132,8 +137,9 @@ export class ModalFormComponent implements OnInit{
 
     }else{ //------------ Asignar Tecnico ---------------------------
 
-      this.datosTkt.id_tkt = this.data.data.id;
-      this.datosTkt.id_tecnico = this.formAsignar.value.id_tecnico;
+      this.datosTkt.id_tkt = this.data.data.Id;
+      this.datosTkt.id_tecnico = this.formAsignar.get('id_tecnico')?.value;
+      console.log(this.data)
       console.log(this.datosTkt)
       try{
         const res = await lastValueFrom(this.RestService.asignarTecnicoTkt(this.datosTkt));
@@ -168,7 +174,9 @@ export class ModalFormComponent implements OnInit{
 
     this.formAsignar.patchValue({
         id: this.data.data.Id,
-        fecha: this.data.data.Fecha,
+        id_cliente:this.data.data.id_cliente,
+        cliente:this.data.data.Cliente,
+        fecha: this.data.data.Fecha.split('T')[0],
         hora: this.data.data.Hora,
         tiposervicio: this.data.data.Tipo,
         servicio: this.data.data.Descripcion,
@@ -181,35 +189,10 @@ export class ModalFormComponent implements OnInit{
 
   cargarMaestros(){
 
-    this.datosBusquedaMaestro.opc = 'TSRV';
-    this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
-      this.listTiposServ=respuesta;
-      this.tipoServ=this.listTiposServ.body[0];
-      })
-
-
-    this.datosBusquedaMaestro.opc = 'SERV';
-    this.RestService.getServicios(this.datosBusquedaMaestro).subscribe(respuesta2=>{
-      this.listServ=respuesta2;
-      this.servicios=this.listServ.body[0];
-      })
-
     this.datosBusquedaMaestro.opc = 'TCN';
     this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta3=>{
       this.listTecnicos=respuesta3;
       this.tecnicos=this.listTecnicos.body[0];
-      })
-
-      this.datosBusquedaMaestro.opc = 'CLI';
-      this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta3=>{
-        this.listClientes=respuesta3;
-        this.clientes=this.listClientes.body[0];
-        })
-
-      this.datosBusquedaMaestro.opc = 'TPOTKT';
-      this.RestService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta4=>{
-        this.listTipoTiket=respuesta4;
-        this.tipoTiket=this.listTipoTiket.body[0];
       })
 
   }

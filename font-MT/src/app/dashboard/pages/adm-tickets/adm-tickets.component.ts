@@ -132,8 +132,6 @@ export class AdmTicketsComponent implements OnInit{
   ngOnInit(): void {
     this.accion = this.route.snapshot.paramMap.get('accion') || '';
 
-    this.cargarMaestros();
-
     this.formTicket = this.formBuilder.group({
       opc:[''],
        id : [{value:'', disabled:this.accion==='Crear'},Validators.required],
@@ -150,6 +148,8 @@ export class AdmTicketsComponent implements OnInit{
        id_cliente:[''],
        tipo_tiket:[0]
     });
+
+    this.cargarMaestros();
 
     if ( this.accion === 'editar'){
       //llenar datos del ticket y buscar comentarios
@@ -174,7 +174,7 @@ export class AdmTicketsComponent implements OnInit{
 
     this.datosCli.opc='SUCUR';
     this.datosCli.vIDCLIENTE = value;
-console.log(this.datosCli)
+
     this.restService.getClientes(this.datosCli).subscribe(res=>{
       this.listSucursales = res;
       this.cSucursales = this.listSucursales.body[0];
@@ -209,6 +209,10 @@ console.log(this.datosCli)
 
   cargarMaestros(){
 
+    this.objetoData = this.dataSharingService.getData();
+
+    console.log(this.objetoData)
+
       this.datosBusquedaMaestro.opc = 'CLI';
       this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
         this.listClientes=respuesta;
@@ -233,21 +237,18 @@ console.log(this.datosCli)
         this.servicios=this.listServ.body[0];
       })
 
-      this.selSucursales('1');
+      this.selSucursales(this.objetoData.data.id_cliente);
 
   }
 
   cargarDatosTicket(){
 
-    this.param1 = this.dataSharingService.getParam1();
-    this.param2 = this.dataSharingService.getParam2();
-    this.objetoData = this.dataSharingService.getData();
 
-    this.datosBusquedaTicket.opc='SEL';
-    this.datosBusquedaTicket.vIDTICKET = this.objetoData.ticket.Id;
-    this.ticketSeleccionado = this.objetoData.ticket.Id;
+      this.datosBusquedaTicket.opc='SEL';
+      this.datosBusquedaTicket.vIDTICKET = this.objetoData.data.Id;
+      this.ticketSeleccionado = this.objetoData.data.Id;
 
-     this.restService.getTicketComents(this.datosBusquedaTicket).subscribe(respuesta=>{
+        this.restService.getTicketComents(this.datosBusquedaTicket).subscribe(respuesta=>{
         this.listComentarios=respuesta;
         this.comentarios=this.listComentarios.body[0];
 
@@ -256,22 +257,22 @@ console.log(this.datosCli)
         this.visitas=this.listComentarios.body[1];
 
         //console.log(this.visitas)
-        console.log(this.objetoData)
-       
+        console.log(this.objetoData.data)
+
         this.formTicket.patchValue({
-          id: this.objetoData.ticket.Id,
-          fecha: this.objetoData.ticket.Fecha.split('T')[0],
-          hora: this.objetoData.ticket.Hora,
-          id_tiposervicio: this.objetoData.ticket.id_tiposervicio,
-          id_servicio: this.objetoData.ticket.id_servicio,
-          descripcion: this.objetoData.ticket.DetalleTKT,
-          id_tecnico: this.objetoData.ticket.id_tecnico,
-          estado: this.objetoData.ticket.Estado,
-          prioridad: this.objetoData.ticket.Prioridad,
-          id_sucursal: this.objetoData.ticket.id_sucursal,
-          id_area: this.objetoData.ticket.id_area,
-          id_cliente: this.objetoData.ticket.id_cliente,
-          tipo_tiket: this.objetoData.ticket.tipo_tiket
+          id: this.objetoData.data.Id,
+          fecha: this.objetoData.data.Fecha.split('T')[0],
+          hora: this.objetoData.data.Hora,
+          id_tiposervicio: this.objetoData.data.id_tiposervicio,
+          id_servicio: this.objetoData.data.id_servicio,
+          descripcion: this.objetoData.data.DetalleTKT,
+          id_tecnico: this.objetoData.data.id_tecnico,
+          estado: this.objetoData.data.Estado,
+          prioridad: this.objetoData.data.Prioridad,
+          id_sucursal: this.objetoData.data.id_sucursal,
+          id_area: this.objetoData.data.id_area,
+          id_cliente: this.objetoData.data.id_cliente,
+          tipo_tiket: this.objetoData.data.tipo_tiket
         });
       })
 
@@ -285,15 +286,15 @@ console.log(this.datosCli)
       this.formTicket.get('id')?.setValue('0');
       this.formTicket.get('id_cliente')?.setValue('1');
     }
-     // console.log(this.formTicket.value)
+      console.log(this.formTicket.value)
 
       try{
-        const res = await lastValueFrom(this.restService.crearTkt(this.formTicket.value));
+        const res = await lastValueFrom(this.restService.saveTickets(this.formTicket.value));
         this.response = res;
 
-        console.log(this.response)
+        console.log(res)
 
-        this.ticketID = res.body[0][0].insertId;
+        this.ticketID = '';
         if(!this.response.error){
           await Swal.fire({
             position: "center",
@@ -314,8 +315,8 @@ console.log(this.datosCli)
           timer: 1500
         });
       }
-      this.regresar();
-    
+      //this.regresar();
+
   }
 
   agregarComentario(elemento: ElementoTicket) {

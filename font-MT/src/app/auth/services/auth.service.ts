@@ -14,7 +14,17 @@ import { Router } from '@angular/router';
 export class AuthService {
   private _userAuth = signal< IUserAuth | null >(null);
   private router = inject(Router);
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  private currentUser: any;
+
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService
+    ) {
+      this.currentUser = this.cookieService.get('currentUser');
+      if (this.currentUser) {
+        this._userAuth.update( JSON.parse(this.currentUser));
+      }
+    }
 
   get userAuth (): IUserAuth | null {
     return this._userAuth();
@@ -64,5 +74,9 @@ export class AuthService {
     this.cookieService.delete('token','/');
     this._userAuth.update( userOld => null );
     this.router.navigateByUrl('/login');
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
   }
 }

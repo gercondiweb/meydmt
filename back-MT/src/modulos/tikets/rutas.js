@@ -6,7 +6,7 @@ const controlador = require('./index');
 
 const router = express.Router();
 
-router.post('/',seguridad(), todos);
+router.post('/select/',seguridad(), todos);
 router.post('/:id',seguridad(), uno);
 router.put('/',seguridad(), eliminar);
 router.post('/',seguridad(), agregar);

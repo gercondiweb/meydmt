@@ -6,10 +6,10 @@ const controlador = require('./index');
 
 const router = express.Router();
 
-router.post('/',seguridad(), todos);
-router.get('/:id', uno);
-router.put('/', eliminar);
-router.post('/', agregar);
+//router.post('/',seguridad(), todos);
+router.get('/:id',seguridad(), uno);
+router.put('/',seguridad(), eliminar);
+router.post('/',seguridad(), agregar);
 
 async function todos (req, res, next){
     try{

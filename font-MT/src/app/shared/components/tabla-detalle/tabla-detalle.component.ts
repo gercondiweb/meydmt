@@ -5,6 +5,7 @@ import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataSharingService } from '../../../dashboard/services/services/data-sharing.service';
+import { DatePipe } from '@angular/common';
 export interface ElementoTablaDetalle {
   nombre: string;
 
@@ -40,6 +41,7 @@ export class TablaDetalleComponent implements OnChanges {
     public dialog: MatDialog,
     private router: Router,
     private dataSharingService: DataSharingService,
+    private datePipe: DatePipe
   ){}
 
   editarElemento(elemento: ElementoTablaDetalle) {
@@ -64,7 +66,7 @@ export class TablaDetalleComponent implements OnChanges {
 
     const param1 = 'valor1';
     const param2 = 'valor2';
-    const data = { ticket: element };
+    const data = { data: element };
 
     //console.log(data)
 
@@ -82,7 +84,7 @@ export class TablaDetalleComponent implements OnChanges {
   editarTiket(element: any) {
     const param3 = 'valor1';
     const param4 = 'valor2';
-    const data2 = { ticket: element };
+    const data2 = { data: element };
 
     //console.log(data)
 
