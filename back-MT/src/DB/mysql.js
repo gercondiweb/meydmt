@@ -178,10 +178,21 @@ function query(tabla, consulta){
     });
 }
 
+function getDato( columns = '*', tabla, where){
+    return new Promise((resolve, reject)=>{
+        conexcion.query(`SELECT ${columns} FROM ${tabla} where ${where}`, [] ,(error, result)=>{
+            return error ? reject(error):resolve(result[0]);
+        })
+    });
+}
+
 function agregar(tabla, data){
     return new Promise((resolve, reject)=>{
-        conexcion.query(`INSERT INTO ${tabla} SET ? ON DUPLICATE KEY UPDATE ?`, [data, data] ,(error, result)=>{
-            return error ? reject(error): resolve(result);
+        conexcion.query(`INSERT INTO ${tabla} SET ? ON DUPLICATE KEY UPDATE ?`, [data, data] , async (error, result)=>{
+            if(error) return reject(error);
+            const { insertId } = result;
+            const dataCreate = await getDato( '*', tabla, ` id = '${insertId}' ` );
+            return resolve(dataCreate);
         })
     });
 }

@@ -29,7 +29,6 @@ interface Area {
 export class AdmClienteComponent implements OnInit {
   private readonly loadingServer = inject(LoadingService);
   accion : any;
-  response: any;
   param1!: string;
   param2!: string;
   objetoData: any;
@@ -73,7 +72,6 @@ export class AdmClienteComponent implements OnInit {
       ciudad : ['',[Validators.required]],
       pais : ['',[Validators.required]],
       zip : ['',],
-      id_cliente : ['',[Validators.required]],
       activo : [1,[Validators.required]],
     });
 
@@ -100,14 +98,14 @@ export class AdmClienteComponent implements OnInit {
     this.idCliente = this.objetoData.data.id;
 
     this.formCliente.patchValue({
-      nit: this.objetoData.data.Nit,
-      cliente: this.objetoData.data.Cliente,
+      nit: this.objetoData.data.nit,
+      cliente: this.objetoData.data.cliente,
       direccion: this.objetoData.data.Direccion,
       email: this.objetoData.data.Email,
       telefono: this.objetoData.data.Telefono,
       ciudad: this.objetoData.data.Ciudad,
       pais: this.objetoData.data.CLAUSULAS,
-      id_cliente: this.objetoData.data.Id,
+      id: this.objetoData.data.id,
       activo: this.objetoData.data.ACTIVO
     });
 
@@ -115,7 +113,7 @@ export class AdmClienteComponent implements OnInit {
 
   cargarSucursalesCliente(){
     this.consultaCliente.opc = 'SUCUR';
-    this.consultaCliente.vIDCLIENTE = this.formCliente.get('id_cliente')?.value;
+    this.consultaCliente.vIDCLIENTE = this.formCliente.get('id')?.value;
 
     this.restService.getClientes(this.consultaCliente).subscribe((data: any) => {
       this.vSucursal = data.body[0];
@@ -126,7 +124,7 @@ export class AdmClienteComponent implements OnInit {
 
   cargarAreasSucursal(){
     this.consultaCliente.opc = 'AREAS';
-    this.consultaCliente.vIDCLIENTE = this.formCliente.get('id_cliente')?.value;
+    this.consultaCliente.vIDCLIENTE = this.formCliente.get('id')?.value;
 
     console.log(this.consultaCliente)
 
@@ -142,14 +140,24 @@ export class AdmClienteComponent implements OnInit {
     try{
       //console.log(this.formCliente.value)
       this.loadingServer.show();
-      const res = await lastValueFrom(this.restService.crearCliente(this.formCliente.value));
+      const cliente = await lastValueFrom(this.restService.crearCliente(this.formCliente.value));
 
-      this.clienteSeleccionado = res.insertId;
-      this.formCliente.get('id')?.setValue(res.insertId);
-      this.formCliente.get('nit')?.enabled;
+        this.clienteSeleccionado = cliente.id;
+        this.formCliente.get('id')?.setValue( this.clienteSeleccionado );
+        this.formCliente.get('nit')?.disable;
+        this.formCliente.patchValue({
+          cliente: cliente.cliente,
+          direccion: cliente.direccion,
+          email: cliente.email,
+          telefono: cliente.telefono,
+          activo: cliente.activo,
+          nit: cliente.nit,
+          id: cliente.id,
+          ...this.formCliente.value
+        });
 
-      //console.log(res)
-      this.response = res;
+      console.log( { cliente });
+      console.log( this.formCliente.value );
      /*  if(!this.response.error){
         await Swal.fire({
           position: "center",

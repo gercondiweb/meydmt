@@ -1,17 +1,18 @@
-exports.success = function(req, res, body = {}, status = 200){
+exports.success = function(req, res, body = {}, status = 200, message){
     res.status(status).send({
         error : false,
         status,
+        message,
         body
-
     });
 }
 
-exports.error = function(req, res, body = { message: 'Error Interno' }, status = 500){
+exports.error = function(req, res, body , status = 500, message = 'Error Interno'){
     res.status(status).send({
         error : true,
         status,
-        ...body
+        message,
+        body
         
     });
 }
