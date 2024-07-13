@@ -32,13 +32,18 @@ async function uno (req, res, next){
 
 async function agregar (req, res, next){
     try{
-        const items = await controlador.agregar(req.body);
-        if(req.body.id == 0){ //si el id=0 va a crear un nuevo item
-            mensaje = 'Item guardado con exito';
-        }else{
-            mensaje = 'Item actualizado con exito'
-        }
-        respuesta.success(req, res, mensaje, 201);
+        const camposRequired = [ 'nit','cliente'];
+        let camposFalatantes = [];
+        const { body } = req;
+        camposRequired.forEach( v => {
+          if ( !body[v] ) camposFalatantes.push(v);
+        } );
+
+        if( camposFalatantes.length ) respuesta.error(req, res, {} , 402, `Faltan los campos ${ camposFalatantes.join(',') }`);
+        const cliente = await controlador.agregar(req.body);
+        const accion = (body.id == 0)? 'guardado' : 'actualizado';
+        let message = `Item ${accion} con exito`;
+        respuesta.success(req, res, cliente , 201, message);
     }catch(err){
         next(err);
     }   

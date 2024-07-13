@@ -31,11 +31,11 @@ export const principalInterceptor: HttpInterceptorFn = (req, next) => {
   .pipe(
     tap((event: HttpEvent<any>) =>{
     //  if(res)
-      if (event instanceof HttpResponse && event.body.body.message  ) {
+      if (event instanceof HttpResponse && event.body.message  ) {
         Swal.fire({
           position: "center",
           icon: "success",
-          text: event.body.body.message ,
+          text: event.body.message ,
           showConfirmButton: false,
           timer: 1500
         });
@@ -45,8 +45,7 @@ export const principalInterceptor: HttpInterceptorFn = (req, next) => {
     } ),
      catchError( ( error : HttpErrorResponse ) => {
 
-      const message =  error.error?.body?.message;
-      console.log( message );
+      const message =  error.error?.message;
       if(message){
         Swal.fire({
           position: "center",
@@ -60,7 +59,7 @@ export const principalInterceptor: HttpInterceptorFn = (req, next) => {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Ocorreu um erro inesperado",
+          title: "Ocorrio un error inesperado",
           showConfirmButton: false,
           timer: 1500
         });

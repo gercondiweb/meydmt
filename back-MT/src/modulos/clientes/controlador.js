@@ -17,6 +17,7 @@ module.exports = function (dbInyectada) {
   }
 
   async function agregar(body) {
+
     const cliente = {
       id: body.id,
       nit: body.nit,
@@ -30,17 +31,8 @@ module.exports = function (dbInyectada) {
    
     }
 
-    const respuesta = await db.agregar(TABLA, cliente);
-    
-    var insertId = 0;
-    
-    if(body.id == 0){
-      insertId = respuesta.insertId;
-    }else{
-      insertId = body.id;
-    }
-    
-    return respuesta;
+    const clienteNew = await db.agregar(TABLA, cliente);
+    return clienteNew;
   }
   
   function eliminar(body) {

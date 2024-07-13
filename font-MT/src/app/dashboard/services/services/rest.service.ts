@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map, reduce } from 'rxjs';
+import { response } from 'express';
 
 
 @Injectable({
@@ -13,11 +14,12 @@ export class RestService {
   constructor(private http: HttpClient) { }
 
   public getClientes(datosConsulta:any): Observable<any>{
-    return this.http.post('consultaclientes', datosConsulta);; // GET http://localhost:4000/api/clientes
+    return this.http.post('consultaclientes', datosConsulta); // GET http://localhost:4000/api/clientes
   }
 
   public crearCliente(datosConsulta:any):Observable<any>{
-    return this.http.post('clientes',datosConsulta);
+    return this.http.post<{ body: { cliente: any }}>('clientes',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
   }
 
   public saveTickets(datosTiket:any): Observable<any>{

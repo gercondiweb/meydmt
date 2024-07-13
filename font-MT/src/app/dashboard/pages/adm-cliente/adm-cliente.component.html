@@ -24,8 +24,8 @@
         <form [formGroup]="formCliente">
           <div class="row g-2">
             <div class="mb-3 col-4">
-              <label for="nitinput" class="form-label">Nit</label>
-              <input type="number" class="form-control" formControlName="nit" placeholder="" id="nitinput">
+              <label for="nitinput" class="form-label">Nite</label>
+              <input type="number" class="form-control" formControlName="nit" placeholder="" id="nitinput"/>
             </div>
             <div class="mb-3 col-8">
               <label for="clienteinput" class="form-label">Nombre</label>
@@ -74,80 +74,82 @@
         </form>
       </div>
     </div>
-        <div class="row">
-          <nav class="navbar sticky-top bg-body-tertiary">
-            <div class="container-fluid">
-              <a class="navbar-brand">Sucursales</a>
-              <button mat-raised-button color="primary" (click)="agregarSucursal()">
-                <mat-icon>add_circle</mat-icon>
-                Agregar Sucursal
-              </button>
-            </div>
 
-          </nav>
-          <div class="accordion" id="accordionPanelsStayOpenExample">
-            @for(sucur of listSucursales;track sucur){
+    @if( clienteSeleccionado !== 0 ){
+      <div class="row">
+        <nav class="navbar sticky-top bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand">Sucursales</a>
+            <button mat-raised-button color="primary" (click)="agregarSucursal()">
+              <mat-icon>add_circle</mat-icon>
+              Agregar Sucursal
+            </button>
+          </div>
 
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    <h3>{{sucur.nombre}} - {{sucur.ciudad}} - {{sucur.departamento}} - {{sucur.pais}}</h3>
-                    <p>Direccion: {{sucur.direccion}} - Telefono: {{sucur.telefono}}</p>
-                  </button>
-                </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                  <div class="accordion-body">
-                    <nav class="navbar sticky-top" style="background-color:#99a0c2; color:aliceblue;">
-                      <div class="container-fluid">
-                        <a class="navbar-brand">Areas</a>
-                        <button mat-raised-button color="primary" (click)="agregarArea()">
-                          <mat-icon>add_circle</mat-icon>
-                          Agregar Area
-                        </button>
-                      </div>
+        </nav>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          @for(sucur of listSucursales;track sucur){
 
-                    </nav>
-                    <table class="table table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col">Id</th>
-                          <th scope="col">Nombre</th>
-                          <th scope="col">Autorizador</th>
-                          <th scope="col">Email</th>
-                          <th scope="col">Activo</th>
-                          <th scope="col">Opciones</th>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  <h3>{{sucur.nombre}} - {{sucur.ciudad}} - {{sucur.departamento}} - {{sucur.pais}}</h3>
+                  <p>Direccion: {{sucur.direccion}} - Telefono: {{sucur.telefono}}</p>
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                  <nav class="navbar sticky-top" style="background-color:#99a0c2; color:aliceblue;">
+                    <div class="container-fluid">
+                      <a class="navbar-brand">Areas</a>
+                      <button mat-raised-button color="primary" (click)="agregarArea()">
+                        <mat-icon>add_circle</mat-icon>
+                        Agregar Area
+                      </button>
+                    </div>
 
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let area of listAreas">
-                          <th scope="row">{{area.id}}</th>
-                          <td>{{area.nombre}}</td>
-                          <td>{{area.autorizador}}</td>
-                          <td>{{area.emailautorizador}}</td>
-                          <td>{{area.activo}}</td>
-                          <td>
-                            <button mat-icon-button
-                            type="button" class="btn btn-primary" (click)="editarArea()">
-                              <mat-icon>edit</mat-icon>
-                            </button>
-                            <button mat-icon-button
-                            type="button" class="btn btn-danger" >
-                              <mat-icon>delete</mat-icon>
-                            </button>
-                          </td>
-                        </tr>
+                  </nav>
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Autorizador</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Activo</th>
+                        <th scope="col">Opciones</th>
 
-                      </tbody>
-                    </table>
-                  </div>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let area of listAreas">
+                        <th scope="row">{{area.id}}</th>
+                        <td>{{area.nombre}}</td>
+                        <td>{{area.autorizador}}</td>
+                        <td>{{area.emailautorizador}}</td>
+                        <td>{{area.activo}}</td>
+                        <td>
+                          <button mat-icon-button
+                          type="button" class="btn btn-primary" (click)="editarArea()">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                          <button mat-icon-button
+                          type="button" class="btn btn-danger" >
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
                 </div>
               </div>
+            </div>
 
-            }
-          </div>
+          }
         </div>
-
+      </div>
+    }
 
   </span>
 </div>
