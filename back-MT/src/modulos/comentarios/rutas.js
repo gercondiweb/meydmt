@@ -30,7 +30,7 @@ async function uno (req, res, next){
 };
 
 async function agregar (req, res, next){
-    try{
+    /*try{
         const items = await controlador.agregar(req.body);
         if(req.body.id == 0){ //si el id=0 va a crear un nuevo item
             mensaje = 'Item guardado con exito';
@@ -38,6 +38,23 @@ async function agregar (req, res, next){
             mensaje = 'Item actualizado con exito'
         }
         respuesta.success(req, res, mensaje, 201);
+    }catch(err){
+        next(err);
+    }  */
+    
+    try{
+        const camposRequired = [ 'id_tiket','comentario'];
+        let camposFalatantes = [];
+        const { body } = req;
+        camposRequired.forEach( v => {
+          if ( !body[v] ) camposFalatantes.push(v);
+        } );
+
+        if( camposFalatantes.length ) respuesta.error(req, res, {} , 402, `Faltan los campos ${ camposFalatantes.join(',') }`);
+        const comentario = await controlador.agregar(req.body);
+        const accion = (body.id == 0)? 'guardado' : 'actualizado';
+        let message = `Item ${accion} con exito`;
+        respuesta.success(req, res, comentario , 201, message);
     }catch(err){
         next(err);
     }   

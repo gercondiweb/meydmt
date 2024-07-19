@@ -1,4 +1,8 @@
 const express=require('express');
+
+const multer = require('multer');
+const path = require('path');
+
 const seguridad = require('./seguridad');
 const respuesta = require('../../red/respuestas');
 
@@ -10,6 +14,8 @@ const router = express.Router();
 router.get('/:id', uno);
 router.put('/',seguridad(), eliminar);
 router.post('/',seguridad(), agregar);
+
+router.post('/:id/photos',seguridad(), agregar);
 
 async function todos (req, res, next){
     try{
@@ -30,14 +36,21 @@ async function uno (req, res, next){
 };
 
 async function agregar (req, res, next){
+    
+    
     try{
-        const items = await controlador.agregar(req.body);
-        if(req.body.id == 0){ //si el id=0 va a crear un nuevo item
-            mensaje = 'Item guardado con exito';
-        }else{
-            mensaje = 'Item actualizado con exito'
-        }
-        respuesta.success(req, res, mensaje, 201);
+        const camposRequired = [ 'id_tiket','observaciones'];
+        let camposFalatantes = [];
+        const { body } = req;
+        camposRequired.forEach( v => {
+          if ( !body[v] ) camposFalatantes.push(v);
+        } );
+
+        if( camposFalatantes.length ) respuesta.error(req, res, {} , 402, `Faltan los campos ${ camposFalatantes.join(',') }`);
+        const comentario = await controlador.agregar(req.body);
+        const accion = (body.id == 0)? 'guardado' : 'actualizado';
+        let message = `Item ${accion} con exito`;
+        respuesta.success(req, res, comentario , 201, message);
     }catch(err){
         next(err);
     }   

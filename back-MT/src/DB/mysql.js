@@ -197,6 +197,16 @@ function agregar(tabla, data){
     });
 }
 
+function uploadPhotos(id, rutaPhoto){
+    return new Promise((resolve, reject)=>{
+        conexcion.query(`UPDATE INTO visitastiket SET ? where id = ${id} ON DUPLICATE KEY UPDATE ?`, [rutaPhoto, rutaPhoto] , async (error, result)=>{
+            if(error) return reject(error);
+            const dataCreate = await getDato( '*', 'visitastiket', ` id = '${id}' ` );
+            return resolve(dataCreate);
+        })
+    });
+}
+
 module.exports = {
     spservicios,
     
@@ -215,5 +225,7 @@ module.exports = {
     spComentarios,
 
     query,
-    agregar
+    agregar,
+
+    uploadPhotos
 }
