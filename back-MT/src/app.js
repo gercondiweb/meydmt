@@ -35,6 +35,8 @@ const consultasTikets =require('./modulos/consultastikets/rutas');
 const getserv = require('./modulos/consultaservicio/rutas');
 const crearticket = require('./modulos/operacionestikets/rutas');
 
+const materialesvisita = require('./modulos/materialesvisita/rutas');
+
 const comentsticket = require('./modulos/operacionestikets/rutas');
 
 const consultaClientes = require('./modulos/consultaclientes/rutas');
@@ -113,6 +115,7 @@ app.use('/api/consultatkt', consultasTikets);
 
 app.use('/api/operacionestikets', crearticket);
 app.use('/api/ticketcoments', comentsticket);
+app.use('/api/materialesvisita', materialesvisita);
 
 app.use('/api/consultacontratos', consultasContrato);
 app.use('/api/operacionescontrato', operacionescontrato);

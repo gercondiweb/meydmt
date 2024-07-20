@@ -1,8 +1,4 @@
 const express=require('express');
-
-const multer = require('multer');
-const path = require('path');
-
 const seguridad = require('./seguridad');
 const respuesta = require('../../red/respuestas');
 
@@ -11,11 +7,9 @@ const controlador = require('./index');
 const router = express.Router();
 
 //router.post('/',seguridad(), todos);
-router.get('/:id', uno);
+router.post('/:id',seguridad(), uno);
 router.put('/',seguridad(), eliminar);
 router.post('/',seguridad(), agregar);
-
-router.post('/:id/photos',seguridad(), agregar);
 
 async function todos (req, res, next){
     try{
@@ -35,11 +29,9 @@ async function uno (req, res, next){
     }   
 };
 
-async function agregar (req, res, next){ 
-    
-    
+async function agregar (req, res, next){    
     try{
-        const camposRequired = [ 'id_tiket','observaciones'];
+        const camposRequired = [ 'id_tiket','comentario', 'cantidad'];
         let camposFalatantes = [];
         const { body } = req;
         camposRequired.forEach( v => {
