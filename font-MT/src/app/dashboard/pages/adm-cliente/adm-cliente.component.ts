@@ -97,23 +97,27 @@ export class AdmClienteComponent implements OnInit {
     this.objetoData = this.dataSharingService.getData();
     this.idCliente = this.objetoData.data.id;
 
+    console.log(this.objetoData)
+
     this.formCliente.patchValue({
-      nit: this.objetoData.data.nit,
-      cliente: this.objetoData.data.cliente,
+      nit: this.objetoData.data.Nit,
+      cliente: this.objetoData.data.Cliente,
       direccion: this.objetoData.data.Direccion,
       email: this.objetoData.data.Email,
       telefono: this.objetoData.data.Telefono,
       ciudad: this.objetoData.data.Ciudad,
       pais: this.objetoData.data.CLAUSULAS,
-      id: this.objetoData.data.id,
-      activo: this.objetoData.data.ACTIVO
+      id: this.objetoData.data.Id,
+      activo: this.objetoData.data.Activo
     });
 
   }
 
   cargarSucursalesCliente(){
     this.consultaCliente.opc = 'SUCUR';
-    this.consultaCliente.vIDCLIENTE = this.formCliente.get('id')?.value;
+    this.consultaCliente.vIDCLIENTE = 1;
+
+    console.log(this.consultaCliente)
 
     this.restService.getClientes(this.consultaCliente).subscribe((data: any) => {
       this.vSucursal = data.body[0];
@@ -124,7 +128,7 @@ export class AdmClienteComponent implements OnInit {
 
   cargarAreasSucursal(){
     this.consultaCliente.opc = 'AREAS';
-    this.consultaCliente.vIDCLIENTE = this.formCliente.get('id')?.value;
+    this.consultaCliente.vIDCLIENTE = 1;
 
     console.log(this.consultaCliente)
 

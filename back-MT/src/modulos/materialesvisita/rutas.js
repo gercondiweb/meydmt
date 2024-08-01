@@ -6,14 +6,14 @@ const controlador = require('./index');
 
 const router = express.Router();
 
-//router.post('/',seguridad(), todos);
+router.post('/getInsumos/',seguridad(), getInsumos);
 router.post('/:id',seguridad(), uno);
 router.put('/',seguridad(), eliminar);
 router.post('/',seguridad(), agregar);
 
-async function todos (req, res, next){
+async function getInsumos (req, res, next){
     try{
-    const items = await controlador.todos();
+    const items = await controlador.consultar(req.body);
         respuesta.success(req, res, items, 200); 
     }catch(err){
         next(err);
@@ -31,7 +31,7 @@ async function uno (req, res, next){
 
 async function agregar (req, res, next){    
     try{
-        const camposRequired = [ 'id_tiket','comentario', 'cantidad'];
+        const camposRequired = [ 'id_tiket','descripcion', 'cantidad'];
         let camposFalatantes = [];
         const { body } = req;
         camposRequired.forEach( v => {

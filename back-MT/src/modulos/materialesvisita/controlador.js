@@ -10,6 +10,10 @@ module.exports = function (dbInyectada) {
     db=require('../../DB/mysql');
   }
 
+  function consultar(consulta){
+    return db.spvisitas(consulta);
+  }
+
   function todos() {
     return db.todos(TABLA);
   }
@@ -22,8 +26,9 @@ module.exports = function (dbInyectada) {
     const comentario = {
       id: body.id,
       id_tiket: body.id_tiket,
-      comentario: body.comentario, 
+      descripcion: body.descripcion, 
       cantidad: body.cantidad,
+      valor_compra : body.valor_compra,
       valor_venta: body.valor_venta,
       usuariocrea: body.usuariocrea,    
       fechacrea: body.fechacrea
@@ -50,5 +55,6 @@ module.exports = function (dbInyectada) {
     uno,
     agregar,
     eliminar,
+    consultar
   };
 };

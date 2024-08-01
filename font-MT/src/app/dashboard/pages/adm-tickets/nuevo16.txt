@@ -1,0 +1,16 @@
+Para MAñana.
+
+
+1. Guardar iniciativa
+2. finalizar ticket - enviar correo informativo.
+4. Guardar fotos (solo 3)
+5. Guardar Firma
+6. revisar UI.
+7. Subir al Servidor.
+3. Crear Reporte PDF desde el Frontend (se debe calcular valor en este reporte)
+
+Para la App Lite
+valor de la cotizacion (monto)
+adjuntar archivo al crear el cliente
+tipo de visita recaudo o venta
+forma de pago - no tipo (anticipado, contado,credito

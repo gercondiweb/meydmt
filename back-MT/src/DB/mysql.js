@@ -58,8 +58,8 @@ function spmaestros(parametros){
     });
 }
 
-function spvisitas(parametros){
-    const {OPC, vID, vIDTIKET, vIDCLIENTE, vIDTECNICO} = parametros;
+function spvisitas(parametros1){
+    const {OPC, vID, vIDTIKET, vIDCLIENTE, vIDTECNICO} = parametros1;
     return new Promise((resolve, reject)=>{
         conexcion.query(`CALL SPVISITAS (?,?,?,?,?)`,   
                     [OPC, vID, vIDTIKET, vIDCLIENTE, vIDTECNICO] ,
