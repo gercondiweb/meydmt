@@ -1,7 +1,0 @@
-{
-  "name": "meyd-mt",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
