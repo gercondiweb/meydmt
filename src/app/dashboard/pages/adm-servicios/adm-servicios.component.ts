@@ -115,7 +115,7 @@ export class AdmServiciosComponent {
     });
   }
 
-  cancelar(data: any) {
+  cancelar(data?: any) {
     this.dialogRef.close(data);
   }
 
