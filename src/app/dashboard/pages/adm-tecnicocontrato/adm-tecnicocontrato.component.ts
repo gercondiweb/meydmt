@@ -38,6 +38,7 @@ export class AdmTecnicocontratoComponent implements OnInit{
   response: any;
 
   public formTecnicoContrato !: FormGroup;
+  public contrato : string = '';
 
   constructor(
     public dialogRef: MatDialogRef<AdmTecnicocontratoComponent>,
@@ -74,9 +75,8 @@ export class AdmTecnicocontratoComponent implements OnInit{
     this.dsTecnicos = this.lTecnicos.body[0];
 
     //console.log(this.dsTecnicos)
-
-    this.formTecnicoContrato.get('vIDCONTRATO')?.setValue(this.data.data.data.CONTRATO);
-    this.formTecnicoContrato.get('vIDCONTRATO')?.disable();
+    
+    this.contrato = this.data.data.data.CONTRATO;
 
 
     //console.log( this.dsTecnicos)
@@ -118,13 +118,14 @@ export class AdmTecnicocontratoComponent implements OnInit{
 
   async guardarTecnicoCont(){
     //Guardar Servicios Contrato
+    alert();
     if(this.formTecnicoContrato.get('vID')?.value == ''){
       this.formTecnicoContrato.get('vACTIVO')?.setValue('1');
     }
-
+    console.log(this.formTecnicoContrato.value)
     this.formTecnicoContrato.get('opc')?.setValue('ADD');
-    this.formTecnicoContrato.get('vIDCONTRATO')?.setValue(this.data.data.data.CONTRATO);
-    console.log(this.data.data.data)
+    this.formTecnicoContrato.get('vIDCONTRATO')?.setValue(this.contrato);
+    console.log(this.data.data)
 
   console.log(this.formTecnicoContrato.value)
     try{
