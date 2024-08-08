@@ -233,10 +233,13 @@ export class AdmContratosComponent implements OnInit{
         data: data,
       }
     });
-    console.log(data);
-    dialogRef.afterClosed().subscribe( (data) => {
-      this.serviciosContrato.push(data)
-      console.log( this.serviciosContrato)
+
+    dialogRef.afterClosed().subscribe( (data2) => {
+      this.serviciosContrato.push(data2)
+      console.log(data2);
+
+      this.serviciosContrato=[];
+      this.cargarServiciosContrato();
     });
   }
 

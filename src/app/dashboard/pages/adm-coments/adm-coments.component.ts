@@ -15,8 +15,11 @@ import { AuthService } from '@/app/auth/services/auth.service';
   styleUrl: './adm-coments.component.css'
 })
 export class AdmComentsComponent implements OnInit{
-
+    
   public frmComents !: FormGroup;
+  nTicket : any;
+  result : any;
+  currentUser : any;
 
   constructor(
     public dialogRef: MatDialogRef<AdmComentsComponent>,
@@ -29,28 +32,33 @@ export class AdmComentsComponent implements OnInit{
 
     const now = new Date();
     const formattedTime = formatDate(now, 'HH:mm', 'en-US');
-    const currentUser = this.authService.getCurrentUser();
+    this.currentUser = this.authService.userInLine;
+
+    console.log(this.authService.userAuth)
 
      this.frmComents = this.formBuilder.group({
       id:[0],
-      id_ticket:[0,[Validators.required]],
+      id_tiket:[0,[Validators.required]],
       comentario:['',[Validators.required]],
-      usuario:['currentUser'],
+      usuario:[''],
       fecha:[now],
       hora:[formattedTime],
       visible:['']
      });
 
+     //console.log(this.data)
+     this.nTicket = this.data.data.Id;
   }
 
   async grabar(){
-
-    console.log(this.data)
-
+    
     this.frmComents.get('id')?.setValue(0);
-
+    this.frmComents.get('id_tiket')?.setValue(this.nTicket);
+    this.frmComents.get('usuario')?.setValue('User');
     try{
       const res = await lastValueFrom(this.RestService.comentarios(this.frmComents.value));
+      this.result = res.body;
+      //console.log(res)
       if(!res.error){
         await Swal.fire({
           position: "center",
@@ -76,7 +84,7 @@ export class AdmComentsComponent implements OnInit{
   }
 
   regresar() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.result);
   }
 
 }

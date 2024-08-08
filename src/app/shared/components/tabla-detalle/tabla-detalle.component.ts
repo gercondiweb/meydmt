@@ -29,7 +29,7 @@ export class TablaDetalleComponent implements OnChanges {
   @Input() datasource!: any[];
   @Input() columns : any[] = [];
 
-  columnsToDisplay = ['Id', 'Cliente','Tipo', 'Fecha', 'Hora', 'Prioridad', 'Estado'];
+  columnsToDisplay = ['Id', 'Cliente','Tipo','Serv', 'Fecha', 'Hora', 'Prioridad', 'Estado'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement!: DetalleServicio | null;
 

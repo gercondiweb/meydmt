@@ -88,7 +88,7 @@ export class AdmTecnicosComponent implements OnInit{
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
 
-   console.log('objetoData', this.objetoData)
+  // console.log('objetoData', this.objetoData)
 
     this.idTecnico = this.objetoData.data.id;
 

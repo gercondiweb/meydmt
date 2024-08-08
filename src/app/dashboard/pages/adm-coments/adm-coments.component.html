@@ -1,5 +1,5 @@
 <div>
-  <h2 class="titulo" mat-dialog-title>Agregar Comentario</h2>
+  <h2 class="titulo" mat-dialog-title>Agregar Comentario al Ticket {{nTicket}}</h2>
 
   <mat-dialog-content>
       <form class="ticket-form" [formGroup]="frmComents">
@@ -9,13 +9,7 @@
             <label for="exampleFormControlInput1" class="form-label">Comentario</label>
             <textarea class="form-control" rows="5"  formControlName="comentario" placeholder="Escriba un comentario"></textarea>
           </div>
-          <div class="mb-3 col-4">
-            <label for="nitinput" class="form-label">Cliente</label>
-            <input type="text" class="form-control" formControlName="id_cliente"  formControlName="" >
-          </div>
-
         </div>
-
 
       </form>
 

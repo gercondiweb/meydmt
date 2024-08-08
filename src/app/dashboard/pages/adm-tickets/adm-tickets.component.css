@@ -10,7 +10,7 @@
   padding: 0 33px 0 55px;
 }
 .comment{
-  background-color: #fff;
+  background-color: #6fcf2829;
   padding: 10px 25px;
   font-size: 16px;
   border: 1px solid #6fcf28;
@@ -18,10 +18,11 @@
   position: relative;
   height: 40%;
   margin-bottom: 20px;
+  border-radius: 10px;
 }
 
 .visits{
-  background-color: #fff;
+  background-color: #6fcf2829;
   padding: 10px 25px;
   font-size: 16px;
   border: 1px solid #6fcf28;
@@ -29,6 +30,7 @@
   position: relative;
   height: 50%;
   margin-bottom: 20px;
+  border-radius: 10px;
 }
 
 .comment:before{

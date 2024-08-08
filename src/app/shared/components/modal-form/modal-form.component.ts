@@ -102,7 +102,7 @@ export class ModalFormComponent implements OnInit{
 
   async grabar(){
 
-    console.log(this.data.tipo)
+    //console.log(this.data.tipo)
 
     if (this.data.tipo === 'Crear'){ //------------ Crear Tiket ---------------------------
       this.formAsignar.get('opc')?.setValue('NEW');
@@ -114,6 +114,7 @@ export class ModalFormComponent implements OnInit{
       try{
         const res = await lastValueFrom(this.RestService.crearTkt(this.formAsignar.value));
         this.response = res;
+        console.log(res);
         if(!this.response.error){
           await Swal.fire({
             position: "top-end",
@@ -139,16 +140,17 @@ export class ModalFormComponent implements OnInit{
 
       this.datosTkt.id_tkt = this.data.data.Id;
       this.datosTkt.id_tecnico = this.formAsignar.get('id_tecnico')?.value;
-      console.log(this.data)
-      console.log(this.datosTkt)
+      //console.log(this.data)
+      //console.log(this.datosTkt)
       try{
         const res = await lastValueFrom(this.RestService.asignarTecnicoTkt(this.datosTkt));
         this.response = res;
+        //console.log(res);
         if(!this.response.error){
           await Swal.fire({
             position: "top-end",
             icon: "success",
-            title: this.response.body,
+            title: this.response.message,
             showConfirmButton: false,
             timer: 1500
           });

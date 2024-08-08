@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, map, tap } from 'rxjs';
@@ -12,9 +12,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+
   private _userAuth = signal< IUserAuth | null >(null);
   private router = inject(Router);
   private currentUser: any;
+
+  userInLine = computed( () => this._userAuth() )
 
   constructor(
     private http: HttpClient,

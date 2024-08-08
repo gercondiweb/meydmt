@@ -186,8 +186,8 @@ export class AdmTicketsComponent implements OnInit{
       this.cArea = this.listAreas.body[0];
     });
 
-    console.log(this.cSucursales)
-    console.log(this.cArea)
+    //console.log(this.cSucursales)
+    //console.log(this.cArea)
   }
 
   selServicios(value: string){
@@ -211,7 +211,7 @@ export class AdmTicketsComponent implements OnInit{
 
     this.objetoData = this.dataSharingService.getData();
 
-    console.log(this.objetoData)
+    //console.log(this.objetoData)
 
       this.datosBusquedaMaestro.opc = 'CLI';
       this.restService.getMaestros(this.datosBusquedaMaestro).subscribe(respuesta=>{
@@ -257,7 +257,7 @@ export class AdmTicketsComponent implements OnInit{
         this.visitas=this.listComentarios.body[1];
 
         //console.log(this.visitas)
-        console.log(this.objetoData.data)
+        //console.log(this.objetoData.data)
 
         this.formTicket.patchValue({
           id: this.objetoData.data.Id,
@@ -299,7 +299,7 @@ export class AdmTicketsComponent implements OnInit{
           await Swal.fire({
             position: "center",
             icon: "success",
-            title: 'Tiket: ' + this.ticketID + ' creado satisfactoriamente!',
+            title: res.message,
             showConfirmButton: false,
             timer: 2000
           });
@@ -321,6 +321,7 @@ export class AdmTicketsComponent implements OnInit{
 
   agregarComentario(elemento: ElementoTicket) {
     // Lógica para editar el elemento
+    console.log(this.objetoData.data)
     const dialogRef = this.dialog.open(AdmComentsComponent, {
       disableClose: true,
       autoFocus: true,
@@ -328,12 +329,13 @@ export class AdmTicketsComponent implements OnInit{
       width : '900px',
       data: {
         tipo: 'Crear',
-        data: elemento,
+        data: this.objetoData.data,
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
+      this.comentarios.push(data);
     });
   }
 

@@ -31,6 +31,10 @@ export class AdmTecnicocontratoComponent implements OnInit{
   lTecnicos:any;
   dsTecnicos:  any[]=[];
 
+  columnEspecialidades: string[] = ['id', 'nombre','descripcion'];
+  listEspecialidades= new MatTableDataSource<any>();
+  vEspecialidad:any;
+
   response: any;
 
   public formTecnicoContrato !: FormGroup;
@@ -43,15 +47,18 @@ export class AdmTecnicocontratoComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.cargarTecnicos();
+
 
     this.formTecnicoContrato= this.formBuilder.group({
           opc:[''],
-          id : [0,[Validators.required]],
-          id_contrato : ['',[Validators.required]],
-          id_tecnico : ['',[Validators.required]],
-          activo : [0]
+          vID : [0,[Validators.required]],
+          vIDCONTRATO : [0,[Validators.required]],
+          vIDTECNICO : [0,[Validators.required]],
+          vACTIVO : [0]
     })
+
+    this.cargarTecnicos();
+
   }
 
   consultaTec = {
@@ -59,17 +66,50 @@ export class AdmTecnicocontratoComponent implements OnInit{
   }
 
   cargarTecnicos() {
+
+    //console.log(this.data)
+
     this.restService.getMaestros(this.consultaTec).subscribe((respuesta:any)=>{
     this.lTecnicos = respuesta;
     this.dsTecnicos = this.lTecnicos.body[0];
 
-    this.formTecnicoContrato.get('id_contrato')?.setValue(this.data.data.CONTRATO);
-    this.formTecnicoContrato.get('id_contrato')?.disable();
+    //console.log(this.dsTecnicos)
+
+    this.formTecnicoContrato.get('vIDCONTRATO')?.setValue(this.data.data.data.CONTRATO);
+    this.formTecnicoContrato.get('vIDCONTRATO')?.disable();
+
 
     //console.log( this.dsTecnicos)
 
   });
 
+  }
+
+  onSelectChange(event: any) {
+    const selectedValue = event.target.value;
+    this.cargarEspecialidades(selectedValue);
+
+
+  }
+
+  consultaEspecialidades={
+    opc:'',
+    vID:0,
+    vIDTECNICO:0,
+    vActivo:0
+
+  }
+
+  cargarEspecialidades(idtecnico: any){
+    //console.log('objetoData', this.objetoData)
+
+    this.consultaEspecialidades.opc='SLC-TCN';
+    this.consultaEspecialidades.vIDTECNICO= idtecnico;
+
+    this.restService.consultaEspTecnico(this.consultaEspecialidades).subscribe((data: any) => {
+      this.vEspecialidad = data.body[0];
+      this.listEspecialidades = this.vEspecialidad;
+    })
   }
 
   cancelar() {
@@ -78,12 +118,15 @@ export class AdmTecnicocontratoComponent implements OnInit{
 
   async guardarTecnicoCont(){
     //Guardar Servicios Contrato
-    if(this.formTecnicoContrato.get('id')?.value == ''){
-      this.formTecnicoContrato.get('activo')?.setValue('1');
+    if(this.formTecnicoContrato.get('vID')?.value == ''){
+      this.formTecnicoContrato.get('vACTIVO')?.setValue('1');
     }
 
     this.formTecnicoContrato.get('opc')?.setValue('ADD');
+    this.formTecnicoContrato.get('vIDCONTRATO')?.setValue(this.data.data.data.CONTRATO);
+    console.log(this.data.data.data)
 
+  console.log(this.formTecnicoContrato.value)
     try{
 
       //console.log(this.formContrato.value)
@@ -107,9 +150,10 @@ export class AdmTecnicocontratoComponent implements OnInit{
       await Swal.fire({
         position: "center",
         icon: "error",
-        title: e.message,
+        title: e.error.message,
+        text:e.error.body,
         showConfirmButton: false,
-        timer: 1500
+        timer: 3000
       });
     }
 

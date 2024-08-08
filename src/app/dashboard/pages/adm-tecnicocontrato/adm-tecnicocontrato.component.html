@@ -6,14 +6,29 @@
       <div class="row">
         <div class="col-md-2  d-flex flex-column">
           <label for="exampleFormControlInput1" class="form-label">No. Contrato</label>
-          <input type="number" class="form-control" formControlName="id_contrato" >
+          <input type="number" class="form-control" formControlName="vIDCONTRATO" >
         </div>
         <div class="col-md-5 d-flex flex-column">
           <label for="nitinput" class="form-label">Tecnicos</label>
-          <select class="form-select" formControlName="id_tecnico">
+          <select class="form-select" formControlName="vIDTECNICO"
+                  (change)="onSelectChange($event)">
               <option *ngFor="let tecnico of dsTecnicos" [value]="tecnico.id">{{tecnico.nombre}}</option>
           </select>
         </div>
+      </div>
+      <div class="row especialidades">
+        <nav class="navbar sticky-top bg-body-tertiary">
+          <div class="container-fluid titulobarra bg-slate-700" >
+            <a class="navbar-brand" style="color: #fff;">Especialidades</a>
+          </div>
+
+        </nav>
+
+          <app-tabladinamica
+                [columnas]="columnEspecialidades"
+                [dataSource]="listEspecialidades"
+                [filtro]="false"
+                ></app-tabladinamica>
       </div>
     </form>
 
