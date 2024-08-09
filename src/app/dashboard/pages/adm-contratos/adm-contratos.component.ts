@@ -38,7 +38,7 @@ export class AdmContratosComponent implements OnInit{
   //serviciosContrato: any[] = [];
   serviciosContrato!: any[];
 
-  columnasTecnicos : string[]=['foto','Id','numerodocumento','email', 'telefono'];
+  columnasTecnicos : string[]=['foto','Id','nombre','apellidos','email', 'telefono'];
   listTecnicosContrato : any;
   tecnicosContrato!: MatTableDataSource<any,any>;
 

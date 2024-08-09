@@ -75,7 +75,7 @@ export class AdmTecnicocontratoComponent implements OnInit{
     this.dsTecnicos = this.lTecnicos.body[0];
 
     //console.log(this.dsTecnicos)
-    
+
     this.contrato = this.data.data.data.CONTRATO;
 
 
@@ -118,23 +118,22 @@ export class AdmTecnicocontratoComponent implements OnInit{
 
   async guardarTecnicoCont(){
     //Guardar Servicios Contrato
-    alert();
     if(this.formTecnicoContrato.get('vID')?.value == ''){
       this.formTecnicoContrato.get('vACTIVO')?.setValue('1');
     }
-    console.log(this.formTecnicoContrato.value)
+    //console.log(this.formTecnicoContrato.value)
     this.formTecnicoContrato.get('opc')?.setValue('ADD');
     this.formTecnicoContrato.get('vIDCONTRATO')?.setValue(this.contrato);
-    console.log(this.data.data)
+    //console.log(this.data.data)
 
-  console.log(this.formTecnicoContrato.value)
+    //console.log(this.formTecnicoContrato.value)
     try{
 
       //console.log(this.formContrato.value)
       const res = await lastValueFrom(this.restService.
                         tecnicosContratos(this.formTecnicoContrato.value));
 
-      //console.log(res)
+      console.log(res)
       this.response = res;
       if(!this.response.error){
         await Swal.fire({
@@ -157,6 +156,8 @@ export class AdmTecnicocontratoComponent implements OnInit{
         timer: 3000
       });
     }
+
+    this.cancelar();
 
   }
 

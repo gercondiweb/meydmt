@@ -14,7 +14,7 @@ import { FrmdinamicmodalComponent } from '../../../shared/components/frmdinamicm
 })
 export class TecnicosComponent implements OnInit{
   titulo = ['Tecnicos'];
-  colTecnicos:string[] = ['foto','numerodocumento','nombre','apellido'];
+  colTecnicos:string[] = ['foto','numerodocumento','nombre','apellidos'];
   dsTecnicos = new MatTableDataSource<any>();
 
   colEspecialidades: string[] = ['id','especialidad', 'activo'];
