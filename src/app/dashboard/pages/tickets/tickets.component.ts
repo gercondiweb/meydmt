@@ -63,8 +63,8 @@ export class TicketsComponent implements OnInit{
     { title: 'Solicitados', icon: 'commute', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
     { title: 'En Ejecucion', icon: 'cancel', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
     { title: 'Cancelados', icon: 'cancel', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
-    { title: 'Ejecutados', icon: 'done_outline', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
-    { title: 'Asignados', icon: 'commute', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Ejecutados', icon: 'done', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Asignados', icon: 'user', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
   ];
 
   ngOnInit(): void {
@@ -99,12 +99,12 @@ export class TicketsComponent implements OnInit{
     //console.log(this.datosDetalle)
   }
 
-  public filtrar(){
-
+  public filtrar(estado:any){
+    alert('Se va a filtrar algo..');
   }
 
   public crearTicket(){
-    
+
     const route = '/dashboard/admtickets'  ;
       this.router.navigate([route,'crear']);
 

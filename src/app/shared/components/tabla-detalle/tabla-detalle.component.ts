@@ -6,6 +6,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataSharingService } from '../../../dashboard/services/services/data-sharing.service';
 import { DatePipe } from '@angular/common';
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable, switchAll } from 'rxjs';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 export interface ElementoTablaDetalle {
   nombre: string;
 
@@ -38,7 +45,8 @@ export class TablaDetalleComponent implements OnChanges {
   }
 
   constructor(
-    public dialog: MatDialog,
+    private http: HttpClient,
+    private dialog: MatDialog,
     private router: Router,
     private dataSharingService: DataSharingService,
     private datePipe: DatePipe
@@ -86,12 +94,13 @@ export class TablaDetalleComponent implements OnChanges {
     const param4 = 'valor2';
     const data2 = { data: element };
 
-    //console.log(data)
+    console.log(data2)
 
     this.dataSharingService.setParams(param3, param4, data2);
     const route = '/dashboard/admtickets'  ;
       this.router.navigate([route,'editar']);
   }
+
 }
 export interface DetalleServicio {
   id: number;

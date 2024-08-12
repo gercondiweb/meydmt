@@ -18,12 +18,21 @@
         <div class="container text-center">
           <div class="row">
             <div *ngFor="let card of cards" class="col-sm-2 mb-2 mb-sm-0">
-              <div class="card">
-                <div class="card-header"><mat-icon class="color_icon">{{ card.icon }}</mat-icon>{{ card.title }}</div>
+
+              <!--Aqui creamos las tarjetas de tikect x estado -->
+              <div class="card text-center" (click)="filtrar('COMP')">
                 <div class="card-body">
-                  <h2 class="card-title"> {{ card.value }}</h2>
+                  <div class="mb-2">
+                      <i class="bi {{ card.icon }}" style="font-size: 2rem;"></i>
+                  </div>
+                  <h3 class="card-title">{{ card.title }}</h3>
+                  <p class="card-text display-6">{{ card.value }}</p>
+
+                  <!--i>{{ card.icon }}</!--i>{{ card.title }}
+                  <h2-- class="card-title"> {{ card.value }}</h2-->
                 </div>
               </div>
+
             </div>
           </div>
         </div>

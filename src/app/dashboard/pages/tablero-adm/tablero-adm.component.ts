@@ -24,6 +24,23 @@ export class TableroAdmComponent implements OnInit{
     fechafinal:new Date()
   }
 
+  datosBusqueda = {
+    opc :"CNT-TKT",
+    id_cliente :"1",
+    fechainicial :"2024-01-01",
+    fechafinal :"2024-12-31",
+  }
+  listDatos: any;
+  datos: any;
+
+  cards1: any[] = [
+    { title: 'Solicitados', icon: 'commute', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'En Ejecucion', icon: 'cancel', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Cancelados', icon: 'cancel', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Ejecutados', icon: 'done', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Asignados', icon: 'user', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+  ];
+
   constructor (private RestService:RestService, private router: Router){}
 
   ngOnInit(): void {
@@ -49,12 +66,26 @@ export class TableroAdmComponent implements OnInit{
 
     console.log('Datos consulta ', this.datosConsulta)
 
-    this.RestService.getServiciosxEstado(this.datosConsulta).subscribe(respuesta=>{
+    /*this.RestService.getServiciosxEstado(this.datosConsulta).subscribe(respuesta=>{
       console.log('resultado', respuesta)
       this.listServxestado=respuesta;
       this.servxestado=this.listServxestado.body;
       this.solicitado = this.servxestado[0];
     })
+  }*/
+
+    this.RestService.getCountTikets(this.datosBusqueda)
+    .subscribe(respuesta=>{
+      this.listDatos = respuesta;
+      this.datos = this.listDatos.body;
+
+      this.cards1[0].value = this.datos[0][0].servicios_solicitados;
+      this.cards1[1].value = this.datos[0][0].servicios_iniciados;
+      this.cards1[2].value = this.datos[0][0].servicios_cancelados;
+      this.cards1[3].value = this.datos[0][0].servicios_ejecutados;
+      this.cards1[4].value = this.datos[0][0].servicios_asignados;
+
+    });
   }
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(

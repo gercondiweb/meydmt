@@ -9,4 +9,5 @@ export * from './mapa/mapa.component';
 export * from './modal-form/modal-form.component';
 export * from './frmdinamicmodal/frmdinamicmodal.component';
 export * from './cargardocs/cargardocs.component';
+export * from './pdf/pdf.component';
 
