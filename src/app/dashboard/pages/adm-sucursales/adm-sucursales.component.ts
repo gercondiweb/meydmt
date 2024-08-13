@@ -3,7 +3,6 @@ import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {  } from '@angular/material';
 import { RestService } from '../../../dashboard/services/services/rest.service';
-import { SucursalService } from './service/sucursal.service';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -15,7 +14,6 @@ export class AdmSucursalesComponent {
 
   public clientes: any;
   readonly dialogRef = inject(MatDialogRef<AdmSucursalesComponent>);
-  readonly sucursalService = inject(SucursalService);
   public data = inject<any>(MAT_DIALOG_DATA);
   titulo : string ='';
 
@@ -29,16 +27,19 @@ export class AdmSucursalesComponent {
   ngOnInit(): void {
     this.formSucursales = this.formBuilder.group({
       id :['',],
+      nit:[''],
       nombre : ['',[Validators.required]],
       ciudad : ['',[Validators.required]],
       direccion : ['',[Validators.required]],
-      pais : ['',[Validators.required]],
-      zip : [''],
+      email : ['',[Validators.required]],
       telefono : ['',[Validators.required]],
+      id_pais : ['',[Validators.required]],
+      zip : [''],
+      id_ciudad : ['',[Validators.required]],
+      id_departamento : ['',[Validators.required]],
       id_cliente : ['',[Validators.required]],
       activo : [1,[Validators.required]],
     });
-
 
     if(this.data.tipo === 'Editar'){
       this.titulo = 'Editar Sucursal';
@@ -54,6 +55,7 @@ export class AdmSucursalesComponent {
 
     this.formSucursales.patchValue({
       id: this.data.data.Id,
+      nit: this.data.data.Nit,
       nombre : this.data.data.nombre,
       ciudad : this.data.data.ciudad,
       direccion : this.data.data.direccion,
@@ -66,11 +68,14 @@ export class AdmSucursalesComponent {
   }
 
   cargarDatosCliente(){
+    console.log(this.data.data)
     this.formSucursales.patchValue({
       id : 0,
-      id_cliente : this.data.data.id,
+      nit: this.data.data.data.Nit,
+      id_cliente : this.data.data.data.Id,
       activo:1
     })
+    console.log(this.formSucursales.value)
   }
 
   regresar() {
@@ -78,7 +83,14 @@ export class AdmSucursalesComponent {
   }
 
   async guardarSucursal(){
-    await lastValueFrom(this.sucursalService.save(this.formSucursales.value));
+    try{
+      const sucursal = await lastValueFrom(this.RestService.sucursales(this.formSucursales.value));
+    }catch{
+
+    }
+
+    this.regresar();
+
   }
 
 }

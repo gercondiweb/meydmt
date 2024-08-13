@@ -130,4 +130,12 @@ export class RestService {
   public comentarios(datosComentario:any): Observable<any>{
     return this.http.post('comentarios', datosComentario); // GET http://localhost:4000/api/clientes
   }
+
+  public sucursales(datosSucursal:any): Observable<any>{
+    return this.http.post('sucursales', datosSucursal); // GET http://localhost:4000/api/sucursales
+  }
+
+  public areas(datosArea:any): Observable<any>{
+    return this.http.post('areas', datosArea); // GET http://localhost:4000/api/areas
+  }
 }

@@ -44,12 +44,15 @@ export class AdmClienteComponent implements OnInit {
   listCiudades: any[]=[];
   vPais: any;
   listPaises: any[]=[];
+
   consultaCliente={
     opc:'SUCUR',
     vIDCLIENTE: 1,
   }
 
   public formCliente !: FormGroup;
+
+  public clienteSeleccionado : number = 0;
 
   constructor(
     private dataSharingService: DataSharingService,
@@ -80,16 +83,16 @@ export class AdmClienteComponent implements OnInit {
       this.cargarDatosCliente();
       this.formCliente.controls['nit'].disable();
       this.formCliente.get('id')?.setValue(this.objetoData.data.id);
+      this.clienteSeleccionado = this.objetoData.data.id;
       this.cargarSucursalesCliente();
       this.cargarAreasSucursal();
 
     }else{
       this.formCliente.get('id')?.setValue(0);
+      this.clienteSeleccionado = 0;
     }
 
   }
-
-  public clienteSeleccionado : number = 0;
 
   cargarDatosCliente(){
     this.param1 = this.dataSharingService.getParam1();
@@ -115,7 +118,7 @@ export class AdmClienteComponent implements OnInit {
 
   cargarSucursalesCliente(){
     this.consultaCliente.opc = 'SUCUR';
-    this.consultaCliente.vIDCLIENTE = 1;
+    this.consultaCliente.vIDCLIENTE = this.objetoData.data.Id;
 
     console.log(this.consultaCliente)
 
@@ -128,7 +131,7 @@ export class AdmClienteComponent implements OnInit {
 
   cargarAreasSucursal(){
     this.consultaCliente.opc = 'AREAS';
-    this.consultaCliente.vIDCLIENTE = 1;
+    this.consultaCliente.vIDCLIENTE = this.objetoData.data.Id;;
 
     console.log(this.consultaCliente)
 
@@ -198,7 +201,7 @@ export class AdmClienteComponent implements OnInit {
     });
   }
 
-  agregarArea(){
+  agregarArea(vId: number){
     const dialogRef = this.dialog.open(AdmAreasComponent, {
       disableClose: true,
       autoFocus: true,
@@ -206,6 +209,7 @@ export class AdmClienteComponent implements OnInit {
       width : '900px',
       data: {
         tipo: 'Crear',
+        idSucur: vId
       }
 
     });

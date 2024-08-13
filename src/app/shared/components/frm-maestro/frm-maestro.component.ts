@@ -30,6 +30,6 @@ export class FrmMaestroComponent implements OnInit{
     crearElemento() {
       // Lógica para editar el elemento
       const route = '/' + this.formAdm + '/'  ;
-      this.router.navigate([route]);
+      this.router.navigate([route,'Crear']);
     }
 }

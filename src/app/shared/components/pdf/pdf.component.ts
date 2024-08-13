@@ -40,8 +40,6 @@ export class PdfComponent implements OnInit {
     //todo: creamos e imprimimos el reporte del ticket
     const imageUrl = '../uploads/logo4.png'; // URL de la imagen
 
-    const imgBase64 =  this.getBase64ImageFromURL(imageUrl);
-
     console.log(this.element)
 
     this.getBase64ImageFromURL(imageUrl).subscribe(base64data => {

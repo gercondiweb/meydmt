@@ -77,7 +77,7 @@
 
 
       <div class="row">
-        <nav class="navbar sticky-top bg-body-tertiary">
+        <nav class="navbar sticky-top bg-body-tertiary" *ngIf="clienteSeleccionado!==0">
           <div class="container-fluid">
             <a class="navbar-brand">Sucursales</a>
             <button mat-raised-button color="primary" (click)="agregarSucursal()">
@@ -97,12 +97,12 @@
                   <p>Direccion: {{sucur.direccion}} - Telefono: {{sucur.telefono}}</p>
                 </button>
               </h2>
-              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse show">
                 <div class="accordion-body">
                   <nav class="navbar sticky-top" style="background-color:#99a0c2; color:aliceblue;">
                     <div class="container-fluid">
                       <a class="navbar-brand">Areas</a>
-                      <button mat-raised-button color="primary" (click)="agregarArea()">
+                      <button mat-raised-button color="primary" (click)="agregarArea(sucur.id)">
                         <mat-icon>add_circle</mat-icon>
                         Agregar Area
                       </button>

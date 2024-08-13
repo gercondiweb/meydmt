@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RestService } from '../../../dashboard/services/services/rest.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-adm-areas',
@@ -24,7 +25,7 @@ export class AdmAreasComponent {
 
   ngOnInit(): void {
     this.formAreas = this.formBuilder.group({
-      id :['',],
+      id :[''],
       id_sucursal : ['',[Validators.required]],
       nombre : ['',[Validators.required]],
       descripcion : ['',[Validators.required]],
@@ -33,6 +34,8 @@ export class AdmAreasComponent {
       telefonoautorizador : ['',[Validators.required]],
       activo : [1,[Validators.required]],
     });
+
+    this.formAreas.get('id_sucursal')?.setValue(this.data.idSucur);
   }
 
   cargarSucursales(){
@@ -43,8 +46,21 @@ export class AdmAreasComponent {
     this.dialogRef.close();
   }
 
-  guardarArea(){
+ async guardarArea(){
+  try{
+    this.formAreas.get('id_sucursal')?.setValue(this.data.idSucur);
+
+    const area = await lastValueFrom(this.RestService.areas(this.formAreas.value));
+
+
+
+  }catch{
 
   }
+
+  this.regresar();
+
+  }
+
 
 }
