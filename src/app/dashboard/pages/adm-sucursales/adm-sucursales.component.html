@@ -18,22 +18,10 @@
             <input type="text" class="form-control" formControlName="direccion"  placeholder="">
           </div>
 
-          <div class="mb-3 col-3">
-            <label for="clienteinput" class="form-label">Pais</label>
-            <input type="text" class="form-control" formControlName="id_pais"  placeholder="">
+          <div class="mb-3">
+            <app-demografico (isValid)="onValidationStatusChanged($event)"></app-demografico>
           </div>
-          <div class="mb-3 col-3">
-            <label for="clienteinput" class="form-label">Departamento</label>
-            <input type="text" class="form-control" formControlName="id_departamento"  placeholder="">
-          </div>
-          <div class="mb-3 col-3">
-            <label for="clienteinput" class="form-label">Ciudad</label>
-            <input type="text" class="form-control" formControlName="id_ciudad"  placeholder="">
-          </div>
-          <div class="mb-3 col-3">
-            <label for="clienteinput" class="form-label">Zip</label>
-            <input type="text" class="form-control" formControlName="zip"  placeholder="">
-          </div>
+
         </div>
       </form>
 

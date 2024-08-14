@@ -31,17 +31,25 @@ export class AdmClienteComponent implements OnInit {
   accion : any;
   param1!: string;
   param2!: string;
+
   objetoData: any;
+
   public idCliente:any;
+
   vCliente: any;
   listClientes: any[]=[];
+
   vSucursal: any;
   listSucursales: any[]=[];
+
   vArea: any;
   listAreas: any[]=[];
+
   columnAreas: string[] = ['id', 'nombre', 'autorizador', 'email', 'activo'];
   vCiudad: any;
+
   listCiudades: any[]=[];
+
   vPais: any;
   listPaises: any[]=[];
 
@@ -72,11 +80,14 @@ export class AdmClienteComponent implements OnInit {
       direccion : ['',[Validators.required]],
       email : ['',[Validators.required]],
       telefono : ['',[Validators.required]],
-      ciudad : ['',[Validators.required]],
-      pais : ['',[Validators.required]],
+      id_ciudad : ['',[Validators.required]],
+      id_pais : ['',[Validators.required]],
+      id_departamento : ['',[Validators.required]],
       zip : ['',],
       activo : [1,[Validators.required]],
     });
+
+    //console.log(this.accion)
 
     if(this.accion === "Editar"){
 
@@ -98,7 +109,7 @@ export class AdmClienteComponent implements OnInit {
     this.param1 = this.dataSharingService.getParam1();
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
-    this.idCliente = this.objetoData.data.id;
+    this.idCliente = this.objetoData.data.Id;
 
     console.log(this.objetoData)
 
@@ -108,19 +119,21 @@ export class AdmClienteComponent implements OnInit {
       direccion: this.objetoData.data.Direccion,
       email: this.objetoData.data.Email,
       telefono: this.objetoData.data.Telefono,
-      ciudad: this.objetoData.data.Ciudad,
-      pais: this.objetoData.data.CLAUSULAS,
+      id_ciudad: this.objetoData.data.id_ciudad,
+      id_pais: this.objetoData.data.id_pais,
+      id_departamento: this.objetoData.data.id_departamento,
+      zip: this.objetoData.data.zip,
       id: this.objetoData.data.Id,
       activo: this.objetoData.data.Activo
     });
-
+    console.log(this.formCliente.value)
   }
 
   cargarSucursalesCliente(){
     this.consultaCliente.opc = 'SUCUR';
     this.consultaCliente.vIDCLIENTE = this.objetoData.data.Id;
 
-    console.log(this.consultaCliente)
+    //console.log(this.consultaCliente)
 
     this.restService.getClientes(this.consultaCliente).subscribe((data: any) => {
       this.vSucursal = data.body[0];
@@ -145,7 +158,14 @@ export class AdmClienteComponent implements OnInit {
   async guardarCliente(){
 
     try{
-      //console.log(this.formCliente.value)
+
+      this.formCliente.get('id_pais').setValue(this.dataSharingService.getPais());
+      this.formCliente.get('zip').setValue(this.dataSharingService.getZip());
+      this.formCliente.get('id_ciudad').setValue(this.dataSharingService.getCiudad());
+      this.formCliente.get('id_departamento').setValue(this.dataSharingService.getDepartamento());
+
+      console.log(this.formCliente.value)
+
       this.loadingServer.show();
       const cliente = await lastValueFrom(this.restService.crearCliente(this.formCliente.value));
 
@@ -162,6 +182,9 @@ export class AdmClienteComponent implements OnInit {
           id: cliente.id,
           ...this.formCliente.value
         });
+      //--- Guardamos la info del cliente que se acaba de crear
+
+      this.dataSharingService.setParams(cliente.id,cliente.nit, cliente);
 
       console.log( { cliente });
       console.log( this.formCliente.value );
@@ -197,7 +220,10 @@ export class AdmClienteComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if(result !== undefined){
+        console.log(`Dialog result: ${result}`);
+        this.listSucursales.push(result);
+      }
     });
   }
 
@@ -215,7 +241,10 @@ export class AdmClienteComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined){
       console.log(`Dialog result: ${result}`);
+      this.listAreas.push(result);
+      }
     });
   }
 

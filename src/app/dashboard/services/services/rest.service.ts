@@ -138,4 +138,10 @@ export class RestService {
   public areas(datosArea:any): Observable<any>{
     return this.http.post('areas', datosArea); // GET http://localhost:4000/api/areas
   }
+
+  public demografico(dato:any): Observable<any>{
+    return this.http.post('consultaclientes/demografico', dato); // GET http://localhost:4000/api/areas
+  }
+
+
 }

@@ -36,11 +36,11 @@ export class LayoutComponent implements OnInit{
           ruta: '/dashboard/masterservicios',
           name: 'Servicios'
         },
-        {
+        /*{
           icon: 'subdirectory_arrow_right',
           ruta: '/dashboard/admtiposervicios',
           name: 'Tipo Servicios'
-        }
+        }*/
       ]
     },
     {
@@ -53,11 +53,11 @@ export class LayoutComponent implements OnInit{
       ruta: '/dashboard/informes',
       name: 'Informes'
     },
-    {
+   /* {
       icon: 'plus_one',
       ruta: '/dashboard/cotizacion',
       name: 'Cotizaciones'
-    },
+    },*/
    ]
   }
 

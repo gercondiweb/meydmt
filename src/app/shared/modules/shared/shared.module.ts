@@ -10,7 +10,8 @@ import { NavegacionComponent,
           ModalFormComponent,
           FrmdinamicmodalComponent,
           CargardocsComponent,
-          PdfComponent
+          PdfComponent,
+          DemograficoComponent
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -36,7 +37,8 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     LoadingFullComponent,
     CargardocsComponent,
     BuscaLupaComponent,
-    PdfComponent
+    PdfComponent,
+    DemograficoComponent,
   ],
   imports: [
     CommonModule,
@@ -69,7 +71,8 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     ReactiveFormsModule,
     CargardocsComponent,
     BuscaLupaComponent,
-    PdfComponent
+    PdfComponent,
+    DemograficoComponent,
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-3">
+    <label for="country" class="form-label">Pais</label>
+    <select id="country" class="form-select" [(ngModel)]="selectedCountry" #refCountry (change)="onCountryChange(refCountry.value)">
+      <option *ngFor="let country of countries" [value]="country.id">{{ country.pais }}</option>
+    </select>
+  </div>
+
+  <div class="col-3">
+    <label for="department" class="form-label">Municipo</label>
+    <select id="selectedDepartment" name="selectedDepartment" #refMunicipo class="form-select" [(ngModel)]="selectedDepartment" (change)="onDepartmentChange(refMunicipo.value)">
+      <option *ngFor="let department of departments" [value]="department.id">{{ department.departamento }}</option>
+    </select>
+  </div>
+
+  <div class="col-3">
+    <label for="city" class="form-label">Ciudad</label>
+    <select id="city" class="form-select" [(ngModel)]="selectedCity" #refCiudad (change)="onCityChange(refCiudad.value)">
+      <option *ngFor="let city of cities" [value]="city.id">{{ city.ciudad }}</option>
+    </select>
+  </div>
+
+  <div class="col-3">
+    <label for="zip" class="form-label">Zip</label>
+    <input id="zip" class="form-control" type="text" [(ngModel)]="selectedZip" (input)="onZipChange($event)" />
+  </div>
+
+</div>

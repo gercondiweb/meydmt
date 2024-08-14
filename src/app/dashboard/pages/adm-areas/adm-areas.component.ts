@@ -3,6 +3,7 @@ import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RestService } from '../../../dashboard/services/services/rest.service';
 import { lastValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-adm-areas',
@@ -15,6 +16,8 @@ export class AdmAreasComponent {
   public clientes: any;
 
   public formAreas!: FormGroup;
+
+  result: any;
 
   constructor(
     public dialogRef: MatDialogRef<AdmAreasComponent>,
@@ -43,7 +46,7 @@ export class AdmAreasComponent {
   }
 
   regresar() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.result);
   }
 
  async guardarArea(){
@@ -51,10 +54,18 @@ export class AdmAreasComponent {
     this.formAreas.get('id_sucursal')?.setValue(this.data.idSucur);
 
     const area = await lastValueFrom(this.RestService.areas(this.formAreas.value));
+    this.result = area.body;
 
 
-
-  }catch{
+  }catch( e:any ){
+    console.log(e);
+    await Swal.fire({
+      position: "center",
+      icon: "error",
+      title: e.message,
+      showConfirmButton: false,
+      timer: 1500
+    });
 
   }
 
