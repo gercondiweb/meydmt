@@ -25,7 +25,7 @@
           <div class="row g-2">
             <div class="mb-3 col-4">
               <label for="nitinput" class="form-label">Numero Identificación</label>
-              <input type="number" class="form-control" formControlName="numerodocumento" placeholder="999999999" id="nitinput">
+              <input type="number" class="form-control" formControlName="numerodocumento" id="nitinput">
             </div>
             <div class="mb-3 col-4">
               <label for="clienteinput" class="form-label">Nombre</label>
@@ -56,12 +56,20 @@
             </div>
 
             <div class="foto">
-              <img class="imagen" [src]="formTecnico.get('foto')?.value" alt="Imagen" *ngIf="formTecnico.get('foto')?.value">
+              <div class="row">
+                <img class="imagen" [src]="formTecnico.get('foto')?.value" alt="Imagen" *ngIf="formTecnico.get('foto')?.value">
+              </div>
+
+              <div class="row" *ngIf="formTecnico.get('numerodocumento').value">
+                <app-cargardocs [option]="'tecnico'" [id]="idTecnico" ></app-cargardocs>
+              </div>
             </div>
 
             <div class="mb-3 col-3">
-              <label for="exampleFormControlInput1" class="form-label">Foto</label>
-              <input type="text" class="form-control" formControlName="foto"  placeholder="">
+
+                <label for="exampleFormControlInput1" class="form-label">Foto</label>
+                <input type="text" class="form-control" formControlName="foto"  placeholder="">
+
             </div>
 
             <div class="mb-3 col-3">
