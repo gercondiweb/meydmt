@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-2">
+    <div *ngIf="campocompleto[0].comentario ===1 ">
+      {{campocompleto[0].descripcion}}
+      <input type="text" *ngModel="comentario">
+    </div>
+    <div *ngIf="campocompleto[0].valor ===1">
+      {{campocompleto[0].valor}}
+      <input type="text" *ngModel="valor">
+    </div>
+    <div *ngIf="campocompleto[0].sino===1">
+      {{campocompleto[0].sino}}
+      <input type="checkbox" *ngModel="sino">
+    </div>
+    <div *ngIf="campocompleto[0].bueno===1">
+      {{campocompleto[0].bueno}}
+      <input type="checkbox" *ngModel="bueno">
+    </div>
+  </div>
+  <!--div *ngFor="let campo of campocompleto">
+    <div class="col-2">{{campo.sino}}||{{campo.referencia}}</div>
+  </!--div-->
+</div>

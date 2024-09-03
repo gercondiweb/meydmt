@@ -12,4 +12,6 @@ export * from './adm-areas/adm-areas.component';
 export * from './adm-tecnicos/adm-tecnicos.component';
 export * from './adm-tickets/adm-tickets.component';
 export * from './adm-coments/adm-coments.component';
-export * from './adm-tecnicocontrato/adm-tecnicocontrato.component'
+export * from './adm-tecnicocontrato/adm-tecnicocontrato.component';
+export * from '../../produccion/pages/produccion/produccion.component';
+export * from '../../produccion/pages/adm-produccion/adm-produccion.component';

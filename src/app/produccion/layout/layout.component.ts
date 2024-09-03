@@ -13,55 +13,45 @@ export class LayoutComponent implements OnInit{
    this.items = [
     {
       icon: 'dashboard',
-      ruta: '/dashboard/tablero',
+      ruta: '/produccion/tableroprod',
       name: 'Tablero'
     },
     {
       icon: 'feed',
-      ruta: '/dashboard/tickets',
-      name: 'Tikets'
+      ruta: '/produccion/produccion',
+      name: 'Ordenes'
     },
     {
       icon: 'domain',
-      ruta: '/dashboard/clientes',
+      ruta: '/produccion/clientes',
       name: 'Clientes'
     },
     {
       icon: 'apps',
-      ruta: '/dashboard/contratos',
-      name: 'Contratos',
+      ruta: '/produccion/formatos',
+      name: 'Formatos',
       submenu: [
         {
           icon: 'subdirectory_arrow_right',
-          ruta: '/dashboard/masterservicios',
-          name: 'Servicios'
+          ruta: '/produccion/campios',
+          name: 'Campos'
         },
-        /*{
+        {
           icon: 'subdirectory_arrow_right',
-          ruta: '/dashboard/admtiposervicios',
-          name: 'Tipo Servicios'
-        }*/
+          ruta: '/produccion/secciones',
+          name: 'Secciones'
+        }
       ]
     },
     {
       icon: 'group',
-      ruta: '/dashboard/tecnicos',
+      ruta: '/produccion/tecnicos',
       name: 'Tecnicos'
     },
     {
       icon: 'monitoring',
-      ruta: '/dashboard/informes',
+      ruta: '/produccion/informes',
       name: 'Informes'
-    },
-   /* {
-      icon: 'plus_one',
-      ruta: '/dashboard/cotizacion',
-      name: 'Cotizaciones'
-    },*/
-    {
-      icon: 'monitoring',
-      ruta: '/dashboard/produccion',
-      name: 'Produccion'
     }
    ]
   }

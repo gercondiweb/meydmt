@@ -17,6 +17,11 @@ export const routes: Routes = [
         .then(m => m.ConductorModule)
       },
       {
+        path:'produccion',
+        loadChildren: () => import('./produccion/produccion.module')
+        .then(m => m.ProduccionModule)
+      },
+      {
         path: 'login',
         redirectTo: 'auth/login',
         pathMatch: 'full'
