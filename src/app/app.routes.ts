@@ -17,6 +17,11 @@ export const routes: Routes = [
         .then(m => m.ConductorModule)
       },
       {
+        path:'inicio',
+        loadChildren: ()=> import('./inicio/inicio.module')
+        .then(m => m.InicioModule)
+      },
+      {
         path: 'login',
         redirectTo: 'auth/login',
         pathMatch: 'full'
@@ -24,6 +29,11 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'auth',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        redirectTo: 'inicio/home',
         pathMatch: 'full'
       }
 ];

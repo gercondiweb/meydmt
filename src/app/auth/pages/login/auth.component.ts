@@ -24,7 +24,7 @@ export class AuthComponent {
 
       const isAuthtenticate = await lastValueFrom(this.authService.login(this.usuario, this.password));
       this.loadingService.hidden();
-       if(isAuthtenticate) this.router.navigateByUrl('/dashboard');
+       if(isAuthtenticate) this.router.navigateByUrl('/inicio/home');
 
     } catch (error) {
       this.loadingService.hidden();
