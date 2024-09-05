@@ -4,7 +4,8 @@ import { LayoutComponent } from '../produccion/layout/layout.component';
 import {
   TableroprodComponent,
   ProduccionComponent,
-  AdmProduccionComponent
+  AdmProduccionComponent,
+  ConfProduccionComponent
 } from './pages';
 import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosComponent } from '../dashboard/pages';
 
@@ -46,7 +47,11 @@ const routes: Routes = [
       {
         path: 'admtecnicos/:accion',
         component:AdmTecnicosComponent
-      }
+      },
+      {
+        path: 'conf-produccion',
+        component:ConfProduccionComponent
+      },
     ]
   },
   {

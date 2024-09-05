@@ -1,0 +1,196 @@
+<div class="flex flex-col h-screen bg-gray-100">
+
+    <!-- Área de contenido principal -->
+    <div class="flex-1 p-4">
+        <div class="text-right">
+            <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 text-sm rounded">
+                Guardar
+            </button>
+        </div>
+        <!-- Contenedor de las 4 secciones  -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">
+             
+            
+               <!-- Sección 1 - Formato -->
+            <div class="bg-white p-4 rounded-md">
+                <h2 class="text-gray-500 text-lg font-semibold pb-1">Formato</h2>
+                <div class="my-1"></div> <!-- Espacio de separación -->
+                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+
+                <!-- Campo de entrada para el nombre del formato -->
+                <div class="mb-4 ">
+                    <input-group type="text" label="Nombre del formato" id="nombreFormato" name="nombreFormato"
+                        placeholder="Ingrese el nombre del formato" />
+                </div>
+            </div>
+
+
+            <!-- Sección 2 - campos -->
+            <div class="bg-white p-4 rounded-md">
+                <h2 class="text-gray-500 text-lg font-semibold pb-1">Contenido del formato </h2>
+                <div class="my-1"></div> <!-- Espacio de separación -->
+                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+                <div class="chart-container" style="position: relative; height:150px; width:100%">
+                    <!-- Espacio contenido -->
+
+                </div>
+            </div>
+
+            <!-- Sección 3 - Tabla de secciones-->
+            <div class="bg-white p-4 rounded-md">
+                <h2 class="text-gray-500 text-lg font-semibold pb-4">Secciones</h2>
+                <div class="my-1"></div> <!-- Espacio de separación -->
+                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+                <table class="w-full table-auto text-sm">
+                    <thead>
+                        <tr class="text-sm leading-normal">
+                            <th
+                                class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
+                                Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-2 px-4 border-b border-grey-light">
+                                <check-box [value]="'recepcion'" [name]="'secciones'" [label]="'Sección 1'"
+                                    [options]="[{ value: 'recepcion', name: 'Recepción del servicio' }]">
+                                </check-box>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-2 px-4 border-b border-grey-light">
+                                <check-box [value]="'caracteristicas'" [name]="'secciones'" [label]="'Sección 2'"
+                                    [options]="[{ value: 'caracteristicas', name: 'Características del motor' }]">
+                                </check-box>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-2 px-4 border-b border-grey-light">
+                                <check-box [value]="'inventario'" [name]="'secciones'" [label]="'Sección 3'"
+                                    [options]="[{ value: 'inventario', name: 'Inventario de partes' }]">
+                                </check-box>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Botón-->
+                <div class="text-right mt-4">
+                    <button  (click)="openModal()" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
+                        Agregar
+                    </button>
+                </div>
+            </div>
+
+
+
+            <!-- Sección 4 - Tabla de campos -->
+            <div class="bg-white p-4 rounded-md">
+                <h2 class="text-gray-500 text-lg font-semibold pb-4">Campos</h2>
+                <div class="my-1"></div> <!-- Espacio de separación -->
+                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+                <table class="w-full table-auto text-sm">
+                    <thead>
+                        <tr class="text-sm leading-normal">
+                            <th
+                                class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">
+                                Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-2 px-4 border-b border-grey-light">
+                                <check-box [value]="'Correo'" [name]="'Campos'" [label]="'Campo 1'"
+                                    [options]="[{ value: 'Correo', name: 'Correo' }]">
+                                </check-box>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-2 px-4 border-b border-grey-light">
+                                <check-box [value]="'Placa'" [name]="'Campos'" [label]="'Campo 2'"
+                                    [options]="[{ value: 'Placa', name: 'Placa' }]">
+                                </check-box>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-2 px-4 border-b border-grey-light">
+                                <check-box [value]="'Motor'" [name]="'Campos'" [label]="'Campo 3'"
+                                    [options]="[{ value: 'Motor', name: 'Motor' }]">
+                                </check-box>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Botón-->
+                <div class="text-right mt-4">
+                    <button (click)="opendModal()" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
+                        Agregar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal [ngClass]="{ 'showModal': showModal() }" [isShow]="showModal">
+    <div class="modal-overlay" *ngIf="showModal()">
+      <div class="modal-content">
+        <!-- Botón de cerrar dentro del modal-content -->
+        
+        <!-- Contenido del modal -->
+        <section class="text-gray-600 body-font relative">
+          <div class="container px-5 py-24 mx-auto flex">
+            <div class="lg:w-full md:w-full bg-white rounded-lg p-8 flex flex-col w-full mt-10 relative z-10 shadow-md">
+                <button class="close-button text-right text-cyan-500 hover:text-cyan-600 text-2xl font-semibold" (click)="closed()">×</button>
+                <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Secciones</h2>
+              
+              <p class="leading-relaxed mb-5 text-gray-600">Diligencie los datos correspondientes de la sección que desea crear</p>
+              <div class="relative mb-4">
+                <input-group label="Nombre" type="text" id="nombre" name="nombre" class="w-full"/>
+              </div>
+              <div class="relative mb-4">
+                <text-area-group label="Descripcion" name="descripcion" class="w-full"/>
+              </div>
+              <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Guardar</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </app-modal>
+  
+
+  <app-modal [ngClass]="{ 'showmodal': showmodal() }" [isShow]="showmodal">
+    <div class="modal-overlay" *ngIf="showmodal()">
+      <div class="modal-content">
+        <section class="text-gray-600 body-font relative">
+          <div class="container px-5 py-24 mx-auto flex">
+            <div class="lg:w-full md:w-full bg-white rounded-lg p-8 flex flex-col w-full mt-10 relative z-10 shadow-md">
+              <button class="close-button text-right text-cyan-500 hover:text-cyan-600 text-2xl font-semibold" (click)="closedModal()">×</button>
+              <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Campos</h2>
+              <p class="leading-relaxed mb-5 text-gray-600">Diligencie los datos correspondientes del campo que desea crear</p>
+              <div class="relative mb-4">
+                <input-group label="Nombre" type="text" id="nombre" name="nombre" class="w-full"/>
+              </div>
+              <div class="relative mb-4">
+                <desplegable
+                  [value]="selectedDesplegableValue"
+                  name="Desplegable"
+                  label="Selecciona las propiedades"
+                  [options]="DesplegableOptions"
+                ></desplegable>
+              </div>
+              <div class="relative mb-4">
+                <app-tabladinamica
+                  [columnas]="['Nombre', 'Propiedades']"
+                  [dataSource]="dataSource"
+                  >
+                </app-tabladinamica>
+              </div>
+              <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Guardar</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </app-modal>
+  

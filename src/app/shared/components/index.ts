@@ -12,5 +12,11 @@ export * from './cargardocs/cargardocs.component';
 export * from './pdf/pdf.component';
 export * from './demografico/demografico.component';
 export * from './navegacionprod/navegacionprod.component';
+export * from './text-area-group/text-area-group.component';
+export * from './input-group/input-group.component';
+export * from './modal/modal.component';
+export * from './desplegable/desplegable.component';
+export * from './check-box/check-box.component';
 export * from './campo-orden/campo-orden.component';
+
 

@@ -1,8 +1,9 @@
 export const environment = {
   production: false,
   apiUrl: {
-    base: 'http://localhost:4002/api',
+    base: 'https://meyd-mt-5dad4c7c009d.herokuapp.com/api',
     //base:'https://meyd-mt-5dad4c7c009d.herokuapp.com/api',
+    // base: 'http://localhost:4002/api',
     sucursal: 'sucursales',
     consultaservicio : 'consultaservicio/serv',
     auth:{
