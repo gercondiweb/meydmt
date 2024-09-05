@@ -73,6 +73,10 @@ export class RestService {
     return this.http.post('operacionestikets/creartkt', datosConsulta);
   }
 
+  public listarServicios(datosTipoServ:any):Observable<any>{
+    return this.http.post('operacionestikets/creartkt', datosTipoServ);
+  }
+
   public asignarTecnicoTkt(datosConsulta:any):Observable<any>{
     return this.http.post('operacionestikets/creartkt', datosConsulta);
   }

@@ -17,6 +17,12 @@ export const routes: Routes = [
         .then(m => m.ConductorModule)
       },
       {
+        path:'produccion',
+        loadChildren: () => import('./produccion/produccion.module')
+        .then(m => m.ProduccionModule)
+ 
+      },
+      {
         path:'inicio',
         loadChildren: ()=> import('./inicio/inicio.module')
         .then(m => m.InicioModule)

@@ -195,7 +195,7 @@ export class AdmTicketsComponent implements OnInit{
     this.datosConsutaServicios.opc='SRVxTPO';
     this.datosConsutaServicios.id_tiposervicio = value;
 
-    this.restService.crearTkt(this.datosConsutaServicios).subscribe(res3=>{
+    this.restService.listarServicios(this.datosConsutaServicios).subscribe(res3=>{
       this.listServ = res3;
       this.servicios = this.listServ.body[0];
     });

@@ -1,0 +1,185 @@
+<div class="form-container bg-white p-3">
+  <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+    <div class="card">
+      <div class="card-header">
+
+        <div class="row">
+          <div class="col-6">
+            <h2>Administrar Ordenes de Trabajo (OIT)</h2>
+          </div>
+          <div class="col-6 text-end">
+            <button mat-raised-button color="primary" (click)="regresar()">
+              <mat-icon>reply</mat-icon>
+              Regresar
+            </button>
+            <button class="btnGuardar" mat-raised-button color="success" (click)="guardarOrden()">
+              <mat-icon>save</mat-icon>
+              Guardar
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-body  mt-3">
+        <form [formGroup]="frmCabeceraOrden">
+          <div class="row g-2">
+            <div class="mb-3 col-4">
+              <label for="nitinput" class="form-label">OIT</label>
+              <input type="text" class="form-control" formControlName="OIT" id="oitinput">
+            </div>
+            <div class="mb-3 col-4">
+              <label for="clienteinput" class="form-label">Cliente</label>
+              <input type="text" class="form-control" formControlName="cliente"  placeholder="" >
+            </div>
+
+            <div class="mb-3 col-4">
+              <label for="nitinput" class="form-label">Nit</label>
+              <input type="text" class="form-control" formControlName="nit"  placeholder="">
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="exampleFormControlInput1" class="form-label">Direccion</label>
+              <input type="text" class="form-control" formControlName="direccion"  placeholder="">
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="exampleFormControlInput1" class="form-label">Correo</label>
+              <input type="email" class="form-control" formControlName="correo" placeholder="example@yourcompany.com">
+            </div>
+            <div class="mb-3 col-4">
+              <label for="exampleFormControlInput1" class="form-label">Autorizador</label>
+              <input type="text" class="form-control" formControlName="autoriza" >
+            </div>
+            <div class="mb-3 col-2">
+              <label for="exampleFormControlInput1" class="form-label">Telefono</label>
+              <input type="text" class="form-control" formControlName="telefono" placeholder="">
+            </div>
+            <div class="mb-3 col-2">
+              <label class="form-label">Fecha Entrada</label>
+              <input type="date" class="form-control" formControlName="fechaentrada" placeholder="">
+            </div>
+            <div class="mb-3 col-2">
+              <label class="form-label">Hora Entrada</label>
+              <input type="time" class="form-control" formControlName="horaentrada" placeholder="">
+            </div>
+            <div class="mb-3 col-2">
+              <label class="form-label">Fecha Cotizacion</label>
+              <input type="date" class="form-control" formControlName="fechaentregacotizacion" placeholder="">
+            </div>
+            <div class="mb-3 col-2">
+              <label class="form-label">Fecha de Autorizacion</label>
+              <input type="date" class="form-control" formControlName="fechaautorizacion" placeholder="">
+            </div>
+            <div class="mb-3 col-2">
+              <label class="form-label">Fecha Entrega Pactada</label>
+              <input type="date" class="form-control" formControlName="fechaentregapactada" placeholder="">
+            </div>
+            <div class="mb-3 col-2">
+              <label class="form-label">Fecha Salida</label>
+              <input type="date" class="form-control" formControlName="fechasalida" placeholder="">
+            </div>
+            <div class="mb-3 col-2">
+              <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
+              <select class="form-select" formControlName="id_prioridad" aria-label="Prioridad">
+                  <option *ngFor="let priori of prioridad" [value]="priori.codigo">{{priori.prioridad}}</option>
+              </select>
+            </div>
+            <div class="mb-3 col-2">
+              <label for="exampleFormControlInput1" class="form-label">Estado</label>
+              <select class="form-select" formControlName="id_prioridad" aria-label="Prioridad">
+                  <option *ngFor="let priori of prioridad" [value]="priori.codigo">{{priori.prioridad}}</option>
+              </select>
+            </div>
+            <div class="mb-3 col-2">
+              <label for="exampleFormControlInput1" class="form-label">Tipo Formato</label>
+              <select class="form-select" formControlName="id_formato" aria-label="Prioridad">
+                <option *ngFor="let formato of formatos" [value]="formato.id">{{formato.formato}}</option>
+            </select>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <!--div class="card secciones bg-slate-700 mt-3" *ngFor="let sec of secciones">
+        <div class="card-header" style="color: #fff;">
+          {{sec.seccion}}
+        </div>
+        <div class="campos">
+
+        </div>
+
+          <ul class="list-group list-group-flush">
+            <ng-container *ngFor="let campo of campos">
+              <li class="list-group-item" *ngIf="campo.id_seccion === sec.id">
+                <label>{{campo.nombrecampo}}</label> <input type="text">
+              </li>
+            </ng-container>
+
+          </ul>
+
+      </!--div-->
+      <div class="card secciones mt-3" *ngFor="let sec of secciones">
+        <div class="card-header  bg-slate-700 " style="color: #fff;">
+          {{sec.seccion}}
+        </div>
+        <div class="card-body campos">
+          <ng-container *ngFor="let campo of campos">
+            <div *ngIf="campo.id_seccion === sec.id">
+              <div class="row bg-slate-200">
+                <label>{{campo.nombrecampo}}</label>
+              </div>
+              <div class="row">
+                <div class="col-2 mb-3" *ngIf="campo.cant">
+                  <label class="">Cantidad</label>
+                  <input class="form-control" type="number">
+                </div>
+                <div class="form-check col-2 mb-3" *ngIf="campo.bueno">
+                  <label class="form-check-label">Bueno</label>
+                  <input class="form-check-input" type="checkbox">
+                </div>
+                <div class="col-2 mb-3" *ngIf="campo.referencia">
+                  <label>Referencia</label>
+                  <input class="form-control" type="text">
+                </div>
+                <div class="col-6 mb-3" *ngIf="campo.comentario">
+                  <label>Comentario</label>
+                  <input class="form-control" type="text">
+                </div>
+                <div class="col-2 mb-3" *ngIf="campo.tension">
+                  <label>Tension</label>
+                  <input class="form-control" type="number" >
+                </div>
+                <div class="form-check col-2 mb-3" *ngIf="campo.sino">
+                  <label class="form-check-label">Si/No</label>
+                  <input class="form-check-input" type="checkbox">
+                </div>
+                <div class="form-check col-2 mb-3" *ngIf="campo.sellos">
+                  <label class="form-check-label">Sellos</label>
+                  <input class="form-check-input" type="checkbox">
+                </div>
+                <div class="col-2 mb-3" *ngIf="campo.tipo">
+                  <label>Tipo</label>
+                  <input class="form-control" type="text">
+                </div>
+                <div class="col-2 mb-3" *ngIf="campo.valor">
+                  <label>Valor</label>
+                  <input class="form-control" type="number">
+                </div>
+                <div class="col-2 mb-3" *ngIf="campo.corriente">
+                  <label>Corriente</label>
+                  <input class="form-control" type="text">
+                </div>
+                <div class="col-2 mb-3" *ngIf="campo.tecnico">
+                  <label>Tecnico</label>
+                  <input  class="form-control" type="number">
+                </div>
+              </div>
+
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </span>
+</div>

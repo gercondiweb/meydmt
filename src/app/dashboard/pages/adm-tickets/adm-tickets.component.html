@@ -92,7 +92,8 @@
               <div class="mb-3 col-4">
                 <label for="exampleFormControlInput1" class="form-label">Tipo de Servicio</label>
                 <select class="form-select" formControlName="id_tiposervicio"
-                      aria-label="Tipo Servicio" (change)="onSelectChange($event, 'selectServicio')">
+                      (change)="onSelectChange($event, 'selectServicio')"
+                      aria-label="Tipo Servicio">
                     <option *ngFor="let ts of tipoServ" [value]="ts.id">{{ts.TIPOSERVICIO}}</option>
                 </select>
               </div>

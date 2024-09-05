@@ -11,7 +11,9 @@ import { TableroAdmComponent,
         AdmTecnicosComponent,
         AdmTicketsComponent,
         AdmTecnicocontratoComponent,
-        AdmSucursalesComponent
+        AdmSucursalesComponent,
+        AdmProduccionComponent,
+        ProduccionComponent
       } from './pages';
 import { userGuard } from './guard/user-guard.guard';
 import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';
@@ -108,6 +110,18 @@ const routes: Routes = [
       {
         path:'informes',
         component: InformesComponent
+      },
+      {
+        path:'produccion',
+        component: ProduccionComponent
+      },
+      {
+        path:'admproduccion',
+        component: AdmProduccionComponent
+      },
+      {
+        path:'produccion/:accion',
+        component: AdmProduccionComponent
       },
       {
         path: '',
