@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'desplegable',
@@ -11,10 +11,12 @@ export class DesplegableComponent {
   @Input() label: string = '';
   @Input() options: { value: string, name: string }[] = [];
 
-  // Método para manejar cambios en la selección
+  @Output() valueChange = new EventEmitter<string[]>();  
+
   onChange(event: any) {
     const selectedOptions = Array.from(event.target.selectedOptions)
                                 .map((option: any) => option.value);
     this.value = selectedOptions;
+    this.valueChange.emit(this.value); 
   }
 }

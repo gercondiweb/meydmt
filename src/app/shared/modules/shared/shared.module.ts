@@ -19,6 +19,7 @@ import { NavegacionComponent,
           DesplegableComponent,
           InputGroupComponent,
           CheckBoxComponent,
+          PaginationComponent,
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -53,6 +54,7 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     ModalComponent,
     InputGroupComponent,
     CheckBoxComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -94,6 +96,7 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     DesplegableComponent,
     InputGroupComponent,
     CheckBoxComponent,
+    PaginationComponent,
   ]
 })
 export class SharedModule { }

@@ -18,5 +18,6 @@ export * from './modal/modal.component';
 export * from './desplegable/desplegable.component';
 export * from './check-box/check-box.component';
 export * from './campo-orden/campo-orden.component';
+export * from './pagination/pagination.component';
 
 

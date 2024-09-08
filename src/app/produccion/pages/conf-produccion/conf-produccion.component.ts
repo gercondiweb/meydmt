@@ -26,12 +26,6 @@ export class ConfProduccionComponent {
     this.showmodal.update( valueOld => true);
   }
 
-  selectedDesplegableValue: string[] = []; 
-  DesplegableOptions: { value: string, name: string }[] = [
-    { value: 'Si', name: 'Si' },
-    { value: 'Bueno', name: 'Bueno' },
-    { value: 'Sello', name: 'Sello' },
-  ];
 
   titulo = ['Propiedades del campo'];
   columnas = ['Nombre','Propiedades'];
@@ -47,5 +41,24 @@ export class ConfProduccionComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  selectedDesplegableValue: string[] = [];
+  desplegableOptions = [
+    { value: 'bueno', name: 'Bueno' },
+    { value: 'malo', name: 'Malo' },
+    { value: 'si', name: 'Si' },
+    { value: 'no', name: 'No' },
+    { value: 'sellos', name: 'Sellos' },
+    { value: 'correo', name: 'Correo' },
+  ];
+
+  onDesplegableValueChange(selectedValues: string[]) {
+    this.selectedDesplegableValue = selectedValues;
+    console.log('Seleccionado:', this.selectedDesplegableValue);
+  }
+
+  onSubmit() {
+    console.log('Datos enviados', this.selectedDesplegableValue);
   }
 }
