@@ -174,7 +174,7 @@
 </app-modal>
 
 
-<app-modal [ngClass]="{ 'showmodal': showmodal() }" [isShow]="showmodal" [opacidad]="true ">
+<app-modal [ngClass]="{ 'showmodal': showmodal() }" [isShow]="showmodal" [opacidad]="true">
     <div class="modal-overlay" *ngIf="showmodal()">
         <div class="modal-content">
             <section class="text-gray-600 body-font relative">
@@ -190,20 +190,58 @@
                             <input-group label="Nombre" type="text" id="nombre" name="nombre" class="w-full" />
                         </div>
                         <div class="relative mb-4">
-                            
                             <form (ngSubmit)="onSubmit()">
-                                <desplegable
-                                  [value]="selectedDesplegableValue"
-                                  name="campos"
-                                  label="Selecciona los campos a utilizar"
-                                  [options]="desplegableOptions"
-                                  (valueChange)="onDesplegableValueChange($event)"
-                                ></desplegable>
-                              </form>
+                                <div class="flex items-center mb-2">
+                                    <!-- Título -->
+                                    <label class="block text-gray-700 text-sm font-semibold mr-4">Selecciona las
+                                        propiedades del campo a utilizar</label>
+
+                                    <!-- Botón para agregar -->
+                                    <button type="button" class="btn btn-secondary text-blue-500 text-xs p-1 ml-auto"
+                                        (click)="open()">
+                                        +
+                                    </button>
+                                </div>
+                                <desplegable [value]="selectedDesplegableValue" name="propiedades"
+                                    [options]="desplegableOptions" (valueChange)="onDesplegableValueChange($event)">
+                                </desplegable>
+                            </form>
                         </div>
+
                         <div class="relative mb-4">
                             <app-tabladinamica [columnas]="['Nombre', 'Propiedades']" [dataSource]="dataSource">
                             </app-tabladinamica>
+                        </div>
+                        <button
+                            class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Guardar</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</app-modal>
+
+<app-modal [ngClass]="{ 'Modal': Modal() }" [isShow]="Modal">
+    <div class="modal-overlay" *ngIf="Modal()">
+        <div class="modal-content">
+            <!-- Botón de cerrar dentro del modal-content -->
+
+            <!-- Contenido del modal -->
+            <section class="text-gray-600 body-font relative">
+                <div class="container px-5 py-24 mx-auto flex">
+                    <div
+                        class="lg:w-full md:w-full bg-white rounded-lg p-8 flex flex-col w-full mt-10 relative z-10 shadow-md">
+                        <button class="close-button text-right text-cyan-500 hover:text-cyan-600 text-2xl font-semibold"
+                            (click)="close()">×</button>
+                        <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Crear propiedades</h2>
+
+                        <p class="leading-relaxed mb-5 text-gray-600">Diligencie los datos correspondientes a la
+                            propiedad que desea crear</p>
+                        <div class="relative mb-4">
+                            <input-group label="Nombre" type="text" id="nombre" name="nombre" class="w-full" />
+                        </div>
+                        <div class="relative mb-4">
+                            <text-area-group label="Descripcion" name="descripcion" class="w-full" />
                         </div>
                         <button
                             class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Guardar</button>

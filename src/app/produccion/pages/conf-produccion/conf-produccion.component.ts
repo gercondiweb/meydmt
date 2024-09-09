@@ -13,6 +13,8 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ConfProduccionComponent {
   @Input() showModal = signal<boolean>(false);
   @Input() showmodal = signal<boolean>(false);
+  @Input() Modal = signal<boolean>(false);
+
   closed(){
     this.showModal.update( dataOld => false);
   }
@@ -25,7 +27,12 @@ export class ConfProduccionComponent {
   opendModal() {
     this.showmodal.update( valueOld => true);
   }
-
+  close(){
+    this.Modal.update( dataOld => false);
+  }
+  open() {
+    this.Modal.update( valueOld => true);
+  }
 
   titulo = ['Propiedades del campo'];
   columnas = ['Nombre','Propiedades'];
