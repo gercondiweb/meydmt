@@ -5,7 +5,11 @@ import {
   TableroprodComponent,
   ProduccionComponent,
   AdmProduccionComponent,
-  ConfProduccionComponent
+  ConfProduccionComponent,
+  FormatosComponent,
+  CamposComponent,
+  SeccionesComponent,
+  PropiedadesComponent
 } from './pages';
 import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosComponent } from '../dashboard/pages';
 
@@ -49,8 +53,26 @@ const routes: Routes = [
         component:AdmTecnicosComponent
       },
       {
-        path: 'conf-produccion',
+        path: 'formatos',
+        component:FormatosComponent
+      },
+      {
+        path: 'conf-produccion/:accion',
         component:ConfProduccionComponent
+      },
+      {
+        path: 'campos',
+        component:CamposComponent
+      },
+      ,
+      {
+        path: 'secciones',
+        component:SeccionesComponent
+      },
+      ,
+      {
+        path: 'propiedades',
+        component:PropiedadesComponent
       },
     ]
   },

@@ -22,6 +22,7 @@ import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposer
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
 import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
 import { InformesComponent } from './pages/informes/informes.component';
+import { CamposComponent } from '../produccion/pages';
 
 
 
@@ -122,6 +123,10 @@ const routes: Routes = [
       {
         path:'produccion/:accion',
         component: AdmProduccionComponent
+      },
+      {
+        path:'campos',
+        component: CamposComponent
       },
       {
         path: '',
