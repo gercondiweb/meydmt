@@ -64,16 +64,14 @@ const routes: Routes = [
         path: 'campos',
         component:CamposComponent
       },
-      ,
       {
         path: 'secciones',
         component:SeccionesComponent
       },
-      ,
       {
         path: 'propiedades',
         component:PropiedadesComponent
-      },
+      }
     ]
   },
   {
