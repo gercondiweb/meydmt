@@ -1,24 +1,25 @@
+import { Component, OnInit} from '@angular/core';
 import { ProdrestserviceService } from './../../services/prodrestservice.service';
 import { SharedModule } from '@/app/shared/modules/shared/shared.module';
-import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-secciones',
+  selector: 'app-tipopropiedades',
   standalone: true,
   imports: [SharedModule],
-  templateUrl: './secciones.component.html',
-  styleUrl: './secciones.component.css'
+  templateUrl: './tipopropiedades.component.html',
+  styleUrl: './tipopropiedades.component.css'
 })
-export class SeccionesComponent implements OnInit{
-  titulo = ['Secciones'];
-  columnas = ['id','seccion','descripcion'];
+export class TipopropiedadesComponent implements OnInit {
+  titulo = ['Tipo propiedades'];
+  columnas = ['id', 'tipopropiedad'];
 
 
   vDataSource!: MatTableDataSource<any,any>;
 
-  consultaSeccion ={
-    opc:'SECCIONES',
+  consultaTipoPropiedad={
+    opc:'TIPOPROPIE',
+ 
   }
 
   public listDatos: any;
@@ -30,19 +31,19 @@ export class SeccionesComponent implements OnInit{
   }
 
   public cargarData(){
-    this._prodrestserviceService.getSeccion(this.consultaSeccion).subscribe(respuesta=>{
+    this._prodrestserviceService.getTipoPropiedades(this.consultaTipoPropiedad).subscribe(respuesta=>{
       this.listDatos = respuesta;
       //this.datos = this.listDatos.body[0];
       this.vDataSource = this.listDatos.body[0];
 
-      console.log('SECCIONES-CargarData');
+      console.log('TIPOPROPIEDADES-CargarData');
 
       console.log(respuesta);
     })
   }
 
   editar(){
-    alert("Editar sección");
+    alert("Editar tipo de propiedad");
   }
 
   applyFilter(event: Event) {

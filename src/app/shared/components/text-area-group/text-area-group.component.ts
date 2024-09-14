@@ -10,5 +10,13 @@ export class TextAreaGroupComponent {
   @Input() placeholder: string='';
   @Input() name: string='';
   @Input() label: string='';
+  @Input() data = signal<any>({})
   maxHeig = input<string>('')
+
+onChange(value:string){
+  this.data.update( dataOld => ({
+    ...this.data(),
+    [this.name] : value
+  }))
+}
 }

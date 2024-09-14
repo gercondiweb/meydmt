@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, reduce } from 'rxjs';
 import { response } from 'express';
+import { IFormato } from '@/app/shared/types/interfaces/IFormato';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class ProdrestserviceService {
     return this.http.post('formatos/consultaformato', datosConsulta); 
   }
 
-  public crearFormato(datosConsulta:any):Observable<any>{
+  public crearFormato( datosConsulta: IFormato ):Observable<any>{
     console.log(datosConsulta);
     return this.http.post<{ body: { formato: any }}>('formatos',datosConsulta)
     .pipe( map( ({ body }) => body ) );
@@ -42,7 +43,7 @@ export class ProdrestserviceService {
   }
 
   public crearSeccion(datosConsulta:any):Observable<any>{
-    return this.http.post<{ body: { formato: any }}>('seccion',datosConsulta)
+    return this.http.post<{ body: { formato: any }}>('secciones',datosConsulta)
     .pipe( map( ({ body }) => body ) );
   }
   public getPropiedades(datosConsulta:any): Observable<any>{
@@ -51,6 +52,14 @@ export class ProdrestserviceService {
 
   public crearPropiedades(datosConsulta:any):Observable<any>{
     return this.http.post<{ body: { formato: any }}>('propiedad',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+  public getTipoPropiedades(datosConsulta:any): Observable<any>{
+    return this.http.post('consultaservicio/serv', datosConsulta); 
+  }
+
+  public crearTipoPropiedades(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('tipopropiedad',datosConsulta)
     .pipe( map( ({ body }) => body ) );
   }
 }

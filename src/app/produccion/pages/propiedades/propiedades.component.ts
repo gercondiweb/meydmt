@@ -12,13 +12,13 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class PropiedadesComponent implements OnInit {
   titulo = ['Propiedades'];
-  columnas = ['id','id_formato','id_seccion','id_campo','orden','nombrecampo','seccion', 'propiedad', 'tipopropiedad'];
+  columnas = ['id','propiedad', 'id_tipopropiedad'];
 
 
   vDataSource!: MatTableDataSource<any,any>;
 
   consultaPropiedad={
-    opc:'TIPOPROPIEDAD',
+    opc:'PROPIEDAD',
  
   }
 

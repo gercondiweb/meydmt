@@ -10,7 +10,7 @@ export class DesplegableComponent {
   @Input() name: string = '';
   @Input() label: string = '';
   @Input() options: { value: string, name: string }[] = [];
-
+  @Input() data = signal<any>({});
   @Output() valueChange = new EventEmitter<string[]>();  
 
   onChange(event: any) {
@@ -18,5 +18,8 @@ export class DesplegableComponent {
                                 .map((option: any) => option.value);
     this.value = selectedOptions;
     this.valueChange.emit(this.value); 
+  }
+  ngOnInit(): void {
+    if (this.options && this.options.length ) this.data()[this.name] =  this.options[0].value;
   }
 }

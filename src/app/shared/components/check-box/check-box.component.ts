@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 
 @Component({
   selector: 'check-box',
@@ -10,7 +10,7 @@ export class CheckBoxComponent {
   @Input() name: string = '';
   @Input() label: string = '';
   @Input() options: { value: string, name: string }[] = [];
-
+  @Input() data = signal<any>({});
   selectedValues: Set<string> = new Set<string>();
 
   onCheckboxChange(value: string, isChecked: boolean): void {
@@ -28,4 +28,8 @@ export class CheckBoxComponent {
   trackByValue(index: number, option: { value: string }): string {
     return option.value;
   }
+
+  ngOnInit(): void {
+    if (this.options && this.options.length ) this.data()[this.name] =  this.options[0].value;
+  } 
 }

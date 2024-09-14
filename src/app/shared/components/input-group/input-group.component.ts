@@ -10,5 +10,13 @@ export class InputGroupComponent {
   @Input() name: string='';
   @Input() label: string='';
   @Input() type: 'number'| 'text'| 'email'|'password' | 'file'='text';
+  @Input() data = signal<any>({})
   disabled = input<boolean>(false);
+  
+  onChange(value:string){
+    this.data.update( dataOld => ({
+      ...this.data(),
+      [this.name] : value
+    }))
+  }
 }

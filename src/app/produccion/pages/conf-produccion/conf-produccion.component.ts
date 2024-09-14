@@ -1,3 +1,5 @@
+import { ICampo, IFormato, IPropiedad, ISeccion} from '@/app/shared/types/interfaces/IFormato';
+import { async } from '@angular/core/testing';
 import { Seccion } from './../adm-produccion/adm-produccion.component';
 import { DataSharingService } from '@/app/dashboard/services';
 import { Meta } from './../../../shared/types/interfaces/Ipagination';
@@ -8,7 +10,7 @@ import { Component, Input, OnInit, signal, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { lastValueFrom, catchError } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LoadingService } from '@/app/shared/services/loading.service';
 
@@ -16,20 +18,60 @@ import { LoadingService } from '@/app/shared/services/loading.service';
 @Component({
   selector: 'app-conf-produccion',
   standalone: true,
-  imports: [SharedModule,CommonModule, RouterModule],
+  imports: [SharedModule,CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './conf-produccion.component.html',
   styleUrl: './conf-produccion.component.css'
 })
 export class ConfProduccionComponent implements OnInit {
   private readonly loadingServer = inject(LoadingService);
+   formatoData = signal<IFormato >({
+    formato: '',
+    descripcion: '',
+    secciones: []
+   });
+   seccionData = signal<ISeccion>({
+    seccion: '',
+    descripcion : '',
+    campos: []
+   });
+   campoData = signal<ICampo>({
+    id_formato: 0,
+    id_seccion : 0,
+    id_campo : 0,
+    nombrecampo: '',
+    orden : '',
+    propiedad:[]
+   });
+   propiedadData = signal<IPropiedad>({
+    propiedad: '',
+    id_tipopropiedad: 0,
+    tipopropiedad:''
+   });
+
+   seleccionSeleccionada = signal<number>(-1);
+
+
+
   @Input() showModal = signal<boolean>(false);
   @Input() showmodal = signal<boolean>(false);
   @Input() Modal = signal<boolean>(false);
   @Input() Show = signal<boolean>(false);
+  @Input() Mod = signal<boolean>(false);
+
   options = signal<{ value: string, name: string}[]>([{ value: '0', name: 'Seleccione'}]);
 
-
-
+  selecionarSeccion( i : number ){
+    if( i === this.seleccionSeleccionada() ) i = -1;
+    this.seleccionSeleccionada.update( valueold => i)
+  }
+  selecionarPropiedad( i : number ){
+    if( i === this.seleccionSeleccionada() ) i = -1;
+    this.seleccionSeleccionada.update( valueold => i)
+  }
+  selecionarCampo( i : number ){
+    if( i === this.seleccionSeleccionada() ) i = -1;
+    this.seleccionSeleccionada.update( valueold => i)
+  }
   closed(){
     this.showModal.update( dataOld => false);
   }
@@ -58,6 +100,13 @@ export class ConfProduccionComponent implements OnInit {
     this.router.navigateByUrl('/produccion/formatos');
   }
 
+  cerrar(){
+    this.Mod.update( dataOld => false);
+  }
+  Selec() {
+    this.Mod.update( valueOld => true);
+  }
+
   titulo = ['Propiedades del campo'];
   columnas = ['Nombre','Propiedades'];
 
@@ -76,22 +125,14 @@ export class ConfProduccionComponent implements OnInit {
 
   selectedDesplegableValue: string[] = [];
   desplegableOptions = [
-    { value: 'bueno', name: 'Bueno' },
-    { value: 'malo', name: 'Malo' },
-    { value: 'si', name: 'Si' },
-    { value: 'no', name: 'No' },
-    { value: 'sellos', name: 'Sellos' },
-    { value: 'correo', name: 'Correo' },
+   {},
   ];
 
   onDesplegableValueChange(selectedValues: string[]) {
     this.selectedDesplegableValue = selectedValues;
-    console.log('Seleccionado:', this.selectedDesplegableValue);
   }
 
-  onSubmit() {
-    console.log('Datos enviados', this.selectedDesplegableValue);
-  }
+ 
 
   //Cargar datos
   frmCabeceraOrden: FormGroup;
@@ -106,18 +147,17 @@ export class ConfProduccionComponent implements OnInit {
   public formatoSeleccionado : number = 0;
 
 
-
   ngOnInit() {
     this.accion = this.route.snapshot.paramMap.get('accion') || '';
 
     this.formFormato = this.formBuilder.group({
-     seccion: ['',[Validators.required]], 
-     descripcion:['',[Validators.required]],
-     formato:['',[Validators.required]],
-     descripcionformato:['',[Validators.required]],
-     propiedad:['',[Validators.required]],
-     id_formato: [null],
-     id_campo: [null],
+      seccion: ['',[Validators.required]], 
+      descripcion:['',[Validators.required]],
+      formato:['',[Validators.required]],
+      descripcionformato:['',[Validators.required]],
+      propiedad:['',[Validators.required]],
+      id_formato: [null],
+      id_campo: [null],
     });
   
   if(this.accion === "Editar"){
@@ -150,7 +190,6 @@ cargarDatosFormato(){
     descripcionformato: this.objetoData.data.descripcionformato,
     propiedad: this.objetoData.data.propiedad, 
   });
-  console.log(this.formFormato.value)
 }
 
   datosCMaestro={
@@ -169,7 +208,17 @@ cargarDatosFormato(){
     private route: ActivatedRoute,
     private  ProdrestserviceService : ProdrestserviceService,
     private formBuilder: FormBuilder
-   ) { }
+   ) { 
+    this.formFormato = this.formBuilder.group({
+      seccion: ['',[Validators.required]], 
+      descripcion:['',[Validators.required]],
+      formato:['',[Validators.required]],
+      descripcionformato:['',[Validators.required]],
+      propiedad:['',[Validators.required]],
+      id_formato: [null],
+      id_campo: [null],
+     });
+   }
 
 
   cargarMaestros(){
@@ -188,34 +237,104 @@ cargarDatosFormato(){
 
 
   //Guardar secciones
+ async guardarSeccion(){
+    try {
+      this.loadingServer.show();
+
+      this.formatoData.update( (valueOld) => {
+        const formato = valueOld as IFormato;
+        if( !formato.secciones ) formato.secciones = [];
+        formato.secciones.push(this.seccionData() as ISeccion)
+        return formato;
+      })
+  
+     // const seccion = await lastValueFrom(this.ProdrestserviceService.crearSeccion(this.formFormato.value));
+  /* 
+      this.formFormato.patchValue({
+        seccion: seccion.seccion, 
+        descripcion: seccion.descripcion 
+      });
+  
+      this.dataSharingService.setParams(seccion.id, seccion.seccion, seccion.descripcion);
+  
+      console.log('Sección guardada correctamente:', seccion); */
+      //console.log('Formulario actualizado:', this.formFormato.value);
+    } catch (error) {
+      console.error('Error al guardar la sección:', error);
+    } finally {
+      this.loadingServer.hidden();
+    }
+  }
 //Guardar Campos
+guardarCampo() {
+  console.log('Datos del formato:', this.formatoData());
+  let seleccionIndex = this.seleccionSeleccionada();
+  console.log('Índice seleccionado:', seleccionIndex);
+  
+  this.formatoData.update((valueOld) => {
+    const formato = valueOld as IFormato;
+    console.log('Datos del formato antes de la actualización:', formato);
+    if (!formato.secciones) {
+      formato.secciones = [];
+    }
+    if (seleccionIndex === -1) {
+      const nuevaSeccion: ISeccion = {
+        seccion: 'Nueva Sección', 
+        descripcion: 'Descripción de la nueva sección',
+        campos: []
+      };
+      formato.secciones.push(nuevaSeccion);
+      seleccionIndex = formato.secciones.length - 1;
+    } else {
+      if (seleccionIndex < 0 || seleccionIndex >= formato.secciones.length) {
+        console.error('Índice de sección no válido');
+        return formato;
+      }
+    }
+
+    if (!formato.secciones[seleccionIndex].campos) {
+      formato.secciones[seleccionIndex].campos = [];
+    }
+    formato.secciones[seleccionIndex].campos.push(this.campoData() as ICampo);
+    console.log('Datos del formato después de la actualización:', formato);
+    return formato;
+  });
+}
 
 
 
 // Guardar propiedad 
 async guardarPropiedad() {
   try {
-    this.loadingServer.show(); 
+    this.loadingServer.show();
 
-    this.formFormato.get('id_campo')?.setValue(this.formatoSeleccionado); 
+    this.formatoData.update((valueOld) => {
+      const formato = valueOld as IFormato;
 
-    const propiedad = await lastValueFrom(this.ProdrestserviceService.crearPropiedades(this.formFormato.value));
+      formato.secciones.forEach(seccion => {
+        seccion.campos.forEach(campo => {
+          
+          if (!Array.isArray(campo.propiedad)) {
+            campo.propiedad = []; 
+          }
+          
+          campo.propiedad.push(this.propiedadData() as IPropiedad);
+        });
+      });
 
-    this.formFormato.patchValue({
-      propiedad: propiedad.campo,
-      id_campo: propiedad.id_campo, 
+      return formato;
     });
-
-    console.log('Propiedad guardada correctamente:', propiedad);
-
-  } catch (error) {
-    console.error('Error al guardar la propiedad:', error);
   } finally {
-    this.loadingServer.hidden();  
+    this.loadingServer.hidden();
   }
 }
 
 
+
+  //Guardar primer parte del formato
+  public guardarFormatoTemp(){
+    console.log(this.formatoData())
+  }
 
 
 

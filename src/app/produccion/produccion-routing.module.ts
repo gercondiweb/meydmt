@@ -9,7 +9,12 @@ import {
   FormatosComponent,
   CamposComponent,
   SeccionesComponent,
-  PropiedadesComponent
+  PropiedadesComponent,
+  TipopropiedadesComponent,
+  AdmSeccionComponent,
+  AdmPropiedadComponent,
+  AdmCampoComponent,
+  AdmTipopropiedadComponent
 } from './pages';
 import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosComponent } from '../dashboard/pages';
 
@@ -71,6 +76,26 @@ const routes: Routes = [
       {
         path: 'propiedades',
         component:PropiedadesComponent
+      },
+      {
+        path: 'tipopropiedades',
+        component:TipopropiedadesComponent
+      },
+      {
+        path: 'adm-seccion/:accion',
+        component:AdmSeccionComponent
+      },
+      {
+        path: 'adm-propiedad/:accion',
+        component:AdmPropiedadComponent
+      },
+      {
+        path: 'adm-campo/:accion',
+        component:AdmCampoComponent
+      },
+      {
+        path: 'adm-tipopropiedad/:accion',
+        component:AdmTipopropiedadComponent
       }
     ]
   },
