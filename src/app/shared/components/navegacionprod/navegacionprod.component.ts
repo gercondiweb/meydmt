@@ -24,6 +24,7 @@ export class NavegacionprodComponent {
   showSubmenu: boolean = false;
 
   @Input( { required:true } ) items:ItemNavigate[] = [];
+  @Input({ required:true }) sigla: string = 'MEYD';
 
   constructor(
    private router:Router

@@ -147,5 +147,13 @@ export class RestService {
     return this.http.post('consultaclientes/demografico', dato); // GET http://localhost:4000/api/areas
   }
 
+  public consultatransporte(datos:any):Observable<any>{
+    return this.http.post('transporte', datos);
+  }
+
+  public vehiculos(datos:any):Observable<any>{
+    return this.http.post('vehiculos', datos);
+  }
+
 
 }

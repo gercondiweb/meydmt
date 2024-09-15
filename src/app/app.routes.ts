@@ -22,6 +22,11 @@ export const routes: Routes = [
         .then(m => m.ProduccionModule)
       },
       {
+        path:'transporte',
+        loadChildren: () => import('./transporte/transporte.module')
+        .then(m => m.TransporteModule)
+      },
+      {
         path: 'login',
         redirectTo: 'auth/login',
         pathMatch: 'full'
