@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RestService } from '../../services/services/rest.service';
-import { Router } from '@angular/router';
 import { DataSharingService } from '../../services/services/data-sharing.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tiposservicios',
-  templateUrl: './tiposservicios.component.html',
-  styleUrls: ['./tiposservicios.component.css']
+  selector: 'app-sucursales',
+  templateUrl: './sucursales.component.html',
+  styleUrl: './sucursales.component.css'
 })
-export class TiposserviciosComponent implements OnInit {
-
-  titulo =['Administrar Tipos de Servicios'];
-  colTipoServicio = ['id', 'TIPOSERVICIO', 'DESCRIPCION'];
+export class SucursalesComponent {
+  titulo =['Administrar Tipos de Sucursales'];
+  colTipoServicio = ['id', 'nombre', 'direccion','telefono', 'id_cliente'];
 
   listTipoServ : any;
   vTipoServicio: any;
@@ -27,11 +26,11 @@ export class TiposserviciosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cargarTipoServicios();
+    this.cargarSucursales();
   }
 
-  cargarTipoServicios() {
-    this.consultaTS.opc = 'TSRV';
+  cargarSucursales() {
+    this.consultaTS.opc = 'SUCUR';
     this.restService.getMaestros(this.consultaTS).subscribe((data: any) => {
       this.listTipoServ = data.body[0];
       this.vTipoServicio = this.listTipoServ;

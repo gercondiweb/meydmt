@@ -35,6 +35,7 @@ import { TecnicoEspecialidadComponent } from './pages/tecnico-especialidad/tecni
 import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
 import { InformesComponent } from './pages/informes/informes.component';
 import { TiposserviciosComponent } from './pages/tiposservicios/tiposservicios.component';
+import { SucursalesComponent } from './pages/sucursales/sucursales.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { TiposserviciosComponent } from './pages/tiposservicios/tiposservicios.c
     InformesComponent,
     ProduccionComponent,
     AdmProduccionComponent,
-    TiposserviciosComponent
+    TiposserviciosComponent,
+    SucursalesComponent
   ],
   imports: [
     CommonModule,

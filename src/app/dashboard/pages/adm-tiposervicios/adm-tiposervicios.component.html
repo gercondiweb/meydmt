@@ -1,1 +1,49 @@
-<busca-lupa/>
+<div class="form-container bg-white p-3">
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+      <div class="card">
+        <div class="card-header">
+  
+          <div class="row">
+            <div class="col-6">
+              <h2>Administrar Tipo de Servicios</h2>
+            </div>
+            <div class="col-6 text-end">
+              <button mat-raised-button color="primary" (click)="regresar()">
+                <mat-icon>reply</mat-icon>
+                Regresar
+              </button>
+              <button class="btnGuardar" mat-raised-button color="success" (click)="guardarTS()">
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </div>
+          </div>
+  
+        </div>
+
+        <div class="card-body  mt-3">    
+            <form class="addSrvForm row g-3" [formGroup]="formTipoServ">
+                <div class="row">
+
+                <div class="col-md-5 d-flex flex-column">
+                <label for="nitinput" class="form-label">Tipo Servicio</label>
+                <input type="text" class="form-control" formControlName="tiposervicio"  placeholder="">
+        
+                </div>
+                <div class="col-md-4 d-flex flex-column">
+                <label for="clienteinput" class="form-label">Descripción</label>
+                <input type="text" class="form-control" formControlName="descripcion"  placeholder="">
+                </div>
+                <div class="col-md-2 d-flex flex-column">
+                <mat-checkbox class="example-margin" formControlName="activo" checked="true">Activo</mat-checkbox>
+                </div>
+        
+                </div>
+            </form>
+        
+           
+        </div>
+      </div>
+      </span>
+      </div>
+  

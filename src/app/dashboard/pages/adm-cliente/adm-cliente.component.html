@@ -12,7 +12,7 @@
               <mat-icon>reply</mat-icon>
               Regresar
             </button>
-            <button mat-raised-button class="success" (click)="guardarCliente()">
+            <button mat-raised-button class="btnGuardar" (click)="guardarCliente()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
@@ -73,12 +73,9 @@
 
           </div>
         </form>
-      </div>
-    </div>
-
 
       <div class="row">
-        <nav class="navbar sticky-top bg-body-tertiary" *ngIf="clienteSeleccionado!==0">
+        <nav class="navbar bg-body-tertiary" *ngIf="clienteSeleccionado!==0">
           <div class="container-fluid">
             <a class="navbar-brand">Sucursales</a>
             <button mat-raised-button color="primary" (click)="agregarSucursal()">
@@ -100,7 +97,7 @@
               </h2>
               <div id="panelsStayOpen-collapseOne" class="accordion-collapse show">
                 <div class="accordion-body">
-                  <nav class="navbar sticky-top" style="background-color:#99a0c2; color:aliceblue;">
+                  <nav class="navbar" style="background-color:#99a0c2; color:aliceblue;">
                     <div class="container-fluid">
                       <a class="navbar-brand">Areas</a>
                       <button mat-raised-button color="primary" (click)="agregarArea(sucur.id)">
@@ -123,24 +120,25 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let area of listAreas">
-                        <th scope="row">{{area.id}}</th>
-                        <td>{{area.nombre}}</td>
-                        <td>{{area.autorizador}}</td>
-                        <td>{{area.emailautorizador}}</td>
-                        <td>{{area.activo}}</td>
-                        <td>
-                          <button mat-icon-button
-                          type="button" class="btn btn-primary" (click)="editarArea()">
-                            <mat-icon>edit</mat-icon>
-                          </button>
-                          <button mat-icon-button
-                          type="button" class="btn btn-danger" >
-                            <mat-icon>delete</mat-icon>
-                          </button>
-                        </td>
-                      </tr>
-
+                      <ng-container *ngFor="let area of listAreas">
+                        <tr *ngIf="area.id_sucursal === sucur.id">
+                          <th scope="row">{{area.id}}</th>
+                          <td>{{area.nombre}}</td>
+                          <td>{{area.autorizador}}</td>
+                          <td>{{area.emailautorizador}}</td>
+                          <td>{{area.activo}}</td>
+                          <td>
+                            <button mat-icon-button
+                            type="button" class="btn btn-primary" (click)="editarArea(area.id, sucur.id)">
+                              <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button
+                            type="button" class="btn btn-danger" >
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                          </td>
+                        </tr>
+                      </ng-container>
                     </tbody>
                   </table>
                 </div>
@@ -150,7 +148,8 @@
           }
         </div>
       </div>
-
+    </div>  
+  </div>
 
   </span>
 </div>

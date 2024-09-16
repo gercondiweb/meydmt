@@ -147,5 +147,9 @@ export class RestService {
     return this.http.post('consultaclientes/demografico', dato); // GET http://localhost:4000/api/areas
   }
 
+  public crearTipoServicio(datoTS:any): Observable<any>{
+    return this.http.post('tiposervicio', datoTS); // POST http://localhost:4000/api/tiposervicio
+  }
+
 
 }

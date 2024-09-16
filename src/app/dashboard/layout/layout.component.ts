@@ -24,7 +24,15 @@ export class LayoutComponent implements OnInit{
     {
       icon: 'domain',
       ruta: '/dashboard/clientes',
-      name: 'Clientes'
+      name: 'Clientes',
+      submenu: [
+        
+          {
+            icon: 'subdirectory_arrow_right',
+            ruta: '/dashboard/sucursales',
+            name: 'Sucursales'
+          },
+        ]
     },
     {
       icon: 'apps',
@@ -36,11 +44,11 @@ export class LayoutComponent implements OnInit{
           ruta: '/dashboard/masterservicios',
           name: 'Servicios'
         },
-        /*{
+        {
           icon: 'subdirectory_arrow_right',
-          ruta: '/dashboard/admtiposervicios',
+          ruta: '/dashboard/tiposservicios',
           name: 'Tipo Servicios'
-        }*/
+        }
       ]
     },
     {
@@ -58,11 +66,6 @@ export class LayoutComponent implements OnInit{
       ruta: '/dashboard/cotizacion',
       name: 'Cotizaciones'
     },*/
-    {
-      icon: 'monitoring',
-      ruta: '/dashboard/produccion',
-      name: 'Produccion'
-    }
    ]
   }
 
