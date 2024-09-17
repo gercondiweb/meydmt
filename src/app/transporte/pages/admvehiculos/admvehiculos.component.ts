@@ -95,7 +95,7 @@ export class AdmvehiculosComponent implements OnInit{
       this.vPropie = rta.body[0];
       this.listPropie = this.vPropie;
     })
-    
+
   }
 
   cargarDatos(){
@@ -119,21 +119,21 @@ export class AdmvehiculosComponent implements OnInit{
       this.datosConsulta.opc ='DOCS';
       this.datosConsulta.vID = this.dVehiculo.data.id;
 
-      this.restService.consultatransporte(this.datosConsulta).subscribe((rta: any) => {
+   /*    this.restService.consultatransporte(this.datosConsulta).subscribe((rta: any) => {
         this.vDocV = rta.body[0];
         this.listDocV = this.vDocV;
-      })
+      }) */
   }
 
   async guardarVehiculo(){
-    
+
     let continuar = false;
 
       this.datosConsulta.opc='CPLACA';
       this.datosConsulta.vplaca = this.formVehiculo.get('placa')?.value;
       this.datosConsulta.vid_propietario = this.formVehiculo.get('id_proveedor')?.value;
 
-      this.restService.consultatransporte(this.datosConsulta).subscribe(respuesta=>{
+     /*  this.restService.consultatransporte(this.datosConsulta).subscribe(respuesta=>{
           if(respuesta.body[0].length > 0){
             //alert('La placa ingresada ya se encuentra en uso.');
             Swal.fire({
@@ -147,13 +147,13 @@ export class AdmvehiculosComponent implements OnInit{
           }else{
             continuar=true;
           }
-        });
+        }); */
 
         if(continuar){
 
-        const res = await lastValueFrom(this.restService.vehiculos(this.formVehiculo.value));
+        //const res = await lastValueFrom(this.restService.vehiculos(this.formVehiculo.value));
 
-        this.response = res;
+       // this.response = res;
         if(!this.response.error){
           await Swal.fire({
             position: "center",
@@ -171,7 +171,7 @@ export class AdmvehiculosComponent implements OnInit{
   agregarFoto(){
 
   }
-  
+
   agregarDocumento(){
     //mostrar modal para agregar documento
   }
