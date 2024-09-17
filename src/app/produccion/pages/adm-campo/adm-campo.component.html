@@ -10,16 +10,6 @@
             <label for="nombrecampo" class="text-sm text-gray-600">Nombre del campo</label>
             <input type="text" id="nombrecampo" name="nombrecampo" class="form-control w-full p-2 border border-gray-300 rounded" />
           </div>
-          <div class="relative mb-4">
-            <div class="flex items-center mb-2">
-                <!-- Título -->
-                <label class="block text-gray-700 text-sm font-semibold mr-4">Selecciona las propiedades del campo a utilizar</label>
-            </div>
-            <desplegable [value]="selectedDesplegableValue" name="propiedades"
-                [options]="options()"
-                (valueChange)="onDesplegableValueChange($event)">
-            </desplegable>
-    </div>
           <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Guardar</button>
         </div>
       </div>

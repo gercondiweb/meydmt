@@ -13,14 +13,6 @@
                 <input-group  label="Nombre propiedad" type="text" id="propiedad" name="propiedad"
                     class="w-full" />
             </div>
-                    <div class="flex items-center mb-2">
-                        <!-- Título -->
-                        <label class="block text-gray-700 text-sm font-semibold mr-4">Selecciona el tipo de propiedad a utilizar</label> 
-                    </div>
-                    <desplegable [value]="selectedDesplegableValue" name="tipopropiedad"
-                        [options]="options()"
-                        (valueChange)="onDesplegableValueChange($event)">
-                    </desplegable>
             
             <button
                 class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" >Guardar</button>

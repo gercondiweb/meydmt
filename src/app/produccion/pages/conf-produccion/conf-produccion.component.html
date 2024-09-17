@@ -38,6 +38,7 @@
                             <pre>
                                 {{ seleccionSeleccionada() | json}}
                                 {{ formatoData() | json }}
+
                             </pre>
                     </div>
 
@@ -95,14 +96,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for( nombrecampo of seccionData().campos; track nombrecampo; let i = $index){
-                                        <td class="py-2 px-4 border-b border-grey-light">
-                                            <check-box name="secciones" (click)="selecionarCampo(i)"
-                                                [label]="nombrecampo.nombrecampo" [options]="options()">
-                                            </check-box>
-                                        </td>
-                                    }
-                            </tbody>
+                                    <tr *ngFor="let nombrecampo of seccionData().campos; let i = index">
+                                      <td class="py-2 px-4 border-b border-grey-light">
+                                        <check-box 
+                                          name="secciones" 
+                                          (click)="selecionarCampo(i)"
+                                          [label]="nombrecampo.nombrecampo" 
+                                          [options]="options()">
+                                        </check-box>
+                                      </td>
+                                    </tr>
+                                  </tbody>                                  
                             </table>
                             <!-- Botón-->
                             <div class="flex justify-start">
@@ -116,7 +120,7 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
+                            <button (click)="guardarDatos()" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
                                 Agregar al contenido del formato
                             </button>
                         </div>
@@ -162,13 +166,15 @@
                                             class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Country</span>
                                         German
                                     </td>
-                                    <td
-                                        class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                        <span
-                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status</span>
-                                        <input-group type="text" [label]="'Orden'" id="orden" name="orden"
-                                            placeholder="Ingrese el orden" />
-                                    </td>
+                                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status</span>
+                                        <div class="inline-flex space-x-2 items-center">
+                                            <input-group type="text" [label]="'Orden'" [data]="ordenData" id="orden" name="orden" placeholder="Ingrese el orden" />
+                                            <button
+                                                class="text-white bg-indigo-500 border-0 py-0.5 px-2 focus:outline-none hover:bg-indigo-600 rounded text-xs"
+                                                type="submit" (click)="guardarOrden()">Guardar</button>
+                                        </div>
+                                    </td>                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -248,11 +254,17 @@
                                                     +
                                                 </button>
                                             </div>
-                                            @for( propiedad of campoData().propiedad; track propiedad; let i = $index){
-                                            <desplegable [value]="selectedDesplegableValue" name="propiedad"
-                                                [options]="options()" (valueChange)="onDesplegableValueChange($event)">
-                                            </desplegable>
-                                            }
+                                            <ng-container *ngFor="let propiedad of campoData().propiedad; let i = index">
+                                                <desplegable 
+                                                  [value]="selectedDesplegableValue" 
+                                                  name="propiedad" 
+                                                  [options]="options()" 
+                                                  class="w-full" 
+                                                  [label]="propiedad.propiedad"
+                                                  [data]="propiedadData"
+                                                  (valueChange)="onDesplegableValueChange($event)">
+                                                </desplegable>   
+                                              </ng-container>                                                                              
                                         </div>
 
                                         <div class="relative mb-4">
@@ -342,7 +354,7 @@
                                                     name="tipopropiedad" class="w-full" />
                                             </div>
                                         <button
-                                            class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" (click)="guardarPropiedad()">Guardar</button>
+                                         (click)="guardarTipoPropiedad()"   class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" (click)="guardarPropiedad()">Guardar</button>
                                     </div>
                                 </div>
                             </section>

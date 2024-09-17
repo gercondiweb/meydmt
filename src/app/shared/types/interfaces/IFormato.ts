@@ -1,7 +1,8 @@
 export interface IFormato {
    id?: number,
     formato: string,
-    descripcion : string,
+    descripcionformato : string,
+    orden: IOrden[],
     secciones: ISeccion[]
 }
 
@@ -18,7 +19,7 @@ export interface ICampo {
     id_seccion : number,
     id_campo : number,
     nombrecampo: string,
-    orden : string,
+    orden : number,
     propiedad: IPropiedad[]
 }
 
@@ -26,6 +27,19 @@ export interface IPropiedad  {
     id?:number,
     propiedad: string,
     id_tipopropiedad: number,
-    tipopropiedad:''
+    tipopropiedad:[]
+  }
+
+  export interface ITipoPropiedad{
+    id?: number,
+    tipopropiedad: string
+  }
+
+  export interface IOrden {
+    id?:number,
+    id_formato:number,
+    id_seccion: number,
+    ide_campo: number,
+    orden: number
   }
 

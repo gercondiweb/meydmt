@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, reduce } from 'rxjs';
 import { response } from 'express';
-import { IFormato } from '@/app/shared/types/interfaces/IFormato';
+import { IFormato, ISeccion } from '@/app/shared/types/interfaces/IFormato';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class ProdrestserviceService {
   }
 
   public crearCampos(datosConsulta:any):Observable<any>{
-    return this.http.post<{ body: { formato: any }}>('nombrecampo',datosConsulta)
+    return this.http.post<{ body: { formato: any }}>('campos',datosConsulta)
     .pipe( map( ({ body }) => body ) );
   }
 
@@ -60,6 +60,14 @@ export class ProdrestserviceService {
 
   public crearTipoPropiedades(datosConsulta:any):Observable<any>{
     return this.http.post<{ body: { formato: any }}>('tipopropiedad',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+  public getOrden(datosConsulta:any): Observable<any>{
+    return this.http.post('campoformato/consulta', datosConsulta); 
+  }
+
+  public crearOrden(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('campoformato',datosConsulta)
     .pipe( map( ({ body }) => body ) );
   }
 }

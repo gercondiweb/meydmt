@@ -1,4 +1,4 @@
-import { ICampo, IFormato, IPropiedad, ISeccion} from '@/app/shared/types/interfaces/IFormato';
+import { ICampo, IFormato, IOrden, IPropiedad, ISeccion, ITipoPropiedad} from '@/app/shared/types/interfaces/IFormato';
 import { async } from '@angular/core/testing';
 import { Seccion } from './../adm-produccion/adm-produccion.component';
 import { DataSharingService } from '@/app/dashboard/services';
@@ -24,9 +24,11 @@ import { LoadingService } from '@/app/shared/services/loading.service';
 })
 export class ConfProduccionComponent implements OnInit {
   private readonly loadingServer = inject(LoadingService);
+  options = signal<{ value: string, name: string}[]>([{ value: '0', name: ''}]);
    formatoData = signal<IFormato >({
     formato: '',
-    descripcion: '',
+    descripcionformato: '',
+    orden:[],
     secciones: []
    });
    seccionData = signal<ISeccion>({
@@ -39,14 +41,24 @@ export class ConfProduccionComponent implements OnInit {
     id_seccion : 0,
     id_campo : 0,
     nombrecampo: '',
-    orden : '',
+    orden : 0,
     propiedad:[]
    });
    propiedadData = signal<IPropiedad>({
     propiedad: '',
     id_tipopropiedad: 0,
-    tipopropiedad:''
+    tipopropiedad:[]
    });
+   tipopropiedadData = signal<ITipoPropiedad>({
+    tipopropiedad: ''
+  });  
+   ordenData = signal<IOrden>({
+    id_formato:0,
+    id_seccion: 0,
+    ide_campo: 0,
+    orden: 0
+   });
+
 
    seleccionSeleccionada = signal<number>(-1);
 
@@ -58,7 +70,6 @@ export class ConfProduccionComponent implements OnInit {
   @Input() Show = signal<boolean>(false);
   @Input() Mod = signal<boolean>(false);
 
-  options = signal<{ value: string, name: string}[]>([{ value: '0', name: 'Seleccione'}]);
 
   selecionarSeccion( i : number ){
     if( i === this.seleccionSeleccionada() ) i = -1;
@@ -188,7 +199,9 @@ cargarDatosFormato(){
     descripcion: this.objetoData.data.descripcion,
     formato: this.objetoData.data.formato,
     descripcionformato: this.objetoData.data.descripcionformato,
-    propiedad: this.objetoData.data.propiedad, 
+    propiedad: this.objetoData.data.propiedad,
+    campo:this.objetoData.data.campo,
+    tipopropiedad: this.objetoData.data.tipopropiedad, 
   });
 }
 
@@ -215,6 +228,8 @@ cargarDatosFormato(){
       formato:['',[Validators.required]],
       descripcionformato:['',[Validators.required]],
       propiedad:['',[Validators.required]],
+      campo:['',[Validators.required]],
+      tipopropiedad:['',[Validators.required]],
       id_formato: [null],
       id_campo: [null],
      });
@@ -237,69 +252,72 @@ cargarDatosFormato(){
 
 
   //Guardar secciones
- async guardarSeccion(){
+  async guardarSeccion() {
     try {
-      this.loadingServer.show();
-
-      this.formatoData.update( (valueOld) => {
-        const formato = valueOld as IFormato;
-        if( !formato.secciones ) formato.secciones = [];
-        formato.secciones.push(this.seccionData() as ISeccion)
-        return formato;
-      })
+      this.loadingServer.show(); 
   
-     // const seccion = await lastValueFrom(this.ProdrestserviceService.crearSeccion(this.formFormato.value));
-  /* 
-      this.formFormato.patchValue({
-        seccion: seccion.seccion, 
-        descripcion: seccion.descripcion 
+      const seccion = this.seccionData() as ISeccion;
+  
+      const resultado = await lastValueFrom(this.ProdrestserviceService.crearSeccion(seccion));
+  
+      this.formatoData.update((valueOld) => {
+        const formato = valueOld as IFormato;
+        if (!formato.secciones) formato.secciones = [];
+        formato.secciones.push(seccion); 
+        return formato; 
       });
   
-      this.dataSharingService.setParams(seccion.id, seccion.seccion, seccion.descripcion);
+      this.formFormato.patchValue({
+        seccion: resultado.seccion, 
+        descripcion: resultado.descripcion
+      });
   
-      console.log('Sección guardada correctamente:', seccion); */
-      //console.log('Formulario actualizado:', this.formFormato.value);
+      this.dataSharingService.setParams(resultado.id, resultado.seccion, resultado.descripcion);
+  
+      console.log('Sección guardada correctamente:', resultado);
+      console.log('Formulario actualizado:', this.formFormato.value);
+  
     } catch (error) {
-      console.error('Error al guardar la sección:', error);
+      console.error('Error al guardar la sección:', error); 
     } finally {
-      this.loadingServer.hidden();
+      this.loadingServer.hidden(); 
     }
   }
-//Guardar Campos
-guardarCampo() {
-  console.log('Datos del formato:', this.formatoData());
-  let seleccionIndex = this.seleccionSeleccionada();
-  console.log('Índice seleccionado:', seleccionIndex);
   
-  this.formatoData.update((valueOld) => {
-    const formato = valueOld as IFormato;
-    console.log('Datos del formato antes de la actualización:', formato);
-    if (!formato.secciones) {
-      formato.secciones = [];
-    }
-    if (seleccionIndex === -1) {
-      const nuevaSeccion: ISeccion = {
-        seccion: 'Nueva Sección', 
-        descripcion: 'Descripción de la nueva sección',
-        campos: []
-      };
-      formato.secciones.push(nuevaSeccion);
-      seleccionIndex = formato.secciones.length - 1;
-    } else {
-      if (seleccionIndex < 0 || seleccionIndex >= formato.secciones.length) {
-        console.error('Índice de sección no válido');
-        return formato;
-      }
-    }
+//Guardar Campos
+async guardarCampo() {
+  try {
+    this.loadingServer.show(); 
 
-    if (!formato.secciones[seleccionIndex].campos) {
-      formato.secciones[seleccionIndex].campos = [];
-    }
-    formato.secciones[seleccionIndex].campos.push(this.campoData() as ICampo);
-    console.log('Datos del formato después de la actualización:', formato);
-    return formato;
-  });
+    const campo = this.campoData() as ICampo;
+
+    const resultado = await lastValueFrom(this.ProdrestserviceService.crearCampos(campo));
+
+    this.seccionData.update((valueOld) => {
+      const seccion = valueOld as ISeccion;
+      if (!seccion.campos) seccion.campos = [];
+      seccion.campos.push(resultado); 
+      return seccion;
+    });
+
+    this.formFormato.patchValue({
+      campo: resultado.campo, 
+      descripcion: resultado.descripcion
+    });
+
+    this.dataSharingService.setParams(resultado.id, resultado.campo, resultado.descripcion);
+
+    console.log('Campo guardado correctamente:', resultado);
+    console.log('Formulario actualizado:', this.formFormato.value);
+
+  } catch (error) {
+    console.error('Error al guardar campo:', error); 
+  } finally {
+    this.loadingServer.hidden(); 
 }
+}
+
+
 
 
 
@@ -307,6 +325,8 @@ guardarCampo() {
 async guardarPropiedad() {
   try {
     this.loadingServer.show();
+
+    const propiedad = this.propiedadData() as IPropiedad;
 
     this.formatoData.update((valueOld) => {
       const formato = valueOld as IFormato;
@@ -318,24 +338,54 @@ async guardarPropiedad() {
             campo.propiedad = []; 
           }
           
-          campo.propiedad.push(this.propiedadData() as IPropiedad);
+          campo.propiedad.push(propiedad);
         });
       });
 
       return formato;
     });
+
+    const resultado = await lastValueFrom(this.ProdrestserviceService.crearPropiedades(propiedad));
+
+    console.log('Propiedad guardada correctamente:', resultado);
+
+  } catch (error) {
+    console.error('Error al guardar la propiedad:', error); 
   } finally {
     this.loadingServer.hidden();
   }
 }
-
-
 
   //Guardar primer parte del formato
   public guardarFormatoTemp(){
     console.log(this.formatoData())
   }
 
+// Guaradr orden
+async guardarOrden() {
+  try {
+    this.loadingServer.show();
+
+    this.formatoData.update((valueOld) => {
+      const formato = valueOld as IFormato;
+      
+      if (!formato.orden) formato.orden = [];
+      
+      formato.orden.push(this.ordenData() as IOrden);
+
+      return formato; 
+    });
+
+    const resultado = await lastValueFrom(this.ProdrestserviceService.crearOrden(this.ordenData()));
+
+    console.log('Orden guardado correctamente:', resultado);
+
+  } catch (error) {
+    console.error('Error al guardar el orden:', error);
+  } finally {
+    this.loadingServer.hidden();
+  }
+}
 
 
   //Paginación
@@ -352,5 +402,82 @@ async guardarPropiedad() {
   loandPagniation(page: number) {
    this.actual.update( pageOld => page );
  }
+
+// Guardar tipo de propiedad
+async guardarTipoPropiedad() {
+  try {
+    this.loadingServer.show();
+
+    const tipoPropiedad = this.tipopropiedadData() as ITipoPropiedad;
+
+    const resultado = await lastValueFrom(this.ProdrestserviceService.crearTipoPropiedades(tipoPropiedad));
+
+    console.log('Tipo de propiedad guardado correctamente:', resultado);
+
+    this.formatoData.update((valueOld) => {
+      const formato = valueOld as IFormato;
+
+      if (!formato.secciones) formato.secciones = [];
+      formato.secciones.forEach(seccion => {
+        seccion.campos.forEach(campo => {
+          if (!campo.propiedad) campo.propiedad = [];
+          campo.propiedad.forEach(prop => {
+            if (prop.id_tipopropiedad === tipoPropiedad.id) {
+            }
+          });
+        });
+      });
+
+      return formato;
+    });
+
+  } catch (error) {
+    console.error('Error al guardar el tipo de propiedad:', error);
+  } finally {
+    this.loadingServer.hidden();
+  }
+}
+
+
+
+ //Guardar datos
+ async guardarDatos() {
+  try {
+    this.loadingServer.show();
+
+    const seccion = this.seccionData() as ISeccion;
+    const campo = this.campoData() as ICampo;
+
+    if (!seccion || !campo) {
+      console.error('No se puede guardar los datos: la sección o el campo no existen.');
+      return;
+    }
+
+    this.formatoData.update((valueOld) => {
+      const formato = valueOld as IFormato;
+      if (!formato.secciones) formato.secciones = [];
+      if (!formato.secciones.some(s => s.id === seccion.id)) {
+        formato.secciones.push(seccion);
+      }
+      return formato;
+    });
+
+    this.seccionData.update((valueOld) => {
+      const secciones = valueOld as ISeccion;
+      if (!secciones.campos) secciones.campos = [];
+      if (!secciones.campos.some(c => c.id === campo.id)) {
+        secciones.campos.push(campo);
+      }
+      return secciones;
+    });
+
+    console.log('Sección y campo guardados correctamente.');
+  } catch (error) {
+    console.error('Error al guardar los datos:', error);
+  } finally {
+    this.loadingServer.hidden();
+  }
+}
+
   
 }
