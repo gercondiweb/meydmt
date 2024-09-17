@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormatosComponent } from './formatos.component';
+import { AdmpropietariosComponent } from './admpropietarios.component';
 
-describe('FormatosComponent', () => {
-  let component: FormatosComponent;
-  let fixture: ComponentFixture<FormatosComponent>;
+describe('AdmpropietariosComponent', () => {
+  let component: AdmpropietariosComponent;
+  let fixture: ComponentFixture<AdmpropietariosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormatosComponent]
+      imports: [AdmpropietariosComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FormatosComponent);
+    fixture = TestBed.createComponent(AdmpropietariosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

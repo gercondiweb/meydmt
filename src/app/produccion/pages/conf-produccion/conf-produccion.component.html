@@ -25,21 +25,15 @@
                     <div class="mb-2  ">
                             <div class="relative mb-4">
                                 <input-group  type="text" [label]="'Nombre del formato'"
-                                 [data]="formatoData" id="formato" name="formato" class="form-control"
+                                  [data]="formatoData" id="formato" name="formato" class="form-control"
                                     placeholder="Ingrese el nombre del formato" />
                             </div>
                             <div class="relative mb-4">
                                 <text-area-group  class="form-control" [data]="formatoData"
-                                    label="Descripcion formato" name="descripcion"
+                                    label="Descripcion formato" name="descripcionformato"
                                     placeholder="Ingrese la descripción correspondiente al formato que desea crear"
                                     class="w-full"></text-area-group>
                             </div>
-                            formato
-                            <pre>
-                                {{ seleccionSeleccionada() | json}}
-                                {{ formatoData() | json }}
-
-                            </pre>
                     </div>
 
                     <!-- Contenedor de las 4 secciones  -->
@@ -61,12 +55,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        @for( seccion of formatoData().secciones; track seccion; let i = $index){
+                                        @for( seccion of listSecciones(); track seccion; let i = $index){
+                                          <tr>
                                             <td class="py-2 px-4 border-b border-grey-light">
-                                                <check-box name="secciones" (click)="selecionarSeccion(i)"
-                                                    [label]="seccion.seccion" [options]="options()">
-                                                </check-box>
+                                              <input type="checkbox" [id]="seccion.id" (click)="selecionarSeccion(i)"/>
+                                              <label>{{ seccion.descripcion }}</label>
                                             </td>
+                                          </tr>
                                         }
                                 </tbody>
                             </table>
@@ -96,18 +91,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let nombrecampo of seccionData().campos; let i = index">
-                                      <td class="py-2 px-4 border-b border-grey-light">
-                                        <check-box 
-                                          name="secciones" 
-                                          (click)="selecionarCampo(i)"
-                                          [label]="nombrecampo.nombrecampo" 
-                                          [options]="options()">
-                                        </check-box>
+                                  @for( campo of listCampos(); track campo; let i = $index){
+                                    <tr>
+                                        <td class="py-2 px-4 border-b border-grey-light">
+                                          <input type="checkbox" [id]="campo.id" (click)="selecionarSeccion(i)"/>
+                                          <label>{{ campo.nombrecampo }}</label>
                                       </td>
                                     </tr>
-                                  </tbody>                                  
+                                  }
+                                  </tbody>
                             </table>
+
                             <!-- Botón-->
                             <div class="flex justify-start">
                                 <app-pagination></app-pagination>
@@ -126,6 +120,7 @@
                         </div>
 
                     </div>
+
                 </div>
 
                 <!-- Sección 3 - campos -->
@@ -174,7 +169,7 @@
                                                 class="text-white bg-indigo-500 border-0 py-0.5 px-2 focus:outline-none hover:bg-indigo-600 rounded text-xs"
                                                 type="submit" (click)="guardarOrden()">Guardar</button>
                                         </div>
-                                    </td>                                    
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -183,43 +178,8 @@
                         <app-pagination></app-pagination>
                     </div>
                 </div>
-                <app-modal [ngClass]="{ 'showModal': showModal() }" [isShow]="showModal" [opacidad]="true">
-                    <div class="modal-overlay" *ngIf="showModal()">
-                        <div class="modal-content">
-                            <!-- Contenido del modal -->
-                            <section class="text-gray-600 body-font relative">
-                                <div class="container px-5 py-24 mx-auto flex">
-                                    <div
-                                        class="lg:w-full md:w-full bg-white rounded-lg p-8 flex flex-col w-full mt-10 relative z-10 shadow-md">
-                                        <button
-                                            class="close-button text-right text-cyan-500 hover:text-cyan-600 text-2xl font-semibold"
-                                            (click)="closed()">×</button>
-                                        <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Secciones</h2>
 
-                                        <p class="leading-relaxed mb-5 text-gray-600">Diligencie los datos
-                                            correspondientes de la sección que desea crear</p>
-
-                                            <div class="relative mb-4">
-                                                <input-group  class="form-control" [data]="seccionData"
-                                                    label="Nombre sección" type="text" id="seccion" name="seccion" class="w-full"/>
-                                            </div>
-                                            <div class="relative mb-4">
-                                                <text-area-group  [data]="seccionData" class="form-control"
-                                                    label="Descripcion sección" name="descripcion"
-                                                    class="w-full"></text-area-group>
-                                            </div>
-                                            <button
-                                                class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-                                                type="submit" (click)="guardarSeccion()">Guardar</button>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </app-modal>
-
-
-
+                <app-create-seccion [showModal]="showModal" (onSave)="guardarSeccion($event)" />
 
                 <app-modal [ngClass]="{ 'showmodal': showmodal() }" [isShow]="showmodal" [opacidad]="true">
                     <div class="modal-overlay" *ngIf="showmodal()">
@@ -234,13 +194,13 @@
                                         <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Campos</h2>
                                         <p class="leading-relaxed mb-5 text-gray-600">Diligencie los datos
                                             correspondientes del campo que desea crear</p>
-                                       
+
                                             <div class="relative mb-4">
                                                 <input-group  class="form-control"
                                               [data]="campoData" label="Nombre del campo" type="text" id="nombrecampo"
                                                     name="nombrecampo" class="w-full" />
                                             </div>
-                                     
+
                                         <div class="relative mb-4">
                                             <div class="flex items-center mb-2">
                                                 <!-- Título -->
@@ -255,16 +215,16 @@
                                                 </button>
                                             </div>
                                             <ng-container *ngFor="let propiedad of campoData().propiedad; let i = index">
-                                                <desplegable 
-                                                  [value]="selectedDesplegableValue" 
-                                                  name="propiedad" 
-                                                  [options]="options()" 
-                                                  class="w-full" 
+                                                <desplegable
+                                                  [value]="selectedDesplegableValue"
+                                                  name="propiedad"
+                                                  [options]="options()"
+                                                  class="w-full"
                                                   [label]="propiedad.propiedad"
                                                   [data]="propiedadData"
                                                   (valueChange)="onDesplegableValueChange($event)">
-                                                </desplegable>   
-                                              </ng-container>                                                                              
+                                                </desplegable>
+                                              </ng-container>
                                         </div>
 
                                         <div class="relative mb-4">
@@ -354,7 +314,7 @@
                                                     name="tipopropiedad" class="w-full" />
                                             </div>
                                         <button
-                                         (click)="guardarTipoPropiedad()"   class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" (click)="guardarPropiedad()">Guardar</button>
+                                          (click)="guardarTipoPropiedad()"   class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" (click)="guardarPropiedad()">Guardar</button>
                                     </div>
                                 </div>
                             </section>
@@ -372,6 +332,7 @@
                                 </p>
                                 <div class="mt-4 flex items-center gap-x-5">
                                     <button type="button"
+                                        (click)="guardarFormato()"
                                         class="rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Si</button>
                                     <button (click)="closED()" type="button"
                                         class="text-sm font-semibold leading-6 text-gray-900 shadow-sm hover:bg-gray-700 hover:text-blue-700">No</button>
@@ -380,3 +341,8 @@
                         </div>
                     </div>
                 </app-modal>
+
+            </div>
+        </div>
+      </span>
+    </div>

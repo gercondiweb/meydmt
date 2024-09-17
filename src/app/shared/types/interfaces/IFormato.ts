@@ -2,8 +2,9 @@ export interface IFormato {
    id?: number,
     formato: string,
     descripcionformato : string,
-    orden: IOrden[],
-    secciones: ISeccion[]
+    estado: number,
+    orden?: IOrden[],
+    secciones?: ISeccion[]
 }
 
 export interface ISeccion  {
