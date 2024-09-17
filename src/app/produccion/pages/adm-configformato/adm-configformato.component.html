@@ -1,0 +1,69 @@
+<div class="form-container bg-white p-3">
+    <div class="row d-flex flex-wrap justify-content-between align-items-center p-1 ps-3 pe-3 w-100 mb-2">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h2>Administrar creación de formatos</h2>
+                    </div>
+                    <div class="col-6 text-end">
+                        <button mat-raised-button color="primary" (click)="regresar()">
+                            <mat-icon>reply</mat-icon>
+                            Regresar
+                        </button>
+                        <button mat-raised-button class="btnGuardar">
+                            <mat-icon>save</mat-icon>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body mt-3">
+                <form [formGroup]="formFormato">
+                    <div class="row g-2">
+                        <div class="mb-3 col-4">
+                            <label for="formatoinput" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" formControlName="formato"
+                                placeholder="Ingresa el nombre del formato" id="formatoinput" />
+                        </div>
+                        <div class="mb-3 col-8">
+                            <label for="descripcioninput" class="form-label">Descripción</label>
+                            <input type="text" class="form-control" formControlName="descripcion"
+                                placeholder="Ingrese la descripción correspondiente al formato" id="descripcioninput">
+                        </div>
+                        <div class="mb-3 col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" formControlName="activo" type="checkbox" value=""
+                                    id="invalidCheck" required>
+                                <label class="form-check-label" for="invalidCheck">
+                                    Activo
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must agree before submitting.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
+                        <div class="container-fluid">
+                            <a class="navbar-brand">Secciones</a>
+                            <button mat-raised-button color="primary" (click)="agregarSeccion()">
+                                <mat-icon>add_circle</mat-icon>
+                                Agregar Sección
+                            </button>
+                        </div>
+                        <div class="container-fluid">
+                            <a class="navbar-brand">Campos</a>
+                            <button mat-raised-button color="primary" (click)="agregarCampos()">
+                                <mat-icon>add_circle</mat-icon>
+                                Agregar Campo
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

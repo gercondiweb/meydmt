@@ -1,0 +1,31 @@
+<div>
+    <h2 class="titulo" mat-dialog-title>Crear Sección</h2>
+  
+    <mat-dialog-content>
+        <form class="sucursal-form" [formGroup]="formCampos">
+          <div class="row g-2">
+            
+            <div class="mb-3 col-12">
+              <label for="campoinput" class="form-label">Nombre campo</label>
+              <input type="text" class="form-control" formControlName="campo"  placeholder="" id="campoinput">
+            </div>
+  
+           
+
+            <div class="col-md-2 d-flex flex-column">
+              <mat-checkbox class="example-margin" formControlName="activo" checked="true">Activo</mat-checkbox>
+              </div>
+          </div>
+  
+  
+        </form>
+  
+    </mat-dialog-content>
+  
+    <div mat-dialog-actions class="pie justify-content-end">
+      <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="guardarCampo()" cdkFocusInitial>Confirmar</button>
+    </div>
+  </div>
+  
+  

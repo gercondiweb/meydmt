@@ -1,4 +1,4 @@
-import { Seccion } from './../adm-produccion/adm-produccion.component';
+import { Campo } from './../adm-produccion/adm-produccion.component';
 import { Component, Inject } from '@angular/core';
 import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -7,60 +7,58 @@ import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-adm-seccion',
+  selector: 'app-adm-campos',
   standalone: false,
-  templateUrl: './adm-seccion.component.html',
-  styleUrl: './adm-seccion.component.css'
+  templateUrl: './adm-campos.component.html',
+  styleUrl: './adm-campos.component.css'
 })
-export class AdmSeccionComponent {
+export class AdmCamposComponent {
   public formatos: any;
 
-  public formSecciones!: FormGroup;
+  public formCampos!: FormGroup;
 
   result: any;
 
-  vSeccion: any;
-  listSecciones: any[]=[];
+  vCampo: any;
+  listCampos: any[]=[];
 
   consultaFormato={
     opc:'FORMATOS'
   }
 
   constructor(
-    public dialogRef: MatDialogRef<AdmSeccionComponent>,
+    public dialogRef: MatDialogRef<AdmCamposComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private ProdrestserviceService: ProdrestserviceService,
   ){}
 
   ngOnInit(): void {
-    this.formSecciones = this.formBuilder.group({
+    this.formCampos = this.formBuilder.group({
       id :[0],
-      seccion : ['',[Validators.required]],
-      descripcion : ['',[Validators.required]],
+      campo : ['',[Validators.required]],
       activo : [1,[Validators.required]],
     });
 
      if (this.data.tipo === 'Crear'){ 
           //console.log('seccion', this.data.idSeccion)
-          this.formSecciones.get('id_seccion')?.setValue(this.data.idSeccion);
+          this.formCampos.get('id_campo')?.setValue(this.data.idCampo);
      }else{
      
-      this.cargarSeccion();
+      this.cargarCampo();
     }
   }
 
-  cargarSeccion(){
+  cargarCampo(){
     this.consultaFormato.opc = 'FORMATOS';
 
     this.ProdrestserviceService.getFormatos(this.consultaFormato).subscribe((data: any) => {
-    this.vSeccion = data.body[0][0];
+    this.vCampo = data.body[0][0];
 
-    this.formSecciones.patchValue({
-      id: this.vSeccion.id,
-      seccion: this.vSeccion.seccion,
-      descripcion: this.vSeccion.descripcion,
-      activo: this.vSeccion.activo,
+    this.formCampos.patchValue({
+      id: this.vCampo.id,
+      campo: this.vCampo.campo,
+      activo: this.vCampo.activo,
     });
  });
   }
@@ -69,11 +67,11 @@ export class AdmSeccionComponent {
     this.dialogRef.close(this.result);
   }
 
-  async guardarSeccion(){
+  async guardarCampo(){
     try {
-      console.log(this.formSecciones.value);
-      const seccion = await lastValueFrom(this.ProdrestserviceService.crearSeccion(this.formSecciones.value));
-      this.result = seccion.body;
+      console.log(this.formCampos.value);
+      const campo = await lastValueFrom(this.ProdrestserviceService.crearCampos(this.formCampos.value));
+      this.result = campo.body;
     } catch (e: any) {
       console.log(e);
       await Swal.fire({
@@ -86,7 +84,4 @@ export class AdmSeccionComponent {
     }
     this.regresar();
   }
-  
-
-
 }

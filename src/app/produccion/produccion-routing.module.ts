@@ -4,19 +4,19 @@ import { LayoutComponent } from '../produccion/layout/layout.component';
 import {
   TableroprodComponent,
   ProduccionComponent,
-  AdmProduccionComponent,
-  ConfProduccionComponent,
   FormatosComponent,
   CamposComponent,
   SeccionesComponent,
   PropiedadesComponent,
   TipopropiedadesComponent,
+  AdmConfigformatoComponent,
   AdmSeccionComponent,
-  AdmPropiedadComponent,
-  AdmCampoComponent,
-  AdmTipopropiedadComponent
+  AdmCamposComponent,
+  
+ 
 } from './pages';
 import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosComponent } from '../dashboard/pages';
+import { AdmProduccionComponent } from './pages/adm-produccion/adm-produccion.component';
 
 
 const routes: Routes = [
@@ -62,10 +62,6 @@ const routes: Routes = [
         component:FormatosComponent
       },
       {
-        path: 'conf-produccion/:accion',
-        component:ConfProduccionComponent
-      },
-      {
         path: 'campos',
         component:CamposComponent
       },
@@ -82,21 +78,17 @@ const routes: Routes = [
         component:TipopropiedadesComponent
       },
       {
+        path: 'adm-configformato/:accion',
+        component:AdmConfigformatoComponent
+      },
+      {
         path: 'adm-seccion/:accion',
         component:AdmSeccionComponent
       },
       {
-        path: 'adm-propiedad/:accion',
-        component:AdmPropiedadComponent
-      },
-      {
         path: 'adm-campo/:accion',
-        component:AdmCampoComponent
+        component:AdmCamposComponent
       },
-      {
-        path: 'adm-tipopropiedad/:accion',
-        component:AdmTipopropiedadComponent
-      }
     ]
   },
   {
