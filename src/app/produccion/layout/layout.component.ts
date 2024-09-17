@@ -33,13 +33,23 @@ export class LayoutComponent implements OnInit{
       submenu: [
         {
           icon: 'subdirectory_arrow_right',
-          ruta: '/produccion/campios',
+          ruta: '/produccion/campos',
           name: 'Campos'
         },
         {
           icon: 'subdirectory_arrow_right',
           ruta: '/produccion/secciones',
           name: 'Secciones'
+        } ,
+        {
+          icon: 'subdirectory_arrow_right',
+          ruta: '/produccion/propiedades',
+          name: 'Propiedades'
+        },
+        {
+          icon: 'subdirectory_arrow_right',
+          ruta: '/produccion/tipopropiedades',
+          name: 'Tipo propiedades'
         }
       ]
     },

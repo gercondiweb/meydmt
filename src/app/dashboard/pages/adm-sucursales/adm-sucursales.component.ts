@@ -79,7 +79,6 @@ export class AdmSucursalesComponent {
 
   cargarDatosCliente(){
     //console.log(this.data.data)
-    this.formSucursales.get('nit')?.disable;
 
     if (this.data.data.data.Id > 0){
       this.formSucursales.patchValue({

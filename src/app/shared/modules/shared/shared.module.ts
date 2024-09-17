@@ -13,7 +13,13 @@ import { NavegacionComponent,
           PdfComponent,
           DemograficoComponent,
           NavegacionprodComponent,
-          CampoOrdenComponent
+          CampoOrdenComponent,
+          TextAreaGroupComponent,
+          ModalComponent,
+          DesplegableComponent,
+          InputGroupComponent,
+          CheckBoxComponent,
+          PaginationComponent,
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -42,7 +48,13 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     PdfComponent,
     DemograficoComponent,
     NavegacionprodComponent,
-    CampoOrdenComponent
+    CampoOrdenComponent,
+    TextAreaGroupComponent,
+    DesplegableComponent,
+    ModalComponent,
+    InputGroupComponent,
+    CheckBoxComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -78,7 +90,13 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     PdfComponent,
     DemograficoComponent,
     NavegacionprodComponent,
-    CampoOrdenComponent
+    CampoOrdenComponent,
+    TextAreaGroupComponent,
+    ModalComponent,
+    DesplegableComponent,
+    InputGroupComponent,
+    CheckBoxComponent,
+    PaginationComponent,
   ]
 })
 export class SharedModule { }

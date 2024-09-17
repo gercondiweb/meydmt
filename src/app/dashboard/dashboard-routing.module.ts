@@ -22,6 +22,9 @@ import { AdmTiposerviciosComponent } from './pages/adm-tiposervicios/adm-tiposer
 import { MasterserviciosComponent } from './pages/masterservicios/masterservicios.component';
 import { AdmMasterserviciosComponent } from './pages/adm-masterservicios/adm-masterservicios.component';
 import { InformesComponent } from './pages/informes/informes.component';
+import { CamposComponent } from '../produccion/pages';
+import { SucursalesComponent } from './pages/sucursales/sucursales.component';
+import { TiposserviciosComponent } from './pages/tiposservicios/tiposservicios.component';
 
 
 
@@ -63,6 +66,15 @@ const routes: Routes = [
         component:AdmServiciosComponent
       },
       {
+        path:'tiposservicios',
+        component: TiposserviciosComponent
+      },
+      
+      {
+        path:'admtiposervicios/:accion',
+        component: AdmTiposerviciosComponent
+      },
+      {
         path:'admtiposervicios',
         component:AdmTiposerviciosComponent
       },
@@ -102,6 +114,18 @@ const routes: Routes = [
         path:'admtecnicos/:accion',
         component: AdmTecnicosComponent
       },
+      {
+        path:'sucursales',
+        component: SucursalesComponent
+      },
+      {
+        path:'admsucursales',
+        component: AdmSucursalesComponent
+      },
+      {
+        path:'admsucursales/:accion',
+        component: AdmSucursalesComponent
+      },
 
       {
         path:'admclientes/:accion',
@@ -110,18 +134,6 @@ const routes: Routes = [
       {
         path:'informes',
         component: InformesComponent
-      },
-      {
-        path:'produccion',
-        component: ProduccionComponent
-      },
-      {
-        path:'admproduccion',
-        component: AdmProduccionComponent
-      },
-      {
-        path:'produccion/:accion',
-        component: AdmProduccionComponent
       },
       {
         path: '',
