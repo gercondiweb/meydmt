@@ -17,6 +17,7 @@ import { AdmrecorridosComponent } from './pages/admrecorridos/admrecorridos.comp
 import { TarifasComponent } from './pages/tarifas/tarifas.component';
 import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
 import { GastosComponent } from './pages/gastos/gastos.component';
+import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
 
 
 const routes: Routes = [
@@ -63,7 +64,7 @@ const routes: Routes = [
       },
       {
         path: 'admtarifas/:accion',
-        component:AdmClienteComponent
+        component:AdmtarifasComponent
       },
       {
         path: 'vehiculos',
