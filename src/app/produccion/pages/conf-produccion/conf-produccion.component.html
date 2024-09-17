@@ -120,65 +120,49 @@
                         </div>
 
                     </div>
-
-                </div>
-
-                <!-- Sección 3 - campos -->
-                <div class="bg-white p-4 rounded-md">
-                    <h2 class="text-gray-500 text-lg font-semibold pb-1">Contenido del formato</h2>
-                    <div class="my-1"></div> <!-- Espacio de separación -->
-                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
-                    <!-- Línea con gradiente -->
-                    <div class="chart-container" style="position: relative; height: 150px; width: 100%;">
-                        <!-- Espacio contenido -->
-                        <table class="border-collapse w-full">
-                            <thead>
-                                <tr>
-                                    <th
-                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                                        Sección</th>
-                                    <th
-                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                                        Campos</th>
-                                    <th
-                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                                        Orden</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                                    <td
-                                        class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                        <span
-                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Company
-                                            name</span>
-                                        KnobHome
-                                    </td>
-                                    <td
-                                        class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                        <span
-                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Country</span>
-                                        German
-                                    </td>
-                                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status</span>
-                                        <div class="inline-flex space-x-2 items-center">
-                                            <input-group type="text" [label]="'Orden'" [data]="ordenData" id="orden" name="orden" placeholder="Ingrese el orden" />
-                                            <button
-                                                class="text-white bg-indigo-500 border-0 py-0.5 px-2 focus:outline-none hover:bg-indigo-600 rounded text-xs"
-                                                type="submit" (click)="guardarOrden()">Guardar</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="flex justify-start mt-4">
-                        <app-pagination></app-pagination>
+                    <div class="bg-white p-4 rounded-md">
+                        <h2 class="text-gray-500 text-lg font-semibold pb-1">Contenido del formato</h2>
+                        <div class="my-1"></div> <!-- Espacio de separación -->
+                        <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
+                        <!-- Línea con gradiente -->
+                        <div class="chart-container" style="position: relative; height: 150px; width: 100%;">
+                            <table class="border-collapse w-full">
+                                <thead>
+                                    <tr>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Sección</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Campos</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Orden</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let secciones of seccionesSeleccionadas">
+                                        <td class="p-3 text-gray-800 text-center border border-gray-300">{{ secciones.seccion }}</td>
+                                        <td class="p-3 text-gray-800 text-center border border-gray-300">
+                                            <ul>
+                                                <li *ngFor="let campo of camposSeleccionados">{{ campo.campo }}</li>
+                                            </ul>
+                                        </td>
+                                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status</span>
+                                            <div class="inline-flex space-x-2 items-center">
+                                                <input-group type="text" [label]="'Orden'" [data]="ordenData" id="orden" name="orden" placeholder="Ingrese el orden" />
+                                                <button
+                                                    class="text-white bg-indigo-500 border-0 py-0.5 px-2 focus:outline-none hover:bg-indigo-600 rounded text-xs"
+                                                    type="submit" (click)="guardarOrden()">Guardar</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex justify-start mt-4">
+                            <app-pagination></app-pagination>
+                        </div>
                     </div>
                 </div>
 
+             
+             
                 <app-create-seccion [showModal]="showModal" (onSave)="guardarSeccion($event)" />
 
                 <app-modal [ngClass]="{ 'showmodal': showmodal() }" [isShow]="showmodal" [opacidad]="true">

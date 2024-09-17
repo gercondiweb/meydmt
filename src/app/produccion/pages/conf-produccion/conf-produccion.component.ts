@@ -86,10 +86,15 @@ export class ConfProduccionComponent implements OnInit {
     if( i === this.seleccionSeleccionada() ) i = -1;
     this.seleccionSeleccionada.update( valueold => i)
   }
+  selecionarTipoPropiedad( i : number ){
+    if( i === this.seleccionSeleccionada() ) i = -1;
+    this.seleccionSeleccionada.update( valueold => i)
+  }
   closed(){
     this.showModal.update( dataOld => false);
   }
   openModal() {
+
     this.showModal.update( valueOld => true);
   }
   closedModal(){
@@ -336,16 +341,18 @@ async guardarPropiedad() {
     this.formatoData.update((valueOld) => {
       const formato = valueOld as IFormato;
 
-      formato.secciones.forEach(seccion => {
-        seccion.campos.forEach(campo => {
-
-          if (!Array.isArray(campo.propiedad)) {
-            campo.propiedad = [];
+      if (Array.isArray(formato.secciones)) {
+        formato.secciones.forEach(seccion => {
+          if (Array.isArray(seccion.campos)) {
+            seccion.campos.forEach(campo => {
+              if (!Array.isArray(campo.propiedad)) {
+                campo.propiedad = [];
+              }
+              campo.propiedad.push(propiedad);
+            });
           }
-
-          campo.propiedad.push(propiedad);
         });
-      });
+      }
 
       return formato;
     });
@@ -360,6 +367,7 @@ async guardarPropiedad() {
     this.loadingServer.hidden();
   }
 }
+
 
   //Guardar primer parte del formato
   async  guardarFormato(){
@@ -450,44 +458,61 @@ async guardarTipoPropiedad() {
   }
 }
 
- //Guardar datos
- async guardarDatos() {
-  try {
-    this.loadingServer.show();
+//Guardar datos
+seccionSeleccionada = signal<number>(-1); 
+campoSeleccionado = signal<number>(-1);   
 
-    const seccion = this.seccionData() as ISeccion;
-    const campo = this.campoData() as ICampo;
+seccionesSeleccionadas: any[] = [];
+camposSeleccionados: any[] = [];
 
-    if (!seccion || !campo) {
-      console.error('No se puede guardar los datos: la sección o el campo no existen.');
-      return;
+seleccionarSeccion(index: number) {
+  const seccion = this.listSecciones[index];
+
+  if (index === this.seccionSeleccionada()) {
+    this.seccionSeleccionada.update(() => -1);
+    this.seccionesSeleccionadas = this.seccionesSeleccionadas.filter(
+      (s) => s.id !== seccion.id
+    );
+  } else {
+    this.seccionSeleccionada.update(() => index);
+    if (!this.seccionesSeleccionadas.some((s) => s.id === seccion.id)) {
+      this.seccionesSeleccionadas.push(seccion);
     }
-
-    this.formatoData.update((valueOld) => {
-      const formato = valueOld as IFormato;
-      if (!formato.secciones) formato.secciones = [];
-      if (!formato.secciones.some(s => s.id === seccion.id)) {
-        formato.secciones.push(seccion);
-      }
-      return formato;
-    });
-
-    this.seccionData.update((valueOld) => {
-      const secciones = valueOld as ISeccion;
-      if (!secciones.campos) secciones.campos = [];
-      if (!secciones.campos.some(c => c.id === campo.id)) {
-        secciones.campos.push(campo);
-      }
-      return secciones;
-    });
-
-    console.log('Sección y campo guardados correctamente.');
-  } catch (error) {
-    console.error('Error al guardar los datos:', error);
-  } finally {
-    this.loadingServer.hidden();
   }
 }
+
+seleccionarCampo(index: number) {
+  const campo = this.listCampos[index];
+
+  if (index === this.campoSeleccionado()) {
+    this.campoSeleccionado.update(() => -1); 
+    this.camposSeleccionados = this.camposSeleccionados.filter(
+      (c) => c.id !== campo.id
+    );
+  } else {
+    this.campoSeleccionado.update(() => index);
+    if (!this.camposSeleccionados.some((c) => c.id === campo.id)) {
+      this.camposSeleccionados.push(campo);
+    }
+  }
+}
+
+async guardarDatos() {
+  if (this.seccionesSeleccionadas.length > 0) {
+    console.log('Secciones seleccionadas:', this.seccionesSeleccionadas);
+  } else {
+    console.log('No hay secciones seleccionadas');
+  }
+
+  if (this.camposSeleccionados.length > 0) {
+    console.log('Campos seleccionados:', this.camposSeleccionados);
+  } else {
+    console.log('No hay campos seleccionados');
+  }
+}
+
+
+
 
 
 }
