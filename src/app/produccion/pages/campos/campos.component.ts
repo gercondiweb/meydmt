@@ -12,14 +12,13 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class CamposComponent implements OnInit{
   titulo = ['Campos'];
-  columnas = ['id','id_formato','id_seccion','id_campo','orden','nombrecampo','seccion', 'propiedad', 'tipopropiedad'];
+  columnas = ['id','nombrecampo','propiedades'];
 
 
   vDataSource!: MatTableDataSource<any,any>;
 
   consultaCampo ={
-    opc:'CAMPO-FORMATO',
-    vID:1
+    opc:'CAMPOPROP',
   }
 
   public listDatos: any;
@@ -31,7 +30,7 @@ export class CamposComponent implements OnInit{
   }
 
   public cargarData(){
-    this._prodrestserviceService.getCampos(this.consultaCampo).subscribe(respuesta=>{
+    this._prodrestserviceService.getMaestros(this.consultaCampo).subscribe(respuesta=>{
       this.listDatos = respuesta;
       //this.datos = this.listDatos.body[0];
       this.vDataSource = this.listDatos.body[0];

@@ -88,7 +88,7 @@ const routes: Routes = [
         component:AdmSeccionComponent
       },
       {
-        path: 'adm-campo/:accion',
+        path: 'adm-campos/:accion',
         component:AdmCamposComponent
       },
       {

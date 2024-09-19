@@ -40,11 +40,14 @@ export class AdmConfigformatoComponent implements OnInit {
 
   consultaformato={
     opc:'ALL',
+    vID:0
     
   }
 
-  public formFormato !: FormGroup;
+  
 
+  public formFormato !: FormGroup;
+  public listDatos: any;
   public formatoSeleccionado : number = 0;
 
   constructor(
@@ -76,7 +79,7 @@ export class AdmConfigformatoComponent implements OnInit {
     if(this.accion === "Editar"){
 
       this.cargarDatosFormato();
-      this.formFormato.controls['formato'].disable();
+      this.formFormato.controls['formato'];
       this.formFormato.get('id')?.setValue(this.objetoData.data.id);
       this.formatoSeleccionado = this.objetoData.data.id;
       this.cargarSeccionFormato();
@@ -96,21 +99,31 @@ export class AdmConfigformatoComponent implements OnInit {
     this.objetoData = this.dataSharingService.getData();
     this.idFormato = this.objetoData.data.Id;
 
-    console.log(this.objetoData)
-
+    console.log(this.objetoData);
+  
     this.formFormato.patchValue({
       formato: this.objetoData.data.formato,
       descripcionformato: this.objetoData.data.descripcionformato,
       activo: this.objetoData.data.Activo
     });
-    console.log(this.formFormato.value)
-  }
+    console.log(this.formFormato.value);
+
+     this.consultaformato.opc='CAMPO-FORMATO';
+     this.consultaformato.vID=this.objetoData.data.id;
+     console.log(this.consultaformato)
+    this.ProdrestserviceService.getFormatos(this.consultaformato).subscribe(respuesta => {
+      this.listDatos = respuesta;
+    }); 
+    console.log(this.listDatos)
+}
+
+
 
   cargarSeccionFormato(){
     const   consultaservicio={
       opc:'SECCIONES',
     }
-    this.ProdrestserviceService.getSeccion(consultaservicio).subscribe(respuesta=>{
+    this.ProdrestserviceService.getMaestros(consultaservicio).subscribe(respuesta=>{
       this.vSeccion = respuesta.body[0];
       this.listSecciones  = this.vSeccion;
       console.log('SECCION-CargarData');
@@ -134,11 +147,10 @@ export class AdmConfigformatoComponent implements OnInit {
   }
   cargarCampoFormato(){
     const  consultacampo={
-      opc:'CAMPO-FORMATO',
-      vID: 1
+      opc:'CAMPOPROP',
     }
 
-    this. ProdrestserviceService.getCampos(consultacampo).subscribe(respuesta=>{
+    this. ProdrestserviceService.getMaestros(consultacampo).subscribe(respuesta=>{
       this.vCampo = respuesta.body[0];
       this.listCampos = this.vCampo;
 
@@ -210,7 +222,6 @@ async guardarFormato(){
 
       this.formatoSeleccionado = formato.id;
       this.formFormato.get('id')?.setValue( this.formatoSeleccionado );
-      this.formFormato.get('formato')?.disable;
       this.formFormato.patchValue({
         formato: formato.formato,
         descripcionformato: formato.descripcionformato,
@@ -229,31 +240,42 @@ async guardarFormato(){
   }
 }
 
-onSeccionCheckboxChange(event: any) {
-  const seccionesArray: FormArray = this.formSeccionesCampos.get('secciones') as FormArray;
+//CAMPO FORMATO
+seccionSeleccionada: string | null = null;
+camposSeleccionados: string[] = [];
+filas: { seccion: string; campos: string[]; orden: string }[] = [];
+seleccionarSeccion(seccion: string) {
+  this.seccionSeleccionada = seccion;
+}
 
-  if (event.target.checked) {
-    seccionesArray.push(this.formBuilder.control(event.target.value));
+seleccionarCampo(campo: string, event: Event) {
+  const checkbox = event.target as HTMLInputElement;
+  if (checkbox.checked) {
+    this.camposSeleccionados.push(campo);
   } else {
-    const index = seccionesArray.controls.findIndex(x => x.value === event.target.value);
-    seccionesArray.removeAt(index);
+    this.camposSeleccionados = this.camposSeleccionados.filter(c => c !== campo);
   }
 }
 
-onCampoCheckboxChange(event: any) {
-  const camposArray: FormArray = this.formSeccionesCampos.get('campos') as FormArray;
+async guardarCampoFormato() {
+  if (this.seccionSeleccionada && this.camposSeleccionados.length > 0) {
+    const orden = (document.getElementById('ordeninput') as HTMLInputElement)?.value || '';
+    
+    this.filas.push({
+      seccion: this.seccionSeleccionada,
+      campos: this.camposSeleccionados,
+      orden: orden
+    });
 
-  if (event.target.checked) {
-    camposArray.push(this.formBuilder.control(event.target.value));
+    this.seccionSeleccionada = null;
+    this.camposSeleccionados = [];
+    
+    console.log('Sección:', this.seccionSeleccionada);
+    console.log('Campos:', this.camposSeleccionados);
   } else {
-    const index = camposArray.controls.findIndex(x => x.value === event.target.value);
-    camposArray.removeAt(index);
+    console.error('Error');
   }
 }
 
-async guardarSeccionesCampos() {
-    console.log('Formulario enviado:', this.formSeccionesCampos.value);
-
-}
 
 }

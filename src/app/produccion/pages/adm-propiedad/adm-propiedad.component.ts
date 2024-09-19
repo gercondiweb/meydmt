@@ -1,21 +1,30 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import {  FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProdrestserviceService } from './../../services/prodrestservice.service';
 import { lastValueFrom } from 'rxjs';
+import { LoadingService } from '@/app/shared/services/loading.service';
+import { DataSharingService } from '@/app/dashboard/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { INPUT_MODALITY_DETECTOR_DEFAULT_OPTIONS } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-adm-propiedad',
-  standalone: false,
+
   templateUrl: './adm-propiedad.component.html',
   styleUrl: './adm-propiedad.component.css'
 })
-export class AdmPropiedadComponent {
+export class AdmPropiedadComponent  implements OnInit{
+  private readonly loadingServer = inject(LoadingService);
   public formatos: any;
 
   public formPropiedad!: FormGroup;
+  accion : any;
+  param1!: string;
+  param2!: string;
 
+  objetoData: any;
   result: any;
 
   vPropiedad: any;
@@ -27,30 +36,59 @@ export class AdmPropiedadComponent {
   consultaservicio={
     opc:'PROPIEDAD'
   }
+  public PropiedadSeleccionado : number = 0;
+  public idPropiedad:any;
+
 
   constructor(
-    public dialogRef: MatDialogRef<AdmPropiedadComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dataSharingService: DataSharingService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private  ProdrestserviceService : ProdrestserviceService,
     private formBuilder: FormBuilder,
-    private ProdrestserviceService: ProdrestserviceService,
-  ){}
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.accion = this.route.snapshot.paramMap.get('accion') || '';
+
     this.formPropiedad = this.formBuilder.group({
-      id :[0],
+      id: [0],
       propiedad : ['',[Validators.required]],
-      tipopropiedad: ['',[Validators.required]],
       activo : [1,[Validators.required]],
-      tipopropiedades: this.formBuilder.array([], Validators.required),
+      id_tipopropiedad: ['',[Validators.required]]
     });
 
-    this.cargarTipoPropiedadFormato();
-     if (this.data.tipo === 'Crear'){ 
-          this.formPropiedad.get('id_propiedad')?.setValue(this.data.id_propiedad);
-     }else{
-     
-      this.cargarPropiedad();
+    //console.log(this.accion)
+
+    if(this.accion === "Editar"){
+
+      this.cargarDatosFormato();
+      this.formPropiedad.controls['propiedad'];
+      this.formPropiedad.get('id')?.setValue(this.objetoData.data.id);
+      this.PropiedadSeleccionado = this.objetoData.data.id;
+      this.cargarTipoPropiedadFormato();
+
+    }else{
+      this.formPropiedad.get('id')?.setValue(0);
+      this.PropiedadSeleccionado = 0;
     }
+
+  }
+
+  cargarDatosFormato(){
+    this.param1 = this.dataSharingService.getParam1();
+    this.param2 = this.dataSharingService.getParam2();
+    this.objetoData = this.dataSharingService.getData();
+    this.idPropiedad = this.objetoData.data.Id;
+
+    console.log(this.objetoData)
+
+    this.formPropiedad.patchValue({
+      propiedad: this.objetoData.data.propiedad,
+      activo: this.objetoData.data.Activo,
+      id_tipopropiedad: this.objetoData.data.id_tipopropiedad
+    });
+    console.log(this.formPropiedad.value)
   }
 
   cargarPropiedad(){
@@ -62,7 +100,7 @@ export class AdmPropiedadComponent {
     this.formPropiedad.patchValue({
       id: this.vPropiedad.id,
       propiedad: this.vPropiedad.propiedad,
-      tipopropiedad: this.vPropiedad.tipopropiedad,
+      id_tipopropiedad: this.vPropiedad.id_tipopropiedad,
       activo: this.vPropiedad.activo,
     });
  });
@@ -82,35 +120,36 @@ export class AdmPropiedadComponent {
 
   }
 
-  regresar() {
-    this.dialogRef.close(this.result);
+  regresar(){
+    this.router.navigateByUrl('/produccion/propiedades');
   }
 
   async guardarPropiedad(){
-    try {
-      console.log(this.formPropiedad.value);
+
+    try{
+  
+    this.loadingServer.show();
       const propiedad = await lastValueFrom(this.ProdrestserviceService.crearPropiedades(this.formPropiedad.value));
-      this.result = propiedad.body;
-    } catch (e: any) {
+  
+        this.PropiedadSeleccionado = propiedad.id;
+        this.formPropiedad.get('id')?.setValue( this.PropiedadSeleccionado );
+        this.formPropiedad.get('propiedad');
+        this.formPropiedad.patchValue({
+          propiedad: propiedad.propiedad,
+          id: propiedad.id,
+          ...this.formPropiedad.value
+        });
+  
+      this.dataSharingService.setParams(propiedad.id,propiedad.propiedad, propiedad);
+  
+      console.log( { propiedad });
+      console.log( this.formPropiedad.value );
+    }catch(e){
       console.log(e);
-      await Swal.fire({
-        position: "center",
-        icon: "error",
-        title: e.message,
-        showConfirmButton: false,
-        timer: 1500
-      });
+    }finally{
+      this.loadingServer.hidden();
     }
-    this.regresar();
   }
 
-  onCheckboxChange(event: any) {
-    const tipopropiedadesArray: FormArray = this.formPropiedad.get('tipopropiedades') as FormArray;
-    if (event.target.checked) {
-      tipopropiedadesArray.push(this.formBuilder.control(event.target.value));
-    } else {
-      const index = tipopropiedadesArray.controls.findIndex(x => x.value === event.target.value);
-      tipopropiedadesArray.removeAt(index);
-    }
-  }
+ 
 }

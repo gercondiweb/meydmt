@@ -1,43 +1,53 @@
-<div>
-    <h2 class="titulo" mat-dialog-title>Crear Propiedad</h2>
-  
-    <mat-dialog-content>
-      <form class="sucursal-form" [formGroup]="formPropiedad">
-        <div class="row g-2">
-  
-          <div class="mb-3 col-12">
-            <label for="propiedadinput" class="form-label">Nombre Propiedad</label>
-            <input type="text" class="form-control" formControlName="propiedad" placeholder="" id="propiedadinput">
+<div class="form-container bg-white p-3">
+  <div class="row d-flex flex-wrap justify-content-between align-items-center p-1 ps-3 pe-3 w-100 mb-2">
+    <div class="card w-100">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <h2>Administrar creación de propiedades</h2>
           </div>
-  
-          <!-- Dropdown con scroll para propiedades -->
+          <div class="col-6 text-end">
+            <button mat-raised-button color="primary" (click)="regresar()">
+              <mat-icon>reply</mat-icon>
+              Regresar
+            </button>
+            <button mat-raised-button class="btnGuardar ms-2" (click)="guardarPropiedad()">
+              <mat-icon>save</mat-icon>
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body mt-3">
+        <form class="sucursal-form" [formGroup]="formPropiedad">
+          <div class="row g-2">
+            <div class="mb-3 col-12">
+              <label for="propiedadinput" class="form-label">Nombre Propiedad</label>
+              <input type="text" class="form-control" formControlName="propiedad" id="propiedadinput" placeholder="">
+            </div>
+
+            <!-- Checkbox 'Activo'-->
+            <div class="col-md-2 d-flex flex-column mt-3">
+              <mat-checkbox class="example-margin" formControlName="activo" [checked]="true">Activo</mat-checkbox>
+            </div>
+          </div>
+     
+
+        <!-- Contenedor para los tipos de propiedades -->
+        <div class="componentes-container mt-4">
           <div class="col-12 mt-3">
             <span class="block text-sm text-gray-700 font-semibold">
-                Selecciona los tipos de propiedades a usar:
+              Selecciona los tipos de propiedades a usar:
             </span>
-            <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
-                <div class="flex flex-col space-y-2">
-                  <div *ngFor="let tipopropiedad of listTipopropiedad">
-                    <label for="seccionescheckbox" class="inline-flex items-center text-sm text-gray-700">
-                            {{ tipopropiedad.tipopropiedad }}
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600"[value]="tipopropiedad.tipopropiedad" (change)="onCheckboxChange($event)"/>
-                        </label>
-                </div>
+            <div>
+              <select class="form-select" style="width: 100%;" formControlName="tipopropiedad">
+                <option *ngFor="let tipopropiedad of listTipopropiedad" [value]="tipopropiedad.id_tipopropiedad">
+                  {{ tipopropiedad.tipopropiedad }}
+                </option>
+              </select>
             </div>
-        </div>
-  
-          <!-- Checkbox 'Activo' colocado después del input de texto -->
-          <div class="col-md-2 d-flex flex-column mt-3">
-            <mat-checkbox class="example-margin" formControlName="activo" checked="true">Activo</mat-checkbox>
           </div>
-          </div>
-        </div>
+        </div>        
       </form>
-    </mat-dialog-content>
-  
-    <div mat-dialog-actions class="pie justify-content-end">
-      <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
-      <button mat-raised-button color="primary" (click)="guardarPropiedad()" cdkFocusInitial>Confirmar</button>
-    </div>
-  </div>
-  
+</div>

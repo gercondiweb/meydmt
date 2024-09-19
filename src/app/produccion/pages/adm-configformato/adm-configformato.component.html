@@ -18,34 +18,34 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body mt-3">
-                <form [formGroup]="formFormato">
-                    <div class="row g-2 mb-3"> <!-- Añadido mb-3 para espacio abajo -->
-                        <div class="mb-3 col-4">
-                            <label for="formatoinput" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" formControlName="formato"
-                                placeholder="Ingresa el nombre del formato" id="formatoinput" />
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-12">
-                              <label for="descripcionformatoInput" class="form-label">Descripción</label>
-                              <textarea type="text" class="form-control" rows="2" formControlName="descripcionformato" placeholder="Ingresa la descripción del formato" id="descripcionformato" ></textarea>
+                <div class="card-body mt-3">
+                    <form [formGroup]="formFormato">
+                        <div class="row g-3 mb-4"> 
+                            <div class="col-md-4">
+                                <label for="formatoinput" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" formControlName="formato"
+                                    placeholder="Ingresa el nombre del formato" id="formatoinput" required />
                             </div>
-                          </div>
-                        <div class="mb-3 col-3">
-                            <div class="form-check">
-                                <input class="form-check-input" formControlName="activo" type="checkbox" value=""
-                                    id="invalidCheck" required>
-                                <label class="form-check-label" for="invalidCheck">
-                                    Activo
-                                </label>
-                                <div class="invalid-feedback">
-                                    You must agree before submitting.
+                            <div class="col-md-6">
+                                <label for="descripcionformatoInput" class="form-label">Descripción</label>
+                                <textarea class="form-control" rows="2" formControlName="descripcionformato" 
+                                    placeholder="Ingresa la descripción del formato" id="descripcionformato" required></textarea>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center"> 
+                                <div class="form-check">
+                                    <input class="form-check-input" formControlName="activo" type="checkbox" id="activoCheck">
+                                    <label class="form-check-label" for="activoCheck">
+                                        Activo
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        Debes activar esta opción.
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                    
+
                 <!-- Contenedor para Secciones y Campos uno al lado del otro -->
                 <div class="row mb-4"> <!-- Añadido mb-4 para espacio abajo -->
                     <div class="d-flex justify-content-between align-items-start w-100">
@@ -54,10 +54,9 @@
                             <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
                                 <div class="container-fluid">
                                     <a class="navbar-brand">Secciones</a>
-                                    <button mat-raised-button color="primary" (click)="agregarSeccion()">
-                                        <mat-icon>add_circle</mat-icon>
-                                        Agregar Sección
-                                    </button>
+                                    <button mat-icon-button color="primary" (click)="agregarSeccion()" style="padding: 4px;">
+                                        <mat-icon style="font-size: 20px;">add_circle</mat-icon>
+                                      </button>                                      
                                 </div>
                                 <!-- Bloque de selección de propiedades para Secciones -->
                                 <div class="col-12 mt-3">
@@ -65,14 +64,19 @@
                                     <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
                                       <div class="flex flex-col space-y-2">
                                         <div *ngFor="let seccion of listSecciones">
-                                          <label class="inline-flex items-center text-sm text-gray-700">
-                                            {{ seccion.seccion }}
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600" [value]="seccion.seccion" (change)="onSeccionCheckboxChange($event)">
-                                          </label>
-                                        </div>
+                                            <label class="inline-flex items-center text-sm text-gray-700">
+                                              <input 
+                                                type="radio" 
+                                                name="seccion"  
+                                                class="form-radio h-5 w-5 text-gray-600" 
+                                                [value]="seccion.seccion"
+                                                (change)="seleccionarSeccion(seccion.seccion)">
+                                              {{ seccion.seccion }}
+                                            </label>
+                                          </div>
                                       </div>
                                     </div>
-                                  </div>                         
+                                  </div>                                                         
                             </nav>
                         </div>
                         <!-- Campos -->
@@ -80,10 +84,9 @@
                             <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
                                 <div class="container-fluid">
                                     <a class="navbar-brand">Campos</a>
-                                    <button mat-raised-button color="primary" (click)="agregarCampos()">
-                                        <mat-icon>add_circle</mat-icon>
-                                        Agregar Campo
-                                    </button>
+                                    <button mat-icon-button color="primary" (click)="agregarCampos()" style="padding: 4px;">
+                                        <mat-icon style="font-size: 20px;">add_circle</mat-icon>
+                                      </button>                                                                          
                                 </div>
                                 <!-- Bloque de selección de propiedades para Campos -->
                                 <div class="col-12 mt-3">
@@ -91,11 +94,15 @@
                                     <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
                                       <div class="flex flex-col space-y-2">
                                         <div *ngFor="let campo of listCampos">
-                                          <label class="inline-flex items-center text-sm text-gray-700">
-                                            {{ campo.nombrecampo }}
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600" [value]="campo.nombrecampo" (change)="onCampoCheckboxChange($event)">
-                                          </label>
-                                        </div>
+                                            <label class="inline-flex items-center text-sm text-gray-700">
+                                              <input 
+                                                type="checkbox" 
+                                                class="form-checkbox h-5 w-5 text-gray-600" 
+                                                [value]="campo.nombrecampo"
+                                                (change)="seleccionarCampo(campo.nombrecampo, $event)">
+                                              {{ campo.nombrecampo }}
+                                            </label>
+                                          </div>                                       
                                       </div>
                                     </div>
                                   </div>
@@ -105,16 +112,19 @@
                 </div>
 
                 <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
-                    <button class="col-6 text-end" color="primary" mat-raised-button class="btnGuardar" (click)="guardarSeccionesCampos()">
-                        <mat-icon>save</mat-icon>
-                        Agregar componentes al formato
-                    </button>  
+                    <div class="container-fluid justify-content-end"> 
+                        <button class="btn btn-primary" color="primary" mat-raised-button (click)="guardarCampoFormato()">
+                            <mat-icon>save</mat-icon>
+                            Agregar campos al formato
+                        </button>
+                    </div>
                 </nav>
+                
                 
                 <div class="componentes-container mt-4"> <!-- Añadido mt-4 para espacio arriba -->
                     <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
                         <div class="container-fluid">
-                            <a class="navbar-brand">Componentes Formato</a>
+                            <a class="navbar-brand">Campos Formato</a>
                         </div>
                         <!-- Contenedor con scroll horizontal y vertical para la tabla -->
                         <div class="col-12 mt-4">
@@ -124,10 +134,10 @@
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
                                                 <th scope="col" class="px-6 py-3">
-                                                    Nombre Campo
+                                                    Nombre Sección
                                                 </th>
                                                 <th scope="col" class="px-6 py-3">
-                                                    Nombre Sección
+                                                    Nombre Campo
                                                 </th>
                                                 <th scope="col" class="px-6 py-3">
                                                     Orden
@@ -135,19 +145,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <td class="px-6 py-4">
-                                                    Campo 1
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    Sección A
-                                                </td>
-                                                    <td class="px-6 py-4">
-                                                        <label for="ordeninput" class="form-label">Ingresa el orden</label>
-                                                        <input type="text" class="form-control" placeholder="Ingresa el orden" id="ordeninput"  />
-                                                    </td>                                              
+                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" *ngFor="let fila of filas">
+                                              <td class="px-6 py-4">{{ fila.seccion }}</td>
+                                              <td class="px-6 py-4">{{ fila.campos.join(', ') }}</td>
+                                              <td class="px-6 py-4">
+                                                <label for="ordeninput" class="form-label">Ingresa el orden</label>
+                                                <input type="text" class="form-control" placeholder="Ingresa el orden" id="ordeninput" />
+                                              </td>
                                             </tr>
-                                        </tbody>
+                                          </tbody>
+                                                                                 
                                     </table>
                                 </div>
                             </div>

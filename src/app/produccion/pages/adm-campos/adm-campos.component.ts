@@ -1,6 +1,6 @@
 import { Campo } from './../adm-produccion/adm-produccion.component';
 import { Component, Inject } from '@angular/core';
-import {  FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProdrestserviceService } from './../../services/prodrestservice.service';
 import { lastValueFrom } from 'rxjs';
@@ -14,81 +14,73 @@ import Swal from 'sweetalert2';
 })
 export class AdmCamposComponent {
   public formatos: any;
-
   public formCampos!: FormGroup;
 
   result: any;
-
   vCampo: any;
-  listCampos: any[]=[];
+  listCampos: any[] = [];
 
   vPropiedad: any;
-  listPropiedades: any[]=[];
+  listPropiedades: any[] = [];
 
-  campoformato={
-    opc:'CAMPO-FORMATO',
-    vID: 1
-  }
+  campoformato = {
+    opc: 'CAMPOPROP'
+  };
 
   constructor(
     public dialogRef: MatDialogRef<AdmCamposComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private ProdrestserviceService: ProdrestserviceService,
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.formCampos = this.formBuilder.group({
-      id :[0],
-      nombrecampo : ['',[Validators.required]],
-      activo : [1,[Validators.required]],
+      id: [0],
+      nombrecampo: ['', [Validators.required]],
+      activo: [1, [Validators.required]],
       propiedades: this.formBuilder.array([], Validators.required),
     });
-      this.cargarPropiedadFormato();
+    this.cargarPropiedadFormato();
 
-     if (this.data.tipo === 'Crear'){ 
-          //console.log('seccion', this.data.idSeccion)
-          this.formCampos.get('id_campo')?.setValue(this.data.idCampo);
-     }else{
-     
+    if (this.data.tipo === 'Crear') {
+      this.formCampos.get('id_campo')?.setValue(this.data.idCampo);
+    } else {
       this.cargarCampo();
     }
   }
 
-  cargarCampo(){
-    this.campoformato.opc = 'CAMPO-FORMATO',
-    this.campoformato.vID = this.data.idCampo;
+  cargarCampo() {
+    this.campoformato.opc = 'CAMPOPROP';
 
+    this.ProdrestserviceService.getMaestros(this.campoformato).subscribe((data: any) => {
+      this.vCampo = data.body[0][0];
 
-    this.ProdrestserviceService.getCampos(this.campoformato).subscribe((data: any) => {
-    this.vCampo = data.body[0][0];
-
-    this.formCampos.patchValue({
-      id: this.vCampo.id,
-      nombrecampo: this.vCampo.nombrecampo,
-      activo: this.vCampo.activo,
+      this.formCampos.patchValue({
+        id: this.vCampo.id,
+        nombrecampo: this.vCampo.nombrecampo,
+        activo: this.vCampo.activo,
+      });
     });
- });
   }
 
-  cargarPropiedadFormato(){
-    const   consultaservicio={
-      opc:'PROPIEDAD',
-    }
-    this.ProdrestserviceService.getPropiedades(consultaservicio).subscribe(respuesta=>{
+  cargarPropiedadFormato() {
+    const consultaservicio = {
+      opc: 'PROPIEDAD',
+    };
+    this.ProdrestserviceService.getPropiedades(consultaservicio).subscribe(respuesta => {
       this.vPropiedad = respuesta.body[0];
-      this.listPropiedades  = this.vPropiedad;
+      this.listPropiedades = this.vPropiedad;
       console.log('PROPIEDADES-CargarData');
-
       console.log(respuesta);
-    })
-
+    });
   }
+
   regresar() {
     this.dialogRef.close(this.result);
   }
 
-  async guardarCampo(){
+  async guardarCampo() {
     try {
       console.log(this.formCampos.value);
       const campo = await lastValueFrom(this.ProdrestserviceService.crearCampos(this.formCampos.value));
