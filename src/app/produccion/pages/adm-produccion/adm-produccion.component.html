@@ -12,7 +12,7 @@
               <mat-icon>reply</mat-icon>
               Regresar
             </button>
-            <button class="btnGuardar" mat-raised-button color="success" (click)="guardarOrden()">
+            <button class="btnGuardar" mat-raised-button (click)="guardarOrden()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
@@ -81,12 +81,12 @@
             <div class="mb-3 col-2">
               <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
               <select class="form-select" formControlName="id_prioridad" aria-label="Prioridad">
-                  <option *ngFor="let priori of prioridad" [value]="priori.codigo">{{priori.prioridad}}</option>
+                  <option *ngFor="let estado of lEstado" [value]="estado.id">{{estado.estado}}</option>
               </select>
             </div>
             <div class="mb-3 col-2">
               <label for="exampleFormControlInput1" class="form-label">Estado</label>
-              <select class="form-select" formControlName="id_prioridad" aria-label="Prioridad">
+              <select class="form-select" formControlName="id_estado" aria-label="Prioridad">
                   <option *ngFor="let priori of prioridad" [value]="priori.codigo">{{priori.prioridad}}</option>
               </select>
             </div>
@@ -94,31 +94,16 @@
               <label for="exampleFormControlInput1" class="form-label">Tipo Formato</label>
               <select class="form-select" formControlName="id_formato" aria-label="Prioridad">
                 <option *ngFor="let formato of formatos" [value]="formato.id">{{formato.formato}}</option>
-            </select>
+              </select>
             </div>
           </div>
 
         </form>
       </div>
-      <!--div class="card secciones bg-slate-700 mt-3" *ngFor="let sec of secciones">
-        <div class="card-header" style="color: #fff;">
-          {{sec.seccion}}
-        </div>
-        <div class="campos">
-
-        </div>
-
-          <ul class="list-group list-group-flush">
-            <ng-container *ngFor="let campo of campos">
-              <li class="list-group-item" *ngIf="campo.id_seccion === sec.id">
-                <label>{{campo.nombrecampo}}</label> <input type="text">
-              </li>
-            </ng-container>
-
-          </ul>
-
-      </!--div-->
+     <!-- INICIA ARMADO DE SECCIONES-->
       <div class="card secciones mt-3" *ngFor="let sec of secciones">
+
+      <form [formGroup]="frmDetalleOrden">
         <div class="card-header  bg-slate-700 " style="color: #fff;">
           {{sec.seccion}}
         </div>
@@ -128,56 +113,63 @@
               <div class="row bg-slate-200">
                 <label>{{campo.nombrecampo}}</label>
               </div>
-              <div class="row">
-                <div class="col-2 mb-3" *ngIf="campo.cant">
-                  <label class="">Cantidad</label>
-                  <input class="form-control" type="number">
-                </div>
-                <div class="form-check col-2 mb-3" *ngIf="campo.bueno">
-                  <label class="form-check-label">Bueno</label>
-                  <input class="form-check-input" type="checkbox">
-                </div>
-                <div class="col-2 mb-3" *ngIf="campo.referencia">
-                  <label>Referencia</label>
-                  <input class="form-control" type="text">
-                </div>
-                <div class="col-6 mb-3" *ngIf="campo.comentario">
-                  <label>Comentario</label>
-                  <input class="form-control" type="text">
-                </div>
-                <div class="col-2 mb-3" *ngIf="campo.tension">
-                  <label>Tension</label>
-                  <input class="form-control" type="number" >
-                </div>
-                <div class="form-check col-2 mb-3" *ngIf="campo.sino">
-                  <label class="form-check-label">Si/No</label>
-                  <input class="form-check-input" type="checkbox">
-                </div>
-                <div class="form-check col-2 mb-3" *ngIf="campo.sellos">
-                  <label class="form-check-label">Sellos</label>
-                  <input class="form-check-input" type="checkbox">
-                </div>
-                <div class="col-2 mb-3" *ngIf="campo.tipo">
-                  <label>Tipo</label>
-                  <input class="form-control" type="text">
-                </div>
-                <div class="col-2 mb-3" *ngIf="campo.valor">
-                  <label>Valor</label>
-                  <input class="form-control" type="number">
-                </div>
-                <div class="col-2 mb-3" *ngIf="campo.corriente">
-                  <label>Corriente</label>
-                  <input class="form-control" type="text">
-                </div>
-                <div class="col-2 mb-3" *ngIf="campo.tecnico">
-                  <label>Tecnico</label>
-                  <input  class="form-control" type="number">
-                </div>
+              <div class="row" *ngFor="let propcampo of propieCampo">
+                <!-- Traemos, buscamos y mostramos las propiedades de los campos-->
+                <ng-container *ngIf="propcampo.id_campo === campo.id_campo" >
+
+                  <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'texto'">
+                    <label class="">{{propcampo.propiedad}}</label>
+                    <input class="form-control" type="text" [formControlName]="campo.nombrecampo" [value]="campo.valorcampo">
+                  </div>
+
+                  <div class="form-check col-2 mb-3" *ngIf="propcampo.tipopropiedad === 'booleano'">
+                    <label class="form-check-label">{{propcampo.propiedad}}</label>
+                    <input class="form-check-input" type="checkbox" [formControlName]="campo.nombre"
+                            [checked]="campo.valorcampo === '1'">
+                  </div>
+
+                  <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'numerico'">
+                    <label>{{propcampo.propiedad}}</label>
+                    <input class="form-control" type="number" [value]="campo.valorcampo">
+                  </div>
+                  <div class="col-12 mb-3" *ngIf="propcampo.tipopropiedad === 'comentario'">
+                    <label>{{propcampo.propiedad}}</label>
+                    <textarea class="form-control">{{campo.valorcampo}}</textarea>
+                  </div>
+                  <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'fecha'">
+                    <label>{{propcampo.propiedad}}</label>
+                    <input class="form-control" type="date" [value]="campo.valorcampo">
+                  </div>
+                  <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'hora'">
+                    <label>{{propcampo.propiedad}}</label>
+                    <input class="form-control" type="time" [value]="campo.valorcampo">
+                  </div>
+                  <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'lista'">
+                    <label>{{propcampo.propiedad}}</label>
+                  </div>
+                 
+                </ng-container>
               </div>
-
-
             </div>
           </ng-container>
+        </div>
+      </form>
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-6">
+           
+          </div>
+          <div class="col-6 text-end">
+            <button mat-raised-button color="primary" (click)="regresar()">
+              <mat-icon>reply</mat-icon>
+              Regresar
+            </button>
+            <button class="btnGuardar" mat-raised-button (click)="guardarOrden()">
+              <mat-icon>save</mat-icon>
+              Guardar
+            </button>
+          </div>
         </div>
       </div>
     </div>

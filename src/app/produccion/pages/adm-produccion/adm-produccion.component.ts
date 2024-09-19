@@ -11,6 +11,7 @@ export interface Campo {
   id: string;
   id_seccion: string;
   nombre: string;
+  tipo: string;
 }
 
 export interface Seccion {
@@ -27,6 +28,7 @@ export interface Seccion {
 export class AdmProduccionComponent implements OnInit {
 
   frmCabeceraOrden: FormGroup;
+  frmDetalleOrden: FormGroup;
 
   accion : any;
   activarSecciones: any = true;
@@ -42,6 +44,10 @@ export class AdmProduccionComponent implements OnInit {
     opc : ''
   }
 
+  consultaSrv={
+    opc:'ESTPROD'
+  }
+
   listPrioridad : any;
   prioridad : any[];
 
@@ -54,18 +60,23 @@ export class AdmProduccionComponent implements OnInit {
   listCampos : any;
   campos : any[];
 
+  listPropieCampo:any;
+  propieCampo:any[];
+
+  listEstados: any; lEstado:any;
+
 
   constructor(
     private dataSharingService: DataSharingService,
     private router: Router,
     private route: ActivatedRoute,
     private restService : ProdrestserviceService,
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     public dialog: MatDialog) { }
 
   ngOnInit() {
 
-    this.frmCabeceraOrden = this.formBuilder.group({
+    this.frmCabeceraOrden = this.fb.group({
       id : [0,[Validators.required]],
       OIT: ['',[Validators.required]],
       equipo:[],
@@ -94,8 +105,7 @@ export class AdmProduccionComponent implements OnInit {
       usuariorecibetaller:[]
     });
 
-
-
+    this.frmDetalleOrden = this.fb.group({});
 
     this.accion = this.route.snapshot.paramMap.get('accion') || '';
 
@@ -104,14 +114,37 @@ export class AdmProduccionComponent implements OnInit {
     if(this.accion === "Editar"){
       this.activarSecciones = true;
 
+      this.frmCabeceraOrden.get('OIT').disable();
+      this.frmCabeceraOrden.get('id_formato').disable();
+
       this.cargarOrden();
+
       this.cargarDetalleOrden();
+
 
     }else{
       this.frmCabeceraOrden.get('id')?.setValue(0);
     }
 
 
+  }
+
+  getValidators(campo: Campo) {
+    const validators = [];
+    if (campo.tipo === 'text') {
+      validators.push(Validators.required);
+    }
+    if (campo.tipo === 'number') {
+      validators.push(Validators.min(1)); // Ejemplo de validación para números
+    }
+    return validators;
+  }
+
+  biuldFormDetalle(){
+    const grupoCampos = this.fb.group({});
+    this.campos.forEach(campo => {
+        grupoCampos.addControl(campo.nombre, this.fb.control(campo.valor || '', this.getValidators(campo)));
+      });
   }
 
   cargarMaestros(){
@@ -189,8 +222,22 @@ export class AdmProduccionComponent implements OnInit {
       this.listCampos=respuesta;
       this.campos=this.listCampos.body[0];
 
-      console.log('CAMPOS',this.campos);
     })
+
+    this.datosFormato.opc='PROPIE-CAMPO';
+    this.datosFormato.vIDFORMATO=idFormato;
+
+    this.restService.getOrdenes(this.datosFormato).subscribe(respuesta=>{
+      this.listPropieCampo=respuesta;
+      this.propieCampo=this.listPropieCampo.body[0];
+
+    })
+
+    this.restService.getMaestros(this.consultaSrv).subscribe((datacs: any) => {
+      this.listEstados = datacs;
+      this.lEstado = this.listEstados.body[0];
+
+    });
 
   }
 
@@ -214,8 +261,27 @@ export class AdmProduccionComponent implements OnInit {
 
   }
 
-  async guardarOrden(){
+  formatToJSON(formValue: any): any {
+    const json = {};
+    this.secciones.forEach(seccion => {
+      json[seccion.secciones] = {};
+      seccion.campos.forEach(campo => {
+        json[seccion.secciones][campo.nombre] = formValue[seccion.secciones][campo.nombre];
+      });
+    });
+    return json;
+  }
 
+  async guardarOrden(){
+    const formValue = this.frmDetalleOrden.value;
+
+    console.log('FORMDETALLE',formValue)
+
+    const json = this.formatToJSON(formValue);
+    console.log(json);
+    //Guardamos la cabecera y capturamos el insertid
+
+    //Guardaos el detalle de la orden
 
   }
 

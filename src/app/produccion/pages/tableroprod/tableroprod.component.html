@@ -1,3 +1,24 @@
-<p>
-  tableroprod works!
-</p>
+<div *ngFor="let seccion of secciones">
+  <h2>{{ seccion.nombre }}</h2>
+  <div *ngFor="let campo of campos">
+    <h3>{{ campo.nombre }}</h3>
+
+    <div *ngFor="let propiedad of campo.propiedades">
+      <label [for]="propiedad.nombre">{{ propiedad.nombre }}:</label>
+      <input 
+        *ngIf="propiedad.tipo === 'texto'" 
+        type="text" 
+        [formControlName]="propiedad.nombre" 
+        [id]="propiedad.nombre" 
+      />
+      <input 
+        *ngIf="propiedad.tipo === 'numero'" 
+        type="number" 
+        [formControlName]="propiedad.nombre" 
+        [id]="propiedad.nombre" 
+      />
+    </div>
+  </div>
+</div>
+
+<button (click)="enviarDatos()">Enviar</button>
