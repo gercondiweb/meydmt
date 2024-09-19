@@ -9,6 +9,8 @@ import { SharedModule } from "../shared/modules/shared/shared.module";
 import { AdmConfigformatoComponent } from './pages';
 import { AdmSeccionComponent } from './pages/adm-seccion/adm-seccion.component';
 import { AdmCamposComponent } from './pages/adm-campos/adm-campos.component';
+import { AdmPropiedadComponent } from './pages/adm-propiedad/adm-propiedad.component';
+import { AdmTipopropiedadComponent } from './pages/adm-tipopropiedad/adm-tipopropiedad.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { AdmCamposComponent } from './pages/adm-campos/adm-campos.component';
     AdmConfigformatoComponent,
     AdmSeccionComponent,
     AdmCamposComponent,
+    AdmPropiedadComponent,
+    AdmTipopropiedadComponent,
   ],
   imports: [
     CommonModule,

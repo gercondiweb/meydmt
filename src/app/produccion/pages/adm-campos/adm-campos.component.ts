@@ -1,6 +1,6 @@
 import { Campo } from './../adm-produccion/adm-produccion.component';
 import { Component, Inject } from '@angular/core';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProdrestserviceService } from './../../services/prodrestservice.service';
 import { lastValueFrom } from 'rxjs';
@@ -22,8 +22,12 @@ export class AdmCamposComponent {
   vCampo: any;
   listCampos: any[]=[];
 
-  consultaFormato={
-    opc:'FORMATOS'
+  vPropiedad: any;
+  listPropiedades: any[]=[];
+
+  campoformato={
+    opc:'CAMPO-FORMATO',
+    vID: 1
   }
 
   constructor(
@@ -36,9 +40,11 @@ export class AdmCamposComponent {
   ngOnInit(): void {
     this.formCampos = this.formBuilder.group({
       id :[0],
-      campo : ['',[Validators.required]],
+      nombrecampo : ['',[Validators.required]],
       activo : [1,[Validators.required]],
+      propiedades: this.formBuilder.array([], Validators.required),
     });
+      this.cargarPropiedadFormato();
 
      if (this.data.tipo === 'Crear'){ 
           //console.log('seccion', this.data.idSeccion)
@@ -50,19 +56,34 @@ export class AdmCamposComponent {
   }
 
   cargarCampo(){
-    this.consultaFormato.opc = 'FORMATOS';
+    this.campoformato.opc = 'CAMPO-FORMATO',
+    this.campoformato.vID = this.data.idCampo;
 
-    this.ProdrestserviceService.getFormatos(this.consultaFormato).subscribe((data: any) => {
+
+    this.ProdrestserviceService.getCampos(this.campoformato).subscribe((data: any) => {
     this.vCampo = data.body[0][0];
 
     this.formCampos.patchValue({
       id: this.vCampo.id,
-      campo: this.vCampo.campo,
+      nombrecampo: this.vCampo.nombrecampo,
       activo: this.vCampo.activo,
     });
  });
   }
 
+  cargarPropiedadFormato(){
+    const   consultaservicio={
+      opc:'PROPIEDAD',
+    }
+    this.ProdrestserviceService.getPropiedades(consultaservicio).subscribe(respuesta=>{
+      this.vPropiedad = respuesta.body[0];
+      this.listPropiedades  = this.vPropiedad;
+      console.log('PROPIEDADES-CargarData');
+
+      console.log(respuesta);
+    })
+
+  }
   regresar() {
     this.dialogRef.close(this.result);
   }
@@ -83,5 +104,15 @@ export class AdmCamposComponent {
       });
     }
     this.regresar();
+  }
+
+  onCheckboxChange(event: any) {
+    const propiedadesArray: FormArray = this.formCampos.get('propiedades') as FormArray;
+    if (event.target.checked) {
+      propiedadesArray.push(this.formBuilder.control(event.target.value));
+    } else {
+      const index = propiedadesArray.controls.findIndex(x => x.value === event.target.value);
+      propiedadesArray.removeAt(index);
+    }
   }
 }

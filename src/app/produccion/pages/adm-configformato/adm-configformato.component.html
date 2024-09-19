@@ -11,7 +11,7 @@
                             <mat-icon>reply</mat-icon>
                             Regresar
                         </button>
-                        <button mat-raised-button class="btnGuardar">
+                        <button mat-raised-button class="btnGuardar" (click)="guardarFormato()">
                             <mat-icon>save</mat-icon>
                             Guardar
                         </button>
@@ -20,17 +20,18 @@
             </div>
             <div class="card-body mt-3">
                 <form [formGroup]="formFormato">
-                    <div class="row g-2">
+                    <div class="row g-2 mb-3"> <!-- Añadido mb-3 para espacio abajo -->
                         <div class="mb-3 col-4">
                             <label for="formatoinput" class="form-label">Nombre</label>
                             <input type="text" class="form-control" formControlName="formato"
                                 placeholder="Ingresa el nombre del formato" id="formatoinput" />
                         </div>
-                        <div class="mb-3 col-8">
-                            <label for="descripcioninput" class="form-label">Descripción</label>
-                            <input type="text" class="form-control" formControlName="descripcion"
-                                placeholder="Ingrese la descripción correspondiente al formato" id="descripcioninput">
-                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                              <label for="descripcionformatoInput" class="form-label">Descripción</label>
+                              <textarea type="text" class="form-control" rows="2" formControlName="descripcionformato" placeholder="Ingresa la descripción del formato" id="descripcionformato" ></textarea>
+                            </div>
+                          </div>
                         <div class="mb-3 col-3">
                             <div class="form-check">
                                 <input class="form-check-input" formControlName="activo" type="checkbox" value=""
@@ -45,21 +46,111 @@
                         </div>
                     </div>
                 </form>
-                <div class="row">
+                <!-- Contenedor para Secciones y Campos uno al lado del otro -->
+                <div class="row mb-4"> <!-- Añadido mb-4 para espacio abajo -->
+                    <div class="d-flex justify-content-between align-items-start w-100">
+                        <!-- Secciones -->
+                        <div class="secciones-container flex-fill">
+                            <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
+                                <div class="container-fluid">
+                                    <a class="navbar-brand">Secciones</a>
+                                    <button mat-raised-button color="primary" (click)="agregarSeccion()">
+                                        <mat-icon>add_circle</mat-icon>
+                                        Agregar Sección
+                                    </button>
+                                </div>
+                                <!-- Bloque de selección de propiedades para Secciones -->
+                                <div class="col-12 mt-3">
+                                    <span class="block text-sm text-gray-700 font-semibold">Selecciona las secciones a usar:</span>
+                                    <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                                      <div class="flex flex-col space-y-2">
+                                        <div *ngFor="let seccion of listSecciones">
+                                          <label class="inline-flex items-center text-sm text-gray-700">
+                                            {{ seccion.seccion }}
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600" [value]="seccion.seccion" (change)="onSeccionCheckboxChange($event)">
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>                         
+                            </nav>
+                        </div>
+                        <!-- Campos -->
+                        <div class="campos-container flex-fill ms-3"> <!-- Añadido ms-3 para espacio a la izquierda -->
+                            <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
+                                <div class="container-fluid">
+                                    <a class="navbar-brand">Campos</a>
+                                    <button mat-raised-button color="primary" (click)="agregarCampos()">
+                                        <mat-icon>add_circle</mat-icon>
+                                        Agregar Campo
+                                    </button>
+                                </div>
+                                <!-- Bloque de selección de propiedades para Campos -->
+                                <div class="col-12 mt-3">
+                                    <span class="block text-sm text-gray-700 font-semibold">Selecciona los campos a usar:</span>
+                                    <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                                      <div class="flex flex-col space-y-2">
+                                        <div *ngFor="let campo of listCampos">
+                                          <label class="inline-flex items-center text-sm text-gray-700">
+                                            {{ campo.nombrecampo }}
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600" [value]="campo.nombrecampo" (change)="onCampoCheckboxChange($event)">
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
+                    <button class="col-6 text-end" color="primary" mat-raised-button class="btnGuardar" (click)="guardarSeccionesCampos()">
+                        <mat-icon>save</mat-icon>
+                        Agregar componentes al formato
+                    </button>  
+                </nav>
+                
+                <div class="componentes-container mt-4"> <!-- Añadido mt-4 para espacio arriba -->
                     <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
                         <div class="container-fluid">
-                            <a class="navbar-brand">Secciones</a>
-                            <button mat-raised-button color="primary" (click)="agregarSeccion()">
-                                <mat-icon>add_circle</mat-icon>
-                                Agregar Sección
-                            </button>
+                            <a class="navbar-brand">Componentes Formato</a>
                         </div>
-                        <div class="container-fluid">
-                            <a class="navbar-brand">Campos</a>
-                            <button mat-raised-button color="primary" (click)="agregarCampos()">
-                                <mat-icon>add_circle</mat-icon>
-                                Agregar Campo
-                            </button>
+                        <!-- Contenedor con scroll horizontal y vertical para la tabla -->
+                        <div class="col-12 mt-4">
+                            <div class="overflow-auto" style="max-height: 300px;">
+                                <div class="relative shadow-md sm:rounded-lg">
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Nombre Campo
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Nombre Sección
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Orden
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td class="px-6 py-4">
+                                                    Campo 1
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    Sección A
+                                                </td>
+                                                    <td class="px-6 py-4">
+                                                        <label for="ordeninput" class="form-label">Ingresa el orden</label>
+                                                        <input type="text" class="form-control" placeholder="Ingresa el orden" id="ordeninput"  />
+                                                    </td>                                              
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </nav>
                 </div>

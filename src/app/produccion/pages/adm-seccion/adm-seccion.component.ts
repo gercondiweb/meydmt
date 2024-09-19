@@ -22,8 +22,8 @@ export class AdmSeccionComponent {
   vSeccion: any;
   listSecciones: any[]=[];
 
-  consultaFormato={
-    opc:'FORMATOS'
+  consultaservicio={
+    opc:'SECCION'
   }
 
   constructor(
@@ -51,9 +51,9 @@ export class AdmSeccionComponent {
   }
 
   cargarSeccion(){
-    this.consultaFormato.opc = 'FORMATOS';
+    this.consultaservicio.opc = 'SECCION';
 
-    this.ProdrestserviceService.getFormatos(this.consultaFormato).subscribe((data: any) => {
+    this.ProdrestserviceService.getSeccion(this.consultaservicio).subscribe((data: any) => {
     this.vSeccion = data.body[0][0];
 
     this.formSecciones.patchValue({

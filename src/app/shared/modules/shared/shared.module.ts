@@ -14,7 +14,6 @@ import { NavegacionComponent,
           DemograficoComponent,
           NavegacionprodComponent,
           CampoOrdenComponent,
-          TextAreaGroupComponent,
           ModalComponent,
           PaginationComponent,
            } from '../../components';
@@ -46,7 +45,6 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    TextAreaGroupComponent,
     ModalComponent,
     PaginationComponent,
   ],
@@ -85,7 +83,6 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    TextAreaGroupComponent,
     ModalComponent,
     PaginationComponent,
   ]

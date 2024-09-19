@@ -9,4 +9,7 @@ export * from './tipopropiedades/tipopropiedades.component';
 export * from './adm-configformato/adm-configformato.component';
 export * from './adm-seccion/adm-seccion.component';
 export * from './adm-campos/adm-campos.component';
+export * from './adm-propiedad/adm-propiedad.component';
+export * from './adm-tipopropiedad/adm-tipopropiedad.component';
+
 

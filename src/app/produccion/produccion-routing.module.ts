@@ -12,6 +12,8 @@ import {
   AdmConfigformatoComponent,
   AdmSeccionComponent,
   AdmCamposComponent,
+  AdmPropiedadComponent,
+  AdmTipopropiedadComponent,
   
  
 } from './pages';
@@ -88,6 +90,14 @@ const routes: Routes = [
       {
         path: 'adm-campo/:accion',
         component:AdmCamposComponent
+      },
+      {
+        path: 'adm-propiedad/:accion',
+        component:AdmPropiedadComponent
+      },
+      {
+        path: 'adm-tipopropiedad/:accion',
+        component:AdmTipopropiedadComponent
       },
     ]
   },
