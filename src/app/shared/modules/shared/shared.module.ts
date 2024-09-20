@@ -14,11 +14,7 @@ import { NavegacionComponent,
           DemograficoComponent,
           NavegacionprodComponent,
           CampoOrdenComponent,
-          TextAreaGroupComponent,
           ModalComponent,
-          DesplegableComponent,
-          InputGroupComponent,
-          CheckBoxComponent,
           PaginationComponent,
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
@@ -49,11 +45,7 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    TextAreaGroupComponent,
-    DesplegableComponent,
     ModalComponent,
-    InputGroupComponent,
-    CheckBoxComponent,
     PaginationComponent,
   ],
   imports: [
@@ -91,11 +83,7 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    TextAreaGroupComponent,
     ModalComponent,
-    DesplegableComponent,
-    InputGroupComponent,
-    CheckBoxComponent,
     PaginationComponent,
   ]
 })

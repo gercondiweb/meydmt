@@ -1,6 +1,6 @@
 import { ICampo, IFormato, IOrden, IPropiedad, ISeccion, ITipoPropiedad} from '@/app/shared/types/interfaces/IFormato';
-//import { async } from '@angular/core/testing';
-//import { Seccion } from './../adm-produccion/adm-produccion.component';
+import { async } from '@angular/core/testing';
+import { Seccion } from './../adm-produccion/adm-produccion.component';
 import { DataSharingService } from '@/app/dashboard/services';
 import { Meta } from './../../../shared/types/interfaces/Ipagination';
 import { provideNativeDateAdapter } from '@angular/material/core';

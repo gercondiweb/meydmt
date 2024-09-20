@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, reduce } from 'rxjs';
 import { response } from 'express';
-import { IFormato, ISeccion } from '@/app/shared/types/interfaces/IFormato';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,7 @@ export class ProdrestserviceService {
     return this.http.post('formatos/consultaformato', datosConsulta); 
   }
 
-  public crearFormato( datosConsulta: IFormato ):Observable<any>{
+  public crearFormato( datosConsulta: any ):Observable<any>{
     console.log(datosConsulta);
     return this.http.post<{ body: { formato: any }}>('formatos',datosConsulta)
     .pipe( map( ({ body }) => body ) );
