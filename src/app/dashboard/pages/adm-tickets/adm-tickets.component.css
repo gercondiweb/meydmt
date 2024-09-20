@@ -82,3 +82,9 @@ img, svg {
   vertical-align: middle;
   width: 300px;
 }
+
+.btnGuardar{
+  background: green;
+  color: white;
+  margin-left: 5px;
+}

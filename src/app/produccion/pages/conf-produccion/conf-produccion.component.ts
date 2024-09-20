@@ -1,4 +1,3 @@
-import { ICampo, IFormato, IOrden, IPropiedad, ISeccion, ITipoPropiedad} from '@/app/shared/types/interfaces/IFormato';
 import { async } from '@angular/core/testing';
 import { Seccion } from './../adm-produccion/adm-produccion.component';
 import { DataSharingService } from '@/app/dashboard/services';
@@ -12,15 +11,12 @@ import { lastValueFrom, catchError } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { LoadingService } from '@/app/shared/services/loading.service';
-import { CreateSeccionComponent } from './create-seccion/create-seccion.component';
+import { LoadingService } from '@/app/shared/services/loading.service';import { CreateSeccionComponent } from './create-seccion/create-seccion.component';
 
 
 @Component({
   selector: 'app-conf-produccion',
-  standalone: true,
-  imports: [SharedModule,CommonModule, RouterModule, FormsModule, ReactiveFormsModule, CreateSeccionComponent],
-  templateUrl: './conf-produccion.component.html',
+   templateUrl: './conf-produccion.component.html',
   styleUrl: './conf-produccion.component.css'
 })
 export class ConfProduccionComponent implements OnInit {
