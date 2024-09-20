@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { RestService } from '@/app/dashboard/services';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 export interface Seccion1 {
   id: number;
@@ -26,73 +30,110 @@ export interface Propiedad {
 })
 export class TableroprodComponent implements OnInit {
 
-  secciones: Seccion1[] = [
-    { id: 1, nombre: 'Sección 1' },
-    { id: 2, nombre: 'Sección 2' }
+  private breakpointObserver = inject(BreakpointObserver);
+
+  public listServxestado: any;
+  public servxestado: any[] = [];
+  public solicitado = 0;
+
+  datosConsulta = {
+    opc:'',
+    id_cliente:1,
+    fechainicial: new Date(),
+    fechafinal:new Date()
+  }
+
+  datosBusqueda = {
+    opc :"CNT-TKT",
+    id_cliente :"1",
+    fechainicial :"2024-01-01",
+    fechafinal :"2024-12-31",
+  }
+  listDatos: any;
+  datos: any;
+
+  cards1: any[] = [
+    { title: 'Solicitados', icon: 'commute', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'En Ejecucion', icon: 'cancel', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Cancelados', icon: 'cancel', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Ejecutados', icon: 'done', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
+    { title: 'Asignados', icon: 'user', value: 0, cols: 1, rows: 1, ischarts: false, tipo: '' },
   ];
 
-  campos: Campo1[] = [
-    {
-      idcampo: 1, nombre: 'Campo 1', id_propiedad: 1, propiedades: [
-        { id: 1, nombre: 'Dirección', tipo: 'texto' },
-        { id: 2, nombre: 'Teléfono', tipo: 'numero' }
-      ]
-    },
-    {
-      idcampo: 2, nombre: 'Campo 2', id_propiedad: 2, propiedades: [
-        { id: 3, nombre: 'Edad', tipo: 'numero' }
-      ]
-    }
-  ];
-
-  formulario: FormGroup = this.fb.group({});
-
-  constructor(private fb: FormBuilder) {}
+  constructor (private RestService:RestService, private router: Router){}
 
   ngOnInit(): void {
-    this.generarFormulario();
+    this.datosConsulta.opc = "SC";
+    this.cargarNumServiciosxEstado();
   }
 
-  generarFormulario() {
-    // Recorremos los campos y agregamos sus propiedades al formulario
-    this.campos.forEach(campo => {
-      console.log('propiedad -->' ,  campo.propiedades)
-      campo.propiedades.forEach(propiedad => {
-        this.formulario.addControl(propiedad.nombre, this.crearControl(propiedad));
-      });
+  cargarNumServiciosxEstado(){
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+
+    // Obtener el último día del mes actual
+    const ultimoDiaMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+
+    // Obtener la fecha final (último día del mes) en formato ISO (YYYY-MM-DD)
+    const fechaFin = '2024-03-31';//ultimoDiaMes.toISOString().slice(0, 10);
+
+    const fechaIni = '2024-02-01'; //this.datosConsulta.fechainicial.toISOString().slice(0, 10);
+
+
+    this.datosConsulta.fechainicial = new Date(fechaIni); // Cambia la fecha a la deseada
+    this.datosConsulta.fechafinal = new Date(fechaFin);
+
+    console.log('Datos consulta ', this.datosConsulta)
+
+    /*this.RestService.getServiciosxEstado(this.datosConsulta).subscribe(respuesta=>{
+      console.log('resultado', respuesta)
+      this.listServxestado=respuesta;
+      this.servxestado=this.listServxestado.body;
+      this.solicitado = this.servxestado[0];
+    })
+  }*/
+
+    this.RestService.getCountTikets(this.datosBusqueda)
+    .subscribe(respuesta=>{
+      this.listDatos = respuesta;
+      this.datos = this.listDatos.body;
+
+      this.cards1[0].value = this.datos[0][0].servicios_solicitados;
+      this.cards1[1].value = this.datos[0][0].servicios_iniciados;
+      this.cards1[2].value = this.datos[0][0].servicios_cancelados;
+      this.cards1[3].value = this.datos[0][0].servicios_ejecutados;
+      this.cards1[4].value = this.datos[0][0].servicios_asignados;
+
     });
   }
+  /** Based on the screen size, switch from standard to one column per row */
+  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return [
+          { title: 'Solicitados', cols: 2, rows: 1, icon: 'commute', value: 55, ischarts:false , tipo:''  },
+          { title: 'En Progreso', cols: 2, rows: 1, icon: 'play_circle_outline', value: 'NA', ischarts:false , tipo:''   },
+          { title: 'Cancelados', cols: 2, rows: 1, icon: 'cancel', value: 2, ischarts:false , tipo:''   },
+          { title: 'Finalizados', cols: 2, rows: 1, icon: 'done_outline', value: 23, ischarts:false , tipo:''   },
+          { title: 'Servicios Solcitados hoy', cols: 4, rows: 2, icon: 'commute', value: 15, ischarts:true , tipo:'colum'   },
+          { title: 'Card 2', cols: 4, rows: 2, icon: 'commute', value: 15, ischarts:true , tipo:'pie'   },
+          { title: 'Card 3', cols: 4, rows: 2, icon: 'commute', value: 15, ischarts:true , tipo:'tabla'   }
+          //{ title: 'Card 4', cols: 1, rows: 1 }
+        ];
+      }
 
-  crearControl(propiedad: Propiedad) {
-    const validators = [];
-    if (propiedad.tipo === 'numero') {
-      validators.push(Validators.pattern(/^[0-9]+$/)); // Validación solo números
-    }
-    return this.fb.control('', validators);
-  }
+      return [
+        { title: 'Solicitados', icon: 'commute', value: 55, cols: 1, rows: 1, ischarts:false , tipo:'' },
+        { title: 'En Progreso', icon: 'play_circle_outline',value: 10,cols: 1, rows: 1, ischarts:false , tipo:'' },
+        { title: 'Cancelados', icon: 'cancel',value: 2,cols: 1, rows: 1, ischarts:false , tipo:'' },
+        { title: 'Finalizados', icon: 'done_outline',value: 23,cols: 1, rows: 1, ischarts:false , tipo:'' },
 
-  enviarDatos() {
-    if (this.formulario.valid) {
-      const valoresFormulario = this.formulario.value;
-
-      console.log(valoresFormulario);
-  
-      // Estructuramos los datos en el formato deseado
-      const resultado = this.campos.map(campo => {
-        return campo.propiedades.map(propiedad => {
-          return {
-            idcampo: campo.idcampo,
-            idpropiedad: propiedad.id,
-            valor: valoresFormulario[propiedad.nombre] // El valor ingresado por el usuario
-          };
-        });
-      }).flat(); // Aplanamos el arreglo de arreglos
-  
-      console.log('Datos a enviar:', JSON.stringify(resultado));
-  
-      // Enviar a la API
-      
-    }
-  }
+        { title: 'Servicios Solcitados hoy', cols: 2, rows: 3, ischarts:true, tipo:'colum' },
+        { title: 'Card 2', cols: 2, rows: 3, ischarts:true, tipo:'pie' },
+        { title: 'Card 3', cols: 4, rows: 2, ischarts:true, tipo:'tabla' }
+        //{ title: 'Card 4', cols: 1, rows: 1 },
+      ];
+    })
+  );
 
 }
