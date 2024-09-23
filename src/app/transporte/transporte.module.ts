@@ -8,6 +8,8 @@ import { VehiculosComponent } from './pages/vehiculos/vehiculos.component';
 import { AdmvehiculosComponent } from './pages/admvehiculos/admvehiculos.component';
 import { TarifasComponent } from './pages/tarifas/tarifas.component';
 import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
+import { RecorridosComponent } from './pages/recorridos/recorridos.component';
+import { AdmrecorridosComponent } from './pages/admrecorridos/admrecorridos.component';
 
 
 
@@ -17,7 +19,9 @@ import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
     VehiculosComponent,
     AdmvehiculosComponent,
     TarifasComponent,
-    AdmtarifasComponent
+    AdmtarifasComponent,
+    RecorridosComponent,
+    AdmrecorridosComponent
   ],
   imports: [
     CommonModule,

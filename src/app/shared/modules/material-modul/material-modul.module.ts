@@ -4,7 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +28,7 @@ import {MatTabsModule} from '@angular/material/tabs';
   declarations: [
   ],
   imports: [
+    MatIcon,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -55,6 +56,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     CommonModule
   ],
   exports: [
+    MatIcon,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
