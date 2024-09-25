@@ -1,3 +1,54 @@
-<p>
-  tableroprod works!
-</p>
+<div class="grid-container">
+  <div class="titulovar">
+    <div class="row">
+      <div class="col">
+          <h1 class="mat-h1">Resumen General de Ordenes de Servicio</h1>
+      </div>
+      <div class="col">
+          <mat-form-field>
+            <mat-label>Seleccione una fecha</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+    </div>
+    
+  </div>
+  <mat-grid-list cols="4" rowHeight="175px">
+    @for (card of cards | async; track card) {
+      <mat-grid-tile [colspan]="card.cols" [rowspan]="card.rows">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon class="color_icon">{{card.icon}}</mat-icon>{{card.title}}
+  
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <div class="graficas" *ngIf="card.ischarts">
+               <div class="grafColumna" *ngIf="card.tipo === 'colum'">
+                  <app-grafico-barras></app-grafico-barras>
+                 
+               </div>
+               <div class="grafLinea" *ngIf="card.tipo === 'linea'">
+                <app-grafico-barras></app-grafico-barras>
+                  Grafico de Linea
+               </div>
+               <div class="grafTorta" *ngIf="card.tipo === 'pie'">
+                <app-grafico-torta></app-grafico-torta>
+                Grafico de Torta
+               </div>
+               <div class="tablaDin" *ngIf="card.tipo === 'tabla'">
+                 Tabla
+              </div>
+            </div>
+            <div *ngIf="!card.ischarts">
+                <h2 class="valores_minicard"> {{card.value}} </h2>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    }
+  </mat-grid-list>
+</div>

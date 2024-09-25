@@ -6,6 +6,7 @@ import { TransporteRoutingModule } from './transporte-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import { VehiculosComponent } from './pages/vehiculos/vehiculos.component';
 import { AdmvehiculosComponent } from './pages/admvehiculos/admvehiculos.component';
+import { TablerotranspComponent } from './pages/tablerotransp/tablerotransp.component';
 
 
 
@@ -13,7 +14,8 @@ import { AdmvehiculosComponent } from './pages/admvehiculos/admvehiculos.compone
   declarations: [
     LayoutComponent,
     VehiculosComponent,
-    AdmvehiculosComponent
+    AdmvehiculosComponent,
+    TablerotranspComponent
   ],
   imports: [
     CommonModule,
