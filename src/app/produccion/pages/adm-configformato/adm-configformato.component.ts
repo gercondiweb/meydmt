@@ -1,3 +1,6 @@
+import { Ordenes } from './../produccion/produccion.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Campo, Seccion } from './../adm-produccion/adm-produccion.component';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataSharingService } from '@/app/dashboard/services';
@@ -16,6 +19,7 @@ import { AdmCamposComponent } from '../adm-campos/adm-campos.component';
   styleUrl: './adm-configformato.component.css'
 })
 export class AdmConfigformatoComponent implements OnInit {
+
   private readonly loadingServer = inject(LoadingService);
   public formSeccionesCampos!: FormGroup;
   accion : any;
@@ -62,8 +66,9 @@ export class AdmConfigformatoComponent implements OnInit {
 
     this.formSeccionesCampos = this.formBuilder.group({
       secciones: this.formBuilder.array([], Validators.required),
-      campos: this.formBuilder.array([], Validators.required) 
-    });
+      campos: this.formBuilder.array([], Validators.required) ,
+      ordenes: this.formBuilder.array([], Validators.required) 
+       });
 
     this.accion = this.route.snapshot.paramMap.get('accion') || '';
 
@@ -89,8 +94,17 @@ export class AdmConfigformatoComponent implements OnInit {
     }else{
       this.formFormato.get('id')?.setValue(0);
       this.formatoSeleccionado = 0;
+      this.cargarSeccionFormato();
+      this.cargarCampoFormato();
+      this.cargarPropiedadFormato();
     }
 
+  }
+
+  agregarOrden( event : Event ,index: number) {
+    const input = event.target as HTMLInputElement;
+    const { value } = input;
+    this.filas[index].orden = value;
   }
 
   cargarDatosFormato(){
@@ -243,7 +257,7 @@ async guardarFormato(){
 //CAMPO FORMATO
 seccionSeleccionada: string | null = null;
 camposSeleccionados: string[] = [];
-filas: { seccion: string; campos: string[]; orden: string }[] = [];
+filas: { seccion: string; campo: string; orden: string }[] = [];
 seleccionarSeccion(seccion: string) {
   this.seccionSeleccionada = seccion;
 }
@@ -259,23 +273,50 @@ seleccionarCampo(campo: string, event: Event) {
 
 async guardarCampoFormato() {
   if (this.seccionSeleccionada && this.camposSeleccionados.length > 0) {
-    const orden = (document.getElementById('ordeninput') as HTMLInputElement)?.value || '';
-    
-    this.filas.push({
-      seccion: this.seccionSeleccionada,
-      campos: this.camposSeleccionados,
-      orden: orden
-    });
+    const orden = this.formSeccionesCampos.get('orden')?.value || '';
+
+    this.camposSeleccionados.forEach( (campo, i) => {
+      this.filas.push({
+        seccion: this.seccionSeleccionada,
+        campo: campo,
+        orden: orden
+      });
+    })
+
 
     this.seccionSeleccionada = null;
     this.camposSeleccionados = [];
-    
-    console.log('Sección:', this.seccionSeleccionada);
-    console.log('Campos:', this.camposSeleccionados);
   } else {
-    console.error('Error');
+    console.error('Error al procesar la información');
   }
 }
+
+
+async guardarCamposFormato(): Promise<void> {
+  if (this.formatoSeleccionado && this.filas.length > 0) {
+    try {
+      for (const fila of this.filas) {
+        const datosFormato = {
+          ...fila,
+          idFormato: this.formatoSeleccionado,
+        };
+        console.log('Guardando datos:', datosFormato);
+
+        //await lastValueFrom(this.ProdrestserviceService.CrearcampoFormato(datosFormato));
+      }
+
+      console.log('Campos guardados exitosamente');
+    } catch (error) {
+      console.error('Error al guardar los campos:', error);
+    }
+  } else {
+    console.error('Error al gruardar los datos');
+  }
+}
+
+
+
+
 
 
 }

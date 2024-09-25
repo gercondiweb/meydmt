@@ -41,13 +41,14 @@
               Selecciona los tipos de propiedades a usar:
             </span>
             <div>
-              <select class="form-select" style="width: 100%;" formControlName="tipopropiedad">
-                <option *ngFor="let tipopropiedad of listTipopropiedad" [value]="tipopropiedad.id_tipopropiedad">
+              <select class="form-select" style="width: 100%;" formControlName="id_tipopropiedad">
+                <option *ngFor="let tipopropiedad of listTipopropiedad" [value]="tipopropiedad.id">
                   {{ tipopropiedad.tipopropiedad }}
                 </option>
               </select>
             </div>
           </div>
-        </div>        
+        </div>
+         
       </form>
 </div>

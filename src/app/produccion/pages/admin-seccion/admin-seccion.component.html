@@ -1,0 +1,42 @@
+<div class="form-container bg-white p-3"></div>
+    <div class="row d-flex flex-wrap justify-content-between align-items-center p-1 ps-3 pe-3 w-100 mb-2">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h2>Administrar creación de secciones</h2>
+                    </div>
+                    <div class="col-6 text-end">
+                        <button mat-raised-button color="primary" (click)="regresar()">
+                            <mat-icon>reply</mat-icon>
+                            Regresar
+                        </button>
+                        <button mat-raised-button class="btnGuardar" (click)="guardarSeccion()">
+                            <mat-icon>save</mat-icon>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body mt-3">
+                <form class="sucursal-form" [formGroup]="formSecciones">
+                    <div class="row g-2">
+                      
+                      <div class="mb-3 col-12">
+                        <label for="seccioninput" class="form-label">Nombre sección</label>
+                        <input type="text" class="form-control" formControlName="seccion"  placeholder="" id="seccioninput">
+                      </div>
+            
+                      <div class="row mt-2">
+                        <div class="col-12">
+                          <label for="exampleFormControlInput1" class="form-label">Descripción</label>
+                          <textarea type="text" class="form-control" rows="2" formControlName="descripcion" ></textarea>
+                        </div>
+                      </div>
+          
+                      <div class="col-md-2 d-flex flex-column">
+                        <mat-checkbox class="example-margin" formControlName="activo" checked="true">Activo</mat-checkbox>
+                        </div>
+                    </div>
+                  </form>
+            </div>

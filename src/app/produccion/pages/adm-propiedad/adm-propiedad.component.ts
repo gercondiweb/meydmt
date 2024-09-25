@@ -71,6 +71,7 @@ export class AdmPropiedadComponent  implements OnInit{
     }else{
       this.formPropiedad.get('id')?.setValue(0);
       this.PropiedadSeleccionado = 0;
+      this.cargarTipoPropiedadFormato();
     }
 
   }
@@ -129,6 +130,7 @@ export class AdmPropiedadComponent  implements OnInit{
     try{
   
     this.loadingServer.show();
+    console.log(this.formPropiedad.value);
       const propiedad = await lastValueFrom(this.ProdrestserviceService.crearPropiedades(this.formPropiedad.value));
   
         this.PropiedadSeleccionado = propiedad.id;
@@ -137,6 +139,7 @@ export class AdmPropiedadComponent  implements OnInit{
         this.formPropiedad.patchValue({
           propiedad: propiedad.propiedad,
           id: propiedad.id,
+          id_tipopropieadad:propiedad.id_tipopropiedad ,
           ...this.formPropiedad.value
         });
   

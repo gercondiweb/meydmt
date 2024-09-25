@@ -19,6 +19,8 @@ import {
 } from './pages';
 import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosComponent } from '../dashboard/pages';
 import { AdmProduccionComponent } from './pages/adm-produccion/adm-produccion.component';
+import { AdminCampoComponent } from './pages/admin-campo/admin-campo.component';
+import { AdminSeccionComponent } from './pages/admin-seccion/admin-seccion.component';
 
 
 const routes: Routes = [
@@ -98,6 +100,14 @@ const routes: Routes = [
       {
         path: 'adm-tipopropiedad/:accion',
         component:AdmTipopropiedadComponent
+      },
+      {
+        path: 'admin-campo/:accion',
+        component:AdminCampoComponent
+      },
+      {
+        path: 'admin-seccion/:accion',
+        component:AdminSeccionComponent
       },
     ]
   },

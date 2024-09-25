@@ -69,4 +69,10 @@ export class ProdrestserviceService {
     return this.http.post<{ body: { formato: any }}>('campoformato',datosConsulta)
     .pipe( map( ({ body }) => body ) );
   }
+
+  public CrearcampoFormato(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('campoformato',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+
 }

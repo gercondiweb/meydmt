@@ -11,6 +11,8 @@ import { AdmSeccionComponent } from './pages/adm-seccion/adm-seccion.component';
 import { AdmCamposComponent } from './pages/adm-campos/adm-campos.component';
 import { AdmPropiedadComponent } from './pages/adm-propiedad/adm-propiedad.component';
 import { AdmTipopropiedadComponent } from './pages/adm-tipopropiedad/adm-tipopropiedad.component';
+import { AdminCampoComponent } from './pages/admin-campo/admin-campo.component';
+import { AdminSeccionComponent } from './pages/admin-seccion/admin-seccion.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { AdmTipopropiedadComponent } from './pages/adm-tipopropiedad/adm-tipopro
     AdmCamposComponent,
     AdmPropiedadComponent,
     AdmTipopropiedadComponent,
+    AdminCampoComponent,
+    AdminSeccionComponent
   ],
   imports: [
     CommonModule,

@@ -47,7 +47,7 @@
                     
 
                 <!-- Contenedor para Secciones y Campos uno al lado del otro -->
-                <div class="row mb-4"> <!-- Añadido mb-4 para espacio abajo -->
+                <div class="row mb-4"> 
                     <div class="d-flex justify-content-between align-items-start w-100">
                         <!-- Secciones -->
                         <div class="secciones-container flex-fill">
@@ -80,7 +80,7 @@
                             </nav>
                         </div>
                         <!-- Campos -->
-                        <div class="campos-container flex-fill ms-3"> <!-- Añadido ms-3 para espacio a la izquierda -->
+                        <div class="campos-container flex-fill ms-3">
                             <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
                                 <div class="container-fluid">
                                     <a class="navbar-brand">Campos</a>
@@ -121,7 +121,7 @@
                 </nav>
                 
                 
-                <div class="componentes-container mt-4"> <!-- Añadido mt-4 para espacio arriba -->
+                <div class="componentes-container mt-4"> 
                     <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
                         <div class="container-fluid">
                             <a class="navbar-brand">Campos Formato</a>
@@ -132,30 +132,30 @@
                                 <div class="relative shadow-md sm:rounded-lg">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                            <tr>
-                                                <th scope="col" class="px-6 py-3">
-                                                    Nombre Sección
-                                                </th>
-                                                <th scope="col" class="px-6 py-3">
-                                                    Nombre Campo
-                                                </th>
-                                                <th scope="col" class="px-6 py-3">
-                                                    Orden
-                                                </th>
-                                            </tr>
+                                          <tr>
+                                            <th scope="col" class="px-6 py-3">Nombre Sección</th>
+                                            <th scope="col" class="px-6 py-3">Nombre Campo</th>
+                                            <th scope="col" class="px-6 py-3">Orden</th>
+                                          </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" *ngFor="let fila of filas">
-                                              <td class="px-6 py-4">{{ fila.seccion }}</td>
-                                              <td class="px-6 py-4">{{ fila.campos.join(', ') }}</td>
-                                              <td class="px-6 py-4">
-                                                <label for="ordeninput" class="form-label">Ingresa el orden</label>
-                                                <input type="text" class="form-control" placeholder="Ingresa el orden" id="ordeninput" />
-                                              </td>
-                                            </tr>
-                                          </tbody>
-                                                                                 
-                                    </table>
+                                          <ng-container *ngFor="let fila of filas; let i = index">
+                                              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td class="px-6 py-4">{{ fila.seccion }}</td>
+                                                <td class="px-6 py-4">{{ fila.campo }}</td>
+                                                <td class="px-6 py-4">
+                                                  <input type="text" class="form-input" name="orden" placeholder="Ingresa el orden" id="orden" value="orden"
+                                                    (change)="agregarOrden($event,i)"
+                                                   />
+                                            </td>
+                                              </tr>
+                                          </ng-container>
+                                        </tbody>
+                                      </table>
+                                      <button mat-raised-button class="btnGuardar" (click)="guardarCamposFormato()">
+                                        <mat-icon>save</mat-icon>
+                                        Guardar
+                                    </button>                                      
                                 </div>
                             </div>
                         </div>
