@@ -18,8 +18,9 @@
           </div>
           <div class="col text-end">
             <!--button mat-raised-button color="primary" (click)="crearContrato()"-->
-            <button type="button" class="btn btn-primary" (click)="digitar()">
-              Crear Nuevo
+            <button mat-raised-button color="primary" (click)="digitar()">
+              <mat-icon>add_circle</mat-icon>
+              Nuevo
             </button>
           </div>
         </div>
@@ -34,15 +35,15 @@
                     <div class="mb-2">
                       <i class="bi {{ card.icon }}" style="font-size: 2rem;"></i>
                     </div>
-                  <h3 class="card-title">{{ card.title }}</h3>
-                  <p class="card-text display-6">{{ card.value }}</p>
+                    <h3 class="card-title">{{ card.title }}</h3>
+                    <p class="card-text display-6">{{ card.value }}</p>
                   </div>
                 </div>
               </div>
             }       
           </div>
         </div>
-        <div class="row filtros p-3" style="background-color: rgb(115, 172, 216);">
+        <div class="row filtros p-3" style="background-color: rgb(129, 134, 139);">
           <div class="col-2">
             <input type="text" class="form-control" placeholder="No. Contrato">
           </div>
@@ -64,7 +65,8 @@
             </button>
           </div>
         </div>
-        <app-tabladinamica></app-tabladinamica>
+        <app-tabladinamica [filtro]="false" [columnas]="colum" 
+                [dataSource]="servicios" [formMaestro]="'transporte/admrecorridos'"></app-tabladinamica>
       </div>
 
     </div>

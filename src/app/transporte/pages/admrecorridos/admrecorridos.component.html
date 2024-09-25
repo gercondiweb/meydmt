@@ -1,1 +1,136 @@
-<p>admrecorridos works!</p>
+<div class="form-container bg-white p-3">
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+      <div class="card p-0">
+        <div class="card-header">
+  
+          <div class="row">
+            <div class="col-6">
+              <h2>Administrar Servicios Vehiculos</h2>
+            </div>
+            <div class="col-6 text-end">
+              <button mat-raised-button color="primary" (click)="regresar()">
+                <mat-icon>reply</mat-icon>
+                Regresar
+              </button>
+              <button class="btnGuardar" mat-raised-button (click)="digitar()">
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </div>
+          </div>
+  
+        </div>
+        <div class="card-body">
+
+            <form [formGroup]="formServicioVehiculo">
+                <div class="row g-2">
+                    <div class="col-8 d-flex flex-column">
+                        <label for="nitinput" class="form-label">Cliente</label>
+                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                            <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 col-4">
+                      <label for="clienteinput" class="form-label">Fecha</label>
+                      <input type="date" class="form-control" formControlName="fecha"  placeholder="" id="clienteinput">
+                    </div>
+                    <div class="col-4 d-flex flex-column">
+                        <label for="nitinput" class="form-label">Vehiculo</label>
+                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                            <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                        </select>
+                    </div>
+                    <div class="col-8 d-flex flex-column">
+                        <label for="nitinput" class="form-label">Conductor</label>
+                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                            <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="col-12">
+                    <label for="clienteinput" class="form-label">Comentarios</label>
+                    <textarea class="form-control" rows="2" formControlName="comentarios" ></textarea>
+                </div>
+                <div class="row">
+                <div class="col-6">
+                    <mat-tab-group animationDuration="0ms">
+                        <!--===================== RUTAS ==============-->
+                        <mat-tab label="Rutas">
+                            <div class="row">
+                                <div class="col-6">
+                                    <!-- Inicio-->
+                                    <div class="container mt-4">
+                                        <div class="row">
+                                          <div *ngFor="let ruta of listRutas" class="col-md-4">
+                                            <div class="card" (click)="seleccionarRuta(ruta.id)" style="cursor: pointer;">
+                                              <div class="card-body">
+                                                <h5 class="card-title">{{ ruta.nombre }}</h5>
+                                                <p class="card-text">{{ ruta.descripcion }}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      
+                                        <div *ngIf="rutaSeleccionada" class="alert alert-info mt-3">
+                                          Ruta seleccionada: {{ rutaSeleccionada }}
+                                        </div>
+                                    </div>
+                                    <!--fin-->
+
+                                    <!--div class="col-8 d-flex flex-column">
+                                        <label for="nitinput" class="form-label">Rutas</label>
+                                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                                            <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                                        </select>
+                                    </div-->
+                                </div>    
+                            </div>
+                            
+                        </mat-tab>
+                        <!--===================== INDIVIDUAL ==============-->
+                        <mat-tab label="Individual">
+                            
+                            <div class="row">
+                                <div class="mb-3 col-3">
+                                    <label for="clienteinput" class="form-label">Hora del Servicio</label>
+                                    <input type="time" class="form-control" formControlName="hora"  placeholder="" id="clienteinput">
+                                </div>
+                                <div class="mb-3 col-4">
+                                    <label for="nitinput" class="form-label">Tipo Servicio</label>
+                                    <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                                        <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-5">
+                                    <label for="nitinput" class="form-label">Zona</label>
+                                    <select class="form-select" formControlName="zona" aria-label="CLiente">
+                                        <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="clienteinput" class="form-label">Origen</label>
+                                <input type="text" class="form-control" formControlName="origen"  placeholder="" id="clienteinput">
+                            </div>
+                            <div class="mb-3">
+                                <label for="clienteinput" class="form-label">Destino</label>
+                                <input type="date" class="form-control" formControlName="destino"  placeholder="" id="clienteinput">
+                            </div>
+                            
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+                <div class="col-6">
+                        <label for="clienteinput" class="form-label">Usuarios</label>
+                        <textarea class="form-control" rows="10" formControlName="usuarios" ></textarea>
+                </div>
+            </div>
+            </form>
+        </div>
+      </div>
+      
+    </span>
+</div>   
