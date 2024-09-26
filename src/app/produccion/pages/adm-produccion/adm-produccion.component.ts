@@ -289,4 +289,11 @@ export class AdmProduccionComponent implements OnInit {
     this.router.navigateByUrl('/produccion/produccion');
   }
 
+  onChange(event: any, campo: any, propiedad: any ){
+    const nuevoValor = event.target.value;
+    console.log('id_campo = ', campo, ' id_propiedad= ', propiedad, ' Nuevo Valor = ', nuevoValor);
+
+
+  }
+
 }
