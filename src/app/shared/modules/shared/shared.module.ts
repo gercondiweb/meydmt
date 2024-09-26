@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LoadingFullComponent } from '../../components/loading-full/loading-full.component';
 import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.component';
+import { TabladinamicaTrComponent } from '../../components/tabladinamica-tr/tabladinamica-tr.component';
 
 
 
@@ -42,7 +43,8 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     PdfComponent,
     DemograficoComponent,
     NavegacionprodComponent,
-    CampoOrdenComponent
+    CampoOrdenComponent,
+    TabladinamicaTrComponent
   ],
   imports: [
     CommonModule,
@@ -78,7 +80,8 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     PdfComponent,
     DemograficoComponent,
     NavegacionprodComponent,
-    CampoOrdenComponent
+    CampoOrdenComponent,
+    TabladinamicaTrComponent
   ]
 })
 export class SharedModule { }

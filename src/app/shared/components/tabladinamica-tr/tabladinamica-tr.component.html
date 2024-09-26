@@ -1,0 +1,59 @@
+<div class="tablecontainer">
+    <div class="tabla" *ngIf="filtro">
+      <mat-form-field class="filtro">
+        <mat-label>Filtrar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Escribe algo que describa lo que buscas" #input>
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
+      matSortDirection="desc">
+      <ng-container *ngFor="let column of columnas" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef>{{ column | titlecase }}</th>
+        <!--td mat-cell *matCellDef="let element">{{ element[column] }}</!--td-->
+        <td mat-cell *matCellDef="let element">
+          <!-- Validar si el nombre de la columna contiene "fecha" y aplicar el formato adecuado -->
+          <ng-container *ngIf="column.includes('fecha')||column.includes('Fecha'); else defaultCell">
+            {{ element[column] | date: 'yyyy-MM-dd' }}
+          </ng-container>
+          <!-- Validar si el nombre de la columna es "foto" y mostrar la imagen -->
+          <ng-template #defaultCell>
+            <ng-container *ngIf="column === 'foto'; else textCell">
+              <img [src]="element[column]" alt="Foto" class="img-thumbnail" width="100">
+            </ng-container>
+            <!-- Mostrar el contenido normal si no es una columna de fecha ni de foto -->
+            <ng-template #textCell>
+              {{ element[column] !== undefined && element[column] !== null ? element[column] : 'N/A' }}
+            </ng-template>
+          </ng-template>
+
+        </td>
+      </ng-container>
+      <!-- Columna de opciones -->
+      <ng-container matColumnDef="opciones">
+        <th mat-header-cell *matHeaderCellDef> Opciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="editarElemento(element)"
+          type="button" class="btn btn-primary" >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="eliminarElemento(element)"
+          type="button" class="btn btn-danger" *ngIf="manejaDoc" >
+            <mat-icon>attach_file</mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="eliminarElemento(element)"
+          type="button" class="btn btn-danger" >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnas.concat('opciones')"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas.concat('opciones');"></tr>
+
+    </table>
+
+  <!--mat-paginator [length]="resultsLength" [pageSize]="30"
+    aria-label="Select page of GitHub search results"></mat-paginator-->
+</div>
+

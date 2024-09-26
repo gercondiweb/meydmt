@@ -159,5 +159,9 @@ export class RestService {
     return this.http.post('tarifas', datos);
   }
 
+  public serviciostr(datos:any):Observable<any>{
+    return this.http.post('serviciostr', datos);
+  }
+
 
 }

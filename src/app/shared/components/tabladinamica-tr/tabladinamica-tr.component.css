@@ -1,0 +1,19 @@
+.tablecontainer {
+    width: 100%;
+    overflow-y: auto;
+  
+  }
+  
+  .tablecontainer table thead {
+    position: sticky;
+    top: 0px;
+    width: 100%;
+  }
+  .filtro{
+    width: 100%;
+  }
+  
+  .img-thumbnail{
+    border-radius : 50%;
+  }
+  

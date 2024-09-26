@@ -12,7 +12,7 @@
                 <mat-icon>reply</mat-icon>
                 Regresar
               </button>
-              <button class="btnGuardar" mat-raised-button (click)="digitar()">
+              <button class="btnGuardar" mat-raised-button (click)="guardar()">
                 <mat-icon>save</mat-icon>
                 Guardar
               </button>
@@ -26,7 +26,7 @@
                 <div class="row g-2">
                     <div class="col-8 d-flex flex-column">
                         <label for="nitinput" class="form-label">Cliente</label>
-                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
+                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente" (change)="clienteselect($event)">
                             <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
                         </select>
                     </div>
@@ -37,98 +37,126 @@
                     </div>
                     <div class="col-4 d-flex flex-column">
                         <label for="nitinput" class="form-label">Vehiculo</label>
-                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                            <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                        <select class="form-select" formControlName="id_vehiculo" aria-label="CLiente">
+                            <option *ngFor="let vehiculo of listVehiculos" [value]="vehiculo.id">{{vehiculo.placa}}</option>
                         </select>
                     </div>
                     <div class="col-8 d-flex flex-column">
                         <label for="nitinput" class="form-label">Conductor</label>
-                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                            <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
+                        <select class="form-select" formControlName="id_conductor" aria-label="CLiente">
+                            <option *ngFor="let conductor of listConductores" [value]="conductor.idconductores">{{conductor.nombre}}</option>
                         </select>
                     </div>
                 </div>
                 
 
-                <div class="col-12">
+                <div class="col-12 mt-2">
                     <label for="clienteinput" class="form-label">Comentarios</label>
-                    <textarea class="form-control" rows="2" formControlName="comentarios" ></textarea>
+                    <textarea class="form-control" rows="2" formControlName="comentario" ></textarea>
                 </div>
-                <div class="row">
+                <div class="row mt-3">
                 <div class="col-6">
-                    <mat-tab-group animationDuration="0ms">
-                        <!--===================== RUTAS ==============-->
-                        <mat-tab label="Rutas">
-                            <div class="row">
-                                <div class="col-6">
-                                    <!-- Inicio-->
-                                    <div class="container mt-4">
-                                        <div class="row">
-                                          <div *ngFor="let ruta of listRutas" class="col-md-4">
-                                            <div class="card" (click)="seleccionarRuta(ruta.id)" style="cursor: pointer;">
-                                              <div class="card-body">
-                                                <h5 class="card-title">{{ ruta.nombre }}</h5>
-                                                <p class="card-text">{{ ruta.descripcion }}</p>
-                                              </div>
-                                            </div>
+                  <mat-tab-group animationDuration="0ms">
+                      <!--===================== INDIVIDUAL ==============-->
+                      <mat-tab label="Individual">
+                            
+                        <div class="row mt-3 individual">
+                            <div class="mb-3 col-3">
+                                <label for="clienteinput" class="form-label">Hora del Servicio</label>
+                                <input type="time" class="form-control" formControlName="hora"  placeholder="" id="clienteinput">
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="nitinput" class="form-label">Tipo Servicio</label>
+                                <select class="form-select" formControlName="id_tiposervicio" aria-label="CLiente">
+                                    <option *ngFor="let tipserv of listTipoServicio" [value]="tipserv.id">{{tipserv.tiposervicio}}</option>
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <label for="nitinput" class="form-label">Zona</label>
+                                <select class="form-select" formControlName="id_zona" aria-label="CLiente">
+                                    <option *ngFor="let zona of listZona" [value]="zona.idzonas">{{zona.zona}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="clienteinput" class="form-label">Origen</label>
+                            <input type="text" class="form-control" formControlName="origen"  placeholder="" id="clienteinput">
+                        </div>
+                        <div class="mb-3">
+                            <label for="clienteinput" class="form-label">Destino</label>
+                            <input type="text" class="form-control" formControlName="destino"  placeholder="" id="clienteinput">
+                        </div>
+                        
+                    </mat-tab>
+                    <!--===================== RUTAS ==============-->
+                    <mat-tab>
+                      <ng-template mat-tab-label>
+                        Rutas <span *ngIf="cantRutas>0" class="badge text-bg-secondary">{{cantRutas}}</span>
+                      </ng-template>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <!-- Inicio-->
+                                <div class="container mt-4">
+                                    <div class="row">
+                                      <div *ngFor="let ruta of listRutas  " class="col-md-4">
+                                        <div class="card cRutas" 
+                                            (click)="seleccionarRuta(ruta.id)" style="cursor: pointer;"
+                                            [ngClass]="{'selected-card': esSeleccionada(ruta.id)}">
+                                          <div class="card-body">
+                                            <h5 class="card-title">{{ ruta.nombre }}</h5>
+                                            <p class="card-text">{{ ruta.descripcion }}</p>
                                           </div>
                                         </div>
-                                      
-                                        <div *ngIf="rutaSeleccionada" class="alert alert-info mt-3">
-                                          Ruta seleccionada: {{ rutaSeleccionada }}
-                                        </div>
+                                      </div>
                                     </div>
-                                    <!--fin-->
-
-                                    <!--div class="col-8 d-flex flex-column">
-                                        <label for="nitinput" class="form-label">Rutas</label>
-                                        <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                                            <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
-                                        </select>
-                                    </div-->
-                                </div>    
-                            </div>
-                            
-                        </mat-tab>
-                        <!--===================== INDIVIDUAL ==============-->
-                        <mat-tab label="Individual">
-                            
-                            <div class="row">
-                                <div class="mb-3 col-3">
-                                    <label for="clienteinput" class="form-label">Hora del Servicio</label>
-                                    <input type="time" class="form-control" formControlName="hora"  placeholder="" id="clienteinput">
+                                  
+                                    <div *ngIf="rutaSeleccionada" class="alert alert-info mt-3">
+                                      Ruta seleccionada: {{ rutaSeleccionada }}
+                                    </div>
                                 </div>
-                                <div class="mb-3 col-4">
-                                    <label for="nitinput" class="form-label">Tipo Servicio</label>
-                                    <select class="form-select" formControlName="id_cliente" aria-label="CLiente">
-                                        <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-5">
-                                    <label for="nitinput" class="form-label">Zona</label>
-                                    <select class="form-select" formControlName="zona" aria-label="CLiente">
-                                        <option *ngFor="let cliente of listClientes" [value]="cliente.Id">{{cliente.Cliente}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label for="clienteinput" class="form-label">Origen</label>
-                                <input type="text" class="form-control" formControlName="origen"  placeholder="" id="clienteinput">
-                            </div>
-                            <div class="mb-3">
-                                <label for="clienteinput" class="form-label">Destino</label>
-                                <input type="date" class="form-control" formControlName="destino"  placeholder="" id="clienteinput">
-                            </div>
-                            
-                        </mat-tab>
-                    </mat-tab-group>
+                                <!--fin-->
+                            </div>    
+                        </div>
+                        
+                    </mat-tab>
+                        
+                </mat-tab-group>
                 </div>
                 <div class="col-6">
                         <label for="clienteinput" class="form-label">Usuarios</label>
                         <textarea class="form-control" rows="10" formControlName="usuarios" ></textarea>
                 </div>
+                <div class="row mt-3">
+                  <div class="col-4">
+                    <h2>Datos Contables</h2>
+                  </div>
+                  <div class="col-3">
+                    <label for="clienteinput" class="form-label">Centro de Costo:</label> 
+                    <input type="text" class="form-control" formControlName="cdec"  placeholder="" id="clienteinput">
+                  </div>
+
+                  <div class="col-3">
+                    <label for="clienteinput" class="form-label">Cuenta Contable:</label> 
+                    <input type="text" class="form-control" formControlName="cuenta"  placeholder="" id="clienteinput">
+                  </div>
+                </div>
             </div>
             </form>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            
+            <div class="col-12 text-end">
+              <button mat-raised-button color="primary" (click)="regresar()">
+                <mat-icon>reply</mat-icon>
+                Regresar
+              </button>
+              <button class="btnGuardar" mat-raised-button (click)="guardar()">
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       

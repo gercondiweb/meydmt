@@ -4,7 +4,17 @@
     margin-left: 5px;
   }
 
-  .card:hover {
-    background-color: #f8f9fa;
-    border-color: #007bff;
+  .cRutas:hover {
+    background-color: #215b96;
+    border-color: #6dbc13;
+    color: white;
+    font-style: italic;
   }
+
+  .selected-card {
+    background-color: #215b96;
+    border-color: #6dbc13;
+    color: white;
+    font-style: italic;
+  }
+  
