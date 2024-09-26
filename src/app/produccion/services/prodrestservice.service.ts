@@ -67,7 +67,7 @@ export class ProdrestserviceService {
 
   public crearOrden(datosConsulta:any):Observable<any>{
     return this.http.post<{ body: { formato: any }}>('campoformato',datosConsulta)
-    .pipe( map( ({ body }) => body ) );
+    .pipe( map( ({ body }) => body ) ); 
   }
 
   public CrearcampoFormato(datosConsulta:any):Observable<any>{
