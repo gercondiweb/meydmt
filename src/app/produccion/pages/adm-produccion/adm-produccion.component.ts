@@ -6,6 +6,7 @@ import { ProdrestserviceService } from '../../services/prodrestservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, lastValueFrom, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 export interface Campo {
   id: string;
@@ -18,6 +19,12 @@ export interface Seccion {
   id: string;
   secciones: string;
   campos: Campo[]; // Relacionar los campos de cada sección
+}
+
+export interface datosOrden {
+  idCampoFormato : number,
+  idPropiedad : number,
+  valor : any
 }
 
 @Component({
@@ -65,6 +72,8 @@ export class AdmProduccionComponent implements OnInit {
 
   listEstados: any; lEstado:any;
 
+  //este arreglo se alimentara de los cambios que realice el usuario en las propiedades de los campos
+  listDatosModificados : any[] = [];
 
   constructor(
     private dataSharingService: DataSharingService,
@@ -129,24 +138,6 @@ export class AdmProduccionComponent implements OnInit {
 
   }
 
-  getValidators(campo: Campo) {
-    const validators = [];
-    if (campo.tipo === 'text') {
-      validators.push(Validators.required);
-    }
-    if (campo.tipo === 'number') {
-      validators.push(Validators.min(1)); // Ejemplo de validación para números
-    }
-    return validators;
-  }
-
-  biuldFormDetalle(){
-    const grupoCampos = this.fb.group({});
-    this.campos.forEach(campo => {
-        grupoCampos.addControl(campo.nombre, this.fb.control(campo.valor || '', this.getValidators(campo)));
-      });
-  }
-
   cargarMaestros(){
     this.datosCMaestro.opc = 'PRIOR';
       this.restService.getMaestros(this.datosCMaestro).subscribe(respuesta=>{
@@ -166,6 +157,7 @@ export class AdmProduccionComponent implements OnInit {
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
 
+    console.log(this.objetoData)
 
     this.frmCabeceraOrden.patchValue({
       id : this.objetoData.data.id,
@@ -272,27 +264,81 @@ export class AdmProduccionComponent implements OnInit {
     return json;
   }
 
+  datoDetalle={
+      opc: '',
+      vIDORDEN: 0,
+      vIDCAMPFORMATO: 0,
+      vIDPROPIEDAD: 0,
+      vVALOR: ''
+  }
+
   async guardarOrden(){
-    const formValue = this.frmDetalleOrden.value;
-
-    console.log('FORMDETALLE',formValue)
-
-    const json = this.formatToJSON(formValue);
-    console.log(json);
+  
+    console.log('Datos MOdificados', this.listDatosModificados)
     //Guardamos la cabecera y capturamos el insertid
 
     //Guardaos el detalle de la orden
 
+    // validar si el campo existe en ordendetalle si existe actualizar el valor sino 
+    //insertar un nuevo campo en orden detalle
+    this.listDatosModificados.forEach((campos, idexcampo)=>{
+      console.log('campos ',campos)
+        this.datoDetalle.vIDCAMPFORMATO = campos[0];
+        this.datoDetalle.vIDORDEN = campos[1];
+        this.datoDetalle.vIDPROPIEDAD = campos[2];
+        this.datoDetalle.vVALOR = campos[3];
+
+        if(campos[0] !== null){
+          // actualizar orden detalle
+          this.datoDetalle.opc = 'UPD-DORDEN';
+          try{
+            const campo = lastValueFrom(this.restService.saveOrdenDetalle(this.datoDetalle));
+          }catch(e: any){
+              console.log(e)       
+          }
+
+        }else{
+          // insertar nuevo campo en orden detalle
+          this.datoDetalle.opc = 'INS-DORDEN';
+          try{
+            const campo = lastValueFrom(this.restService.saveOrdenDetalle(this.datoDetalle));
+          }catch(e: any){
+              console.log(e)       
+          }
+          console.log('Insertar: ', campos[3])
+          
+        }
+    });
+    this.listDatosModificados = [];
   }
 
   regresar(){
     this.router.navigateByUrl('/produccion/produccion');
   }
 
-  onChange(event: any, campo: any, propiedad: any ){
-    const nuevoValor = event.target.value;
-    console.log('id_campo = ', campo, ' id_propiedad= ', propiedad, ' Nuevo Valor = ', nuevoValor);
+  onChange(event: any, idordendetalle:any, campo: any, propiedad: any, escheck: boolean ){
+    
+    let nuevoValor : any;
 
+    if(escheck){
+      nuevoValor = event.target.checked ? 1 : 0;
+    } else{
+      nuevoValor = event.target.value;
+    }
+    let nuevoArreglo :any[] = [idordendetalle, campo, propiedad, nuevoValor];
+
+    console.log('id_ordendetalle =',idordendetalle,  'id_campo = ', campo, ' id_propiedad= ', propiedad, ' Nuevo Valor = ', nuevoValor);
+    
+    // Validamos si en el arreglo existe un campo con el mismo id y propiedad
+    // Si existe, actualizamos el valor
+    // Si no, agregamos un nuevo objeto al arreglo con el id_campo y propiedad y el nuevo valor
+    let item = this.listDatosModificados.find( d => d[0] === campo && d[1] === propiedad);
+    if(item){
+      item[2] = nuevoValor;
+    }else{
+     // this.listDatosModificados.push(campo,propiedad,nuevoValor);
+      this.listDatosModificados.push(nuevoArreglo);
+    }
 
   }
 

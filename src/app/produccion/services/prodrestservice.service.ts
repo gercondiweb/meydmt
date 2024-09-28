@@ -75,4 +75,8 @@ export class ProdrestserviceService {
     .pipe( map( ({ body }) => body ) );
   }
 
+  public saveOrdenDetalle(datos:any): Observable<any>{
+    return this.http.post('ordendetalle/operacion', datos); 
+  }
+
 }
