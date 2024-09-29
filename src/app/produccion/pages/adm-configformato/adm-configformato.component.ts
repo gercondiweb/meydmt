@@ -312,7 +312,7 @@ async guardarCamposFormato(): Promise<void> {
         };
         console.log('Guardando datos:', datosFormato);
 
-        this.gDatosFormato.vCampo = datosFormato.campo;
+        //this.gDatosFormato.vCampo = datosFormato.campo;
         this.gDatosFormato.vOrden = datosFormato.orden;
         this.gDatosFormato.vSeccion = datosFormato.seccion;
         this.gDatosFormato.vIDFormato= datosFormato.idFormato;
