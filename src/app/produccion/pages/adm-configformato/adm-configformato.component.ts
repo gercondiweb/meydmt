@@ -48,6 +48,16 @@ export class AdmConfigformatoComponent implements OnInit {
     
   }
 
+  gDatosFormato={
+    opc:'SVCAMPOFORMATO',
+    vSeccion :'',
+    vCampo :'',
+    vOrden :'',
+    vPropiedades :'',
+    vIDFormato: 0,
+    vIDCampo: 0
+  }
+
   
 
   public formFormato !: FormGroup;
@@ -231,7 +241,7 @@ async guardarFormato(){
 
   try{
 
-  this.loadingServer.show();
+    this.loadingServer.show();
     const formato = await lastValueFrom(this.ProdrestserviceService.crearFormato(this.formFormato.value));
 
       this.formatoSeleccionado = formato.id;
@@ -302,7 +312,12 @@ async guardarCamposFormato(): Promise<void> {
         };
         console.log('Guardando datos:', datosFormato);
 
-        //await lastValueFrom(this.ProdrestserviceService.CrearcampoFormato(datosFormato));
+        this.gDatosFormato.vCampo = datosFormato.campo;
+        this.gDatosFormato.vOrden = datosFormato.orden;
+        this.gDatosFormato.vSeccion = datosFormato.seccion;
+        this.gDatosFormato.vIDFormato= datosFormato.idFormato;
+
+        await lastValueFrom(this.ProdrestserviceService.CrearcampoFormato(this.gDatosFormato));
       }
 
       console.log('Campos guardados exitosamente');

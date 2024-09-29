@@ -86,7 +86,7 @@
             </div>
             <div class="mb-3 col-2">
               <label for="exampleFormControlInput1" class="form-label">Estado</label>
-              <select class="form-select" formControlName="id_estado" aria-label="Prioridad">
+              <select class="form-select" formControlName="estado" aria-label="Prioridad">
                   <option *ngFor="let priori of prioridad" [value]="priori.codigo">{{priori.prioridad}}</option>
               </select>
             </div>
@@ -119,30 +119,30 @@
 
                   <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'texto'">
                     <label class="">{{propcampo.propiedad}}</label>
-                    <input class="form-control" type="text" [formControlName]="campo.nombrecampo" [value]="campo.valorcampo" id="input" (change)="agregarInfo($event,campo)">
+                    <input class="form-control" type="text" [formControlName]="campo.nombrecampo" [value]="campo.valorcampo">
                   </div>
 
                   <div class="form-check col-2 mb-3" *ngIf="propcampo.tipopropiedad === 'booleano'">
                     <label class="form-check-label">{{propcampo.propiedad}}</label>
                     <input class="form-check-input" type="checkbox" [formControlName]="campo.nombre"
-                            [checked]="campo.valorcampo === '1'" id="checkbox">
+                            [checked]="campo.valorcampo === '1'">
                   </div>
 
                   <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'numerico'">
                     <label>{{propcampo.propiedad}}</label>
-                    <input class="form-control" type="number" [value]="campo.valorcampo" id="input">
+                    <input class="form-control" type="number" [value]="campo.valorcampo">
                   </div>
                   <div class="col-12 mb-3" *ngIf="propcampo.tipopropiedad === 'comentario'">
                     <label>{{propcampo.propiedad}}</label>
-                    <textarea class="form-control" id="textarea">{{campo.valorcampo}}</textarea>
+                    <textarea class="form-control">{{campo.valorcampo}}</textarea>
                   </div>
                   <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'fecha'">
                     <label>{{propcampo.propiedad}}</label>
-                    <input class="form-control" type="date" id="input" [value]="campo.valorcampo">
+                    <input class="form-control" type="date" [value]="campo.valorcampo">
                   </div>
                   <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'hora'">
                     <label>{{propcampo.propiedad}}</label>
-                    <input class="form-control" type="time" [value]="campo.valorcampo" id="input">
+                    <input class="form-control" type="time" [value]="campo.valorcampo">
                   </div>
                   <div class="col mb-3" *ngIf="propcampo.tipopropiedad === 'lista'">
                     <label>{{propcampo.propiedad}}</label>
