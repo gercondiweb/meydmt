@@ -51,7 +51,7 @@ export class AdmConfigformatoComponent implements OnInit {
   
 
   public formFormato !: FormGroup;
-  public listDatos: any;
+  public listDatos: any []=[];
   public formatoSeleccionado : number = 0;
 
   constructor(
@@ -126,10 +126,10 @@ export class AdmConfigformatoComponent implements OnInit {
      this.consultaformato.vID=this.objetoData.data.id;
      console.log(this.consultaformato)
     this.ProdrestserviceService.getFormatos(this.consultaformato).subscribe(respuesta => {
-      this.listDatos = respuesta;
+      this.filas = respuesta.body[0];
+      console.log('VER',this.filas);
     }); 
-    console.log(this.listDatos)
-}
+  }
 
 
 
@@ -257,17 +257,17 @@ async guardarFormato(){
 //CAMPO FORMATO
 seccionSeleccionada: string | null = null;
 camposSeleccionados: string[] = [];
-filas: { seccion: string; campo: string; orden: string }[] = [];
+filas: { seccion: string; nombrecampo: string; orden: string }[] = [];
 seleccionarSeccion(seccion: string) {
   this.seccionSeleccionada = seccion;
 }
 
-seleccionarCampo(campo: string, event: Event) {
+seleccionarCampo(nombrecampo: string, event: Event) {
   const checkbox = event.target as HTMLInputElement;
   if (checkbox.checked) {
-    this.camposSeleccionados.push(campo);
+    this.camposSeleccionados.push(nombrecampo);
   } else {
-    this.camposSeleccionados = this.camposSeleccionados.filter(c => c !== campo);
+    this.camposSeleccionados = this.camposSeleccionados.filter(c => c !== nombrecampo);
   }
 }
 
@@ -278,7 +278,7 @@ async guardarCampoFormato() {
     this.camposSeleccionados.forEach( (campo, i) => {
       this.filas.push({
         seccion: this.seccionSeleccionada,
-        campo: campo,
+        nombrecampo: campo,
         orden: orden
       });
     })

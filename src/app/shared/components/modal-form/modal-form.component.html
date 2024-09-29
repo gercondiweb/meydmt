@@ -1,5 +1,7 @@
-<div>
+<div class="container">
   <h2 class="titulo" mat-dialog-title>Asignar Tecnico - TICKET {{tiketSeleccionado}}</h2>
+  <button class="cerrar" aria-label="Cerrar" (click)="cancelar()">X</button>
+</div>
 
   <mat-dialog-content>
     <form class="ticket-form" [formGroup]="formAsignar">
@@ -58,4 +60,4 @@
     <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
     <button mat-raised-button color="primary" (click)="grabar()" cdkFocusInitial>Guardar</button>
   </div>
-</div>
+

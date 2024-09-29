@@ -7,7 +7,6 @@ import { ItemNavigate } from '../../types/interfaces';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '@/app/auth/services/auth.service';
 
-
 @Component({
   selector: 'app-navegacionprod',
   templateUrl: './navegacionprod.component.html',
@@ -22,13 +21,14 @@ export class NavegacionprodComponent {
   public token: string = this._cookieService.get('token');
 
   showSubmenu: boolean = false;
+  drawerOpened: boolean = true; 
 
-  @Input( { required:true } ) items:ItemNavigate[] = [];
-  @Input({ required:true }) sigla: string = 'MEYD';
+  @Input({ required: true }) items: ItemNavigate[] = [];
+  @Input({ required: true }) sigla: string = 'MEYD';
 
   constructor(
-   private router:Router
-  ){}
+    private router: Router
+  ) { }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -36,34 +36,21 @@ export class NavegacionprodComponent {
       shareReplay()
     );
 
-    public isAuthenticated = true;
+  public isAuthenticated = true;
 
-    /*tablero(){
-    this.router.navigate(["tablero"]);
-    }
+  logOut() {
+    this.authService.logout();
+  }
 
-    tikets(){
-      this.router.navigate(["principal/tikets"]);
-      }
+  toggleSubmenu(): void {
+    this.showSubmenu = !this.showSubmenu;
+  }
 
-    cargarActivos(){
-      this.router.navigate(["principal/activos"]);
-    }
+  toggleDrawer(): void {
+    this.drawerOpened = !this.drawerOpened;
+  }
 
-    solicitar(){
-      this.router.navigate(["principal/solicitar"]);
-    }
-
-    cargarClientes(){
-      this.router.navigate(["principal/clientes"]);
-    }*/
-
-    logOut(){
-      this.authService.logout();
-    }
-
-    toggleSubmenu(): void {
-      this.showSubmenu = !this.showSubmenu;
-    }
-
+  trackByFn(index: number, item: ItemNavigate): any {
+    return item.name || index; 
+  }
 }

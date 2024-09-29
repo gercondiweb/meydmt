@@ -1,5 +1,7 @@
-<div>
-  <h2 class="titulo" mat-dialog-title>Agregar Especialidad</h2>
+<div class="container">
+<h2 class="titulo" mat-dialog-title>Agregar Especialidad</h2>
+<button class="cerrar" aria-label="Cerrar" (click)="regresar()">X</button>
+</div>
 
   <mat-dialog-content>
       <form class="sucursal-form" [formGroup]="formTecEsp">
@@ -36,5 +38,5 @@
     <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
     <button mat-raised-button color="primary" (click)="guardarEspecialidad()" cdkFocusInitial>Confirmar</button>
   </div>
-</div>
+
 

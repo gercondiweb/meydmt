@@ -70,8 +70,11 @@ export class ProdrestserviceService {
     .pipe( map( ({ body }) => body ) ); 
   }
 
+  public getCrearcampoFormato(datosConsulta:any): Observable<any>{
+    return this.http.post('campoformato/operacion', datosConsulta); 
+  }
   public CrearcampoFormato(datosConsulta:any):Observable<any>{
-    return this.http.post<{ body: { formato: any }}>('campoformato',datosConsulta)
+    return this.http.post<{ body: { formato: any }}>('campoformato/operacion',datosConsulta)
     .pipe( map( ({ body }) => body ) );
   }
 

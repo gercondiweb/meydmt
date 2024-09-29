@@ -1,5 +1,7 @@
-<div>
+<div class="container">
   <h2 class="titulo" mat-dialog-title>Agregar Documentos</h2>
+    <button class="cerrar" aria-label="Cerrar" (click)="regresar()">X</button>
+</div>  
 
   <mat-dialog-content>
       <form class="sucursal-form" [formGroup]="formTecDocs">
@@ -39,5 +41,5 @@
     <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
     <button mat-raised-button color="primary" (click)="guardarDocumento()" cdkFocusInitial>Confirmar</button>
   </div>
-</div>
+
 

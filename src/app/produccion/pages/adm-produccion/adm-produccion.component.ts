@@ -1,5 +1,5 @@
 import { DataSharingService } from '@/app/dashboard/services';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdrestserviceService } from '../../services/prodrestservice.service';
@@ -289,4 +289,9 @@ export class AdmProduccionComponent implements OnInit {
     this.router.navigateByUrl('/produccion/produccion');
   }
 
+  //guardar info
+  agregarInfo(event : Event, campo){
+    const input= event.target as HTMLInputElement;
+    console.log(campo.id);
+}
 }

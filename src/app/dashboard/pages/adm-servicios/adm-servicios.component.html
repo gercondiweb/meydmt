@@ -1,5 +1,7 @@
-<div>
-  <h2 class="titulo" mat-dialog-title>{{titulo}}</h2>
+<div class="container">
+<h2 class="titulo" mat-dialog-title>{{titulo}}</h2>
+  <button class="cerrar" aria-label="Cerrar" (click)="cancelar()">X</button>
+</div> 
 
   <mat-dialog-content>
     <form class="addSrvForm row g-3" [formGroup]="formServicio">
@@ -44,4 +46,4 @@
     <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
     <button mat-raised-button color="primary" (click)="guardarServCont()" cdkFocusInitial>Confirmar</button>
   </div>
-</div>
+

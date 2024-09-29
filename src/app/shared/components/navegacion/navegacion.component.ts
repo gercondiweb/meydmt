@@ -7,11 +7,10 @@ import { ItemNavigate } from '../../types/interfaces';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '@/app/auth/services/auth.service';
 
-
 @Component({
   selector: 'app-navegacion',
   templateUrl: './navegacion.component.html',
-  styleUrl: './navegacion.component.css'
+  styleUrls: ['./navegacion.component.css'] 
 })
 export class NavegacionComponent {
   private breakpointObserver = inject(BreakpointObserver);
@@ -21,12 +20,11 @@ export class NavegacionComponent {
   public token: string = this._cookieService.get('token');
 
   showSubmenu: boolean = false;
+  drawerOpened: boolean = true; 
 
-  @Input( { required:true } ) items:ItemNavigate[] = [];
+  @Input({ required: true }) items: ItemNavigate[] = [];
 
-  constructor(
-   private router:Router
-  ){}
+  constructor(private router: Router) {}
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -34,36 +32,40 @@ export class NavegacionComponent {
       shareReplay()
     );
 
-    public isAuthenticated = true;
+  public isAuthenticated = true;
 
-    tablero(){
+  tablero() {
     this.router.navigate(["tablero"]);
-    }
+  }
 
-    tikets(){
-      this.router.navigate(["principal/tikets"]);
-      }
+  tikets() {
+    this.router.navigate(["principal/tikets"]);
+  }
 
-    cargarActivos(){
-      this.router.navigate(["principal/activos"]);
-    }
+  cargarActivos() {
+    this.router.navigate(["principal/activos"]);
+  }
 
-    solicitar(){
-      this.router.navigate(["principal/solicitar"]);
-    }
+  solicitar() {
+    this.router.navigate(["principal/solicitar"]);
+  }
 
-    cargarClientes(){
-      this.router.navigate(["principal/clientes"]);
-    }
+  cargarClientes() {
+    this.router.navigate(["principal/clientes"]);
+  }
 
-    logOut(){
-      this.authService.logout();
-    }
+  logOut() {
+    this.authService.logout();
+  }
 
-    toggleSubmenu(): void {
-      this.showSubmenu = !this.showSubmenu;
-    }
+  toggleSubmenu(): void {
+    this.showSubmenu = !this.showSubmenu;
+  }
 
-
-
+  toggleDrawer(): void {
+    this.drawerOpened = !this.drawerOpened; 
+  }
+  trackByFn(index: number, item: ItemNavigate): any {
+    return item.name || index; 
+  }
 }
