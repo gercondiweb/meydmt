@@ -10,6 +10,7 @@ import { TarifasComponent } from './pages/tarifas/tarifas.component';
 import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
 import { RecorridosComponent } from './pages/recorridos/recorridos.component';
 import { AdmrecorridosComponent } from './pages/admrecorridos/admrecorridos.component';
+import { ForecastComponent } from './pages/forecast/forecast.component';
 
 
 
@@ -21,7 +22,8 @@ import { AdmrecorridosComponent } from './pages/admrecorridos/admrecorridos.comp
     TarifasComponent,
     AdmtarifasComponent,
     RecorridosComponent,
-    AdmrecorridosComponent
+    AdmrecorridosComponent,
+    ForecastComponent
   ],
   imports: [
     CommonModule,

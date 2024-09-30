@@ -18,6 +18,7 @@ import { TarifasComponent } from './pages/tarifas/tarifas.component';
 import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
 import { GastosComponent } from './pages/gastos/gastos.component';
 import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
+import { ForecastComponent } from './pages/forecast/forecast.component';
 
 
 const routes: Routes = [
@@ -105,6 +106,10 @@ const routes: Routes = [
       {
         path: 'admrecorridos/:accion',
         component:AdmrecorridosComponent
+      },
+      {
+        path: 'forecast',
+        component:ForecastComponent
       },
     ]
   },
