@@ -13,7 +13,7 @@ import { AuthService } from '@/app/auth/services/auth.service';
   styleUrls: ['./navegacionprod.component.css']
 })
 export class NavegacionprodComponent {
-
+  
   private breakpointObserver = inject(BreakpointObserver);
   private authService = inject(AuthService);
   private readonly _cookieService = inject(CookieService);
@@ -21,14 +21,14 @@ export class NavegacionprodComponent {
   public token: string = this._cookieService.get('token');
 
   showSubmenu: boolean = false;
-  drawerOpened: boolean = true; 
+  drawerOpened: boolean = true;
 
-  @Input({ required: true }) items: ItemNavigate[] = [];
-  @Input({ required: true }) sigla: string = 'MEYD';
+  @Input( { required:true } ) items:ItemNavigate[] = [];
+  @Input({ required:true }) sigla: string = 'MEYD';
 
   constructor(
-    private router: Router
-  ) { }
+   private router:Router
+  ){}
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -38,7 +38,7 @@ export class NavegacionprodComponent {
 
   public isAuthenticated = true;
 
-  logOut() {
+  logOut(){
     this.authService.logout();
   }
 

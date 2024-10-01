@@ -34,8 +34,8 @@
               <div class="flex flex-col space-y-2">
                 <div *ngFor="let propiedad of listPropiedades">
                   <label class="inline-flex items-center text-sm text-gray-700">
-                    {{ propiedad.propiedad }}
                     <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600" [value]="propiedad.propiedad" (change)="onCheckboxChange($event)">
+                    {{ propiedad.propiedad }}
                   </label>
                 </div>
               </div>
