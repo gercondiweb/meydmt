@@ -256,14 +256,14 @@ export class AdmProduccionComponent implements OnInit {
       this.secciones=this.listSecciones.body[0];
     })
 
-    this.consultaFormato.opc='CAMPO-FORMATO'; //lee los campos del formato
+    /*this.consultaFormato.opc='CAMPO-FORMATO'; //lee los campos del formato
     this.consultaFormato.vID=idFormato;
 
     this.restService.getCampos(this.consultaFormato).subscribe(respuesta=>{
       this.lCamposC=respuesta;
       this.camposC=this.lCamposC.body[0];
 
-    })
+    })*/
 
     this.datosFormato.opc='CAMPOS-FORMATO'; //carga todos los valores de los campos del formato
     this.datosFormato.vIDFORMATO=idFormato;
@@ -385,10 +385,16 @@ export class AdmProduccionComponent implements OnInit {
     this.router.navigateByUrl('/produccion/produccion');
   }
 
-  selectCli(){
-    console.log(this.lClientes);
-    this.frmCabeceraOrden.get('nit').setValue(this.lClientes);
+  selectCli(event: any){
+    
+    this.lClientes.filter(cliente => cliente.Id===event.target.value)
+    const nitv = this.lClientes.values;
+
+    console.log(nitv);
+    
+    this.frmCabeceraOrden.get('nit').setValue(nitv);
   }
+  
 
   onChange(event: any, idordendetalle:any, campo: any, propiedad: any, escheck: boolean ){
     

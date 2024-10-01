@@ -29,7 +29,8 @@
             </div>
             <div class=" col-4">
               <label for="clienteinput" class="form-label">Cliente</label>
-              <select class="form-select" formControlName="cliente" aria-label="Prioridad" (onChange)="selectCli()">
+              <select class="form-select" formControlName="cliente" aria-label="Prioridad" 
+                (change)="selectCli($event)">
                 <option *ngFor="let cli of lClientes" [value]="cli.Id">{{cli.Cliente}}
                 </option>
               </select>
