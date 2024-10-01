@@ -6,6 +6,7 @@ import { ProdrestserviceService } from '../../services/prodrestservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, lastValueFrom, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import  moment from 'moment'
 import Swal from 'sweetalert2';
 
 export interface Campo {
@@ -55,6 +56,11 @@ export class AdmProduccionComponent implements OnInit {
     opc:'ESTPROD'
   }
 
+  consultaFormato={
+    opc:'',
+    vID:0
+  }
+
   listPrioridad : any;
   prioridad : any[];
 
@@ -64,8 +70,17 @@ export class AdmProduccionComponent implements OnInit {
   listSecciones : any;
   secciones : any[];
 
+  listClientes : any;
+  lClientes : any[];
+
   listCampos : any;
   campos : any[];
+
+  lCamposC : any;
+  camposC : any[];
+
+  listValCampos : any;
+  valCampos : any[];
 
   listPropieCampo:any;
   propieCampo:any[];
@@ -102,6 +117,7 @@ export class AdmProduccionComponent implements OnInit {
       direccion:[],
       correo:[],
       telefono:[],
+      celular:[],
       autoriza:[],
       id_formato:[],
       id_prioridad:[],
@@ -123,7 +139,6 @@ export class AdmProduccionComponent implements OnInit {
     if(this.accion === "Editar"){
       this.activarSecciones = true;
 
-      this.frmCabeceraOrden.get('OIT').disable();
       this.frmCabeceraOrden.get('id_formato').disable();
 
       this.cargarOrden();
@@ -132,8 +147,11 @@ export class AdmProduccionComponent implements OnInit {
 
 
     }else{
+      this.crearOIT();
       this.frmCabeceraOrden.get('id')?.setValue(0);
     }
+
+    this.frmCabeceraOrden.get('OIT').disable();
 
 
   }
@@ -149,6 +167,13 @@ export class AdmProduccionComponent implements OnInit {
       this.restService.getMaestros(this.datosCMaestro).subscribe(respuesta=>{
         this.listFormatos=respuesta;
         this.formatos=this.listFormatos.body[0];
+      })
+
+      this.consultaFormato.opc='CLI'; //lee los campos del formato
+
+      this.restService.getMaestros(this.consultaFormato).subscribe(respuesta=>{
+        this.lClientes=respuesta.body[0];
+
       })
   }
 
@@ -176,6 +201,7 @@ export class AdmProduccionComponent implements OnInit {
       direccion:this.objetoData.data.direccion,
       correo:this.objetoData.data.correo,
       telefono:this.objetoData.data.telefono,
+      celular:'',
       autoriza:this.objetoData.data.autoriza,
       id_formato:this.objetoData.data.id_formato,
       prioridad:this.objetoData.data.id_prioridad,
@@ -198,6 +224,29 @@ export class AdmProduccionComponent implements OnInit {
     vIDFORMATO:0
   }
 
+  consecutivoOit: any;
+
+  async crearOIT(){
+    this.datosFormato.opc='LAST-CONSECUT';
+    const idorden = await lastValueFrom(this.restService.getOrdenes(this.datosFormato));
+
+    console.log(idorden);
+
+    let numero = idorden.body[0][0].id + 1;
+
+    numero = numero.toString().padStart(4,'0');
+
+    const mesActual= moment().format('MM');
+    const anioActual=moment().format('YYYY');
+
+    console.log(numero);
+
+    this.consecutivoOit = `${numero}-${mesActual}-${anioActual}`;
+
+    this.frmCabeceraOrden.get('OIT').setValue(this.consecutivoOit);
+
+  }
+
   cargarsecciones(idFormato : any){
     this.datosFormato.opc='SEC-FORMATO';
     this.datosFormato.vIDFORMATO=idFormato;
@@ -207,7 +256,16 @@ export class AdmProduccionComponent implements OnInit {
       this.secciones=this.listSecciones.body[0];
     })
 
-    this.datosFormato.opc='CAMPOS-FORMATO';
+    this.consultaFormato.opc='CAMPO-FORMATO'; //lee los campos del formato
+    this.consultaFormato.vID=idFormato;
+
+    this.restService.getCampos(this.consultaFormato).subscribe(respuesta=>{
+      this.lCamposC=respuesta;
+      this.camposC=this.lCamposC.body[0];
+
+    })
+
+    this.datosFormato.opc='CAMPOS-FORMATO'; //carga todos los valores de los campos del formato
     this.datosFormato.vIDFORMATO=idFormato;
 
     this.restService.getOrdenes(this.datosFormato).subscribe(respuesta=>{
@@ -216,13 +274,23 @@ export class AdmProduccionComponent implements OnInit {
 
     })
 
+    this.datosFormato.opc='VALOR-CAMPOS'; //carga todos los valores de los campos del formato
+    this.datosFormato.vIDFORMATO=idFormato;
+    this.datosFormato.vID = this.objetoData.data.id;
+
+    this.restService.getOrdenes(this.datosFormato).subscribe(respuesta=>{
+      this.listValCampos=respuesta;
+      this.valCampos=this.listValCampos.body[0];
+
+    })
+
     this.datosFormato.opc='PROPIE-CAMPO';
     this.datosFormato.vIDFORMATO=idFormato;
 
     this.restService.getOrdenes(this.datosFormato).subscribe(respuesta=>{
       this.listPropieCampo=respuesta;
-      this.propieCampo=this.listPropieCampo.body[0];
-
+      this.propieCampo=this.listPropieCampo.body[1];
+      //console.log('respuesta', respuesta.body[1])
     })
 
     this.restService.getMaestros(this.consultaSrv).subscribe((datacs: any) => {
@@ -273,6 +341,7 @@ export class AdmProduccionComponent implements OnInit {
   }
 
   async guardarOrden(){
+    const id_Orden = this.objetoData.data.id;
   
     console.log('Datos MOdificados', this.listDatosModificados)
     //Guardamos la cabecera y capturamos el insertid
@@ -283,8 +352,8 @@ export class AdmProduccionComponent implements OnInit {
     //insertar un nuevo campo en orden detalle
     this.listDatosModificados.forEach((campos, idexcampo)=>{
       console.log('campos ',campos)
-        this.datoDetalle.vIDCAMPFORMATO = campos[0];
-        this.datoDetalle.vIDORDEN = campos[1];
+        this.datoDetalle.vIDCAMPFORMATO = campos[1];
+        this.datoDetalle.vIDORDEN = id_Orden;
         this.datoDetalle.vIDPROPIEDAD = campos[2];
         this.datoDetalle.vVALOR = campos[3];
 
@@ -314,6 +383,37 @@ export class AdmProduccionComponent implements OnInit {
 
   regresar(){
     this.router.navigateByUrl('/produccion/produccion');
+  }
+
+  selectCli(){
+    console.log(this.lClientes);
+    this.frmCabeceraOrden.get('nit').setValue(this.lClientes);
+  }
+
+  onChange(event: any, idordendetalle:any, campo: any, propiedad: any, escheck: boolean ){
+    
+    let nuevoValor : any;
+
+    if(escheck){
+      nuevoValor = event.target.checked ? 1 : 0;
+    } else{
+      nuevoValor = event.target.value;
+    }
+    let nuevoArreglo :any[] = [idordendetalle, campo, propiedad, nuevoValor];
+
+    console.log('id_ordendetalle =',idordendetalle,  'id_campo = ', campo, ' id_propiedad= ', propiedad, ' Nuevo Valor = ', nuevoValor);
+    
+    // Validamos si en el arreglo existe un campo con el mismo id y propiedad
+    // Si existe, actualizamos el valor
+    // Si no, agregamos un nuevo objeto al arreglo con el id_campo y propiedad y el nuevo valor
+    let item = this.listDatosModificados.find( d => d[0] === campo && d[1] === propiedad);
+    if(item){
+      item[2] = nuevoValor;
+    }else{
+     // this.listDatosModificados.push(campo,propiedad,nuevoValor);
+      this.listDatosModificados.push(nuevoArreglo);
+    }
+
   }
 
 }
