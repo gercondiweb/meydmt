@@ -43,7 +43,7 @@ export class AdmSeccionComponent {
 
      if (this.data.tipo === 'Crear'){ 
           //console.log('seccion', this.data.idSeccion)
-          this.formSecciones.get('id_seccion')?.setValue(this.data.idSeccion);
+          this.formSecciones.get('id')?.setValue(0);
      }else{
      
       this.cargarSeccion();

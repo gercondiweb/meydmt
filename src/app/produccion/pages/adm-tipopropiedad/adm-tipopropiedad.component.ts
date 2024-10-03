@@ -80,6 +80,7 @@ export class AdmTipopropiedadComponent implements OnInit {
     console.log(this.objetoData)
 
     this.formTipoPropiedad.patchValue({
+      id: this.objetoData.data.id,
       tipopropiedad: this.objetoData.data.tipopropiedad,
       activo: this.objetoData.data.Activo
     });

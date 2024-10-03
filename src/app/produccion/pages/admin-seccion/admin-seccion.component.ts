@@ -63,6 +63,7 @@ export class AdminSeccionComponent implements OnInit {
     console.log(this.objetoData);
 
     this.formSecciones.patchValue({
+      id: this.objetoData.data.id,
       seccion: this.objetoData.data.seccion,
       descripcion: this.objetoData.data.descripcion,
       activo: this.objetoData.data.Activo,

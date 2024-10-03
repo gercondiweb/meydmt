@@ -44,7 +44,7 @@ export class AdmCamposComponent {
     this.cargarPropiedadFormato();
 
     if (this.data.tipo === 'Crear') {
-      this.formCampos.get('id_campo')?.setValue(this.data.idCampo);
+      this.formCampos.get('id')?.setValue(0);
     } else {
       this.cargarCampo();
     }
