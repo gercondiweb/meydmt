@@ -10,8 +10,12 @@ export class ProdrestserviceService {
 
   constructor(private http: HttpClient) { }
 
+  public saveOrden(datosOrden:any): Observable<any>{
+    return this.http.post('orden', datosOrden); 
+  }
+
   public getOrdenes(datosConsulta:any): Observable<any>{
-    return this.http.post('ordenes/consultasorden', datosConsulta); 
+    return this.http.post('orden/consultasorden', datosConsulta); 
   }
 
   public getMaestros(datosMaestro:any): Observable<any>{

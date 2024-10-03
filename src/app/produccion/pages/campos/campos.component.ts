@@ -32,12 +32,8 @@ export class CamposComponent implements OnInit{
   public cargarData(){
     this._prodrestserviceService.getMaestros(this.consultaCampo).subscribe(respuesta=>{
       this.listDatos = respuesta;
-      //this.datos = this.listDatos.body[0];
       this.vDataSource = this.listDatos.body[0];
 
-      console.log('CAMPOS-CargarData');
-
-      console.log(respuesta);
     })
   }
 

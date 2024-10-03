@@ -49,13 +49,15 @@ export class AdminCampoComponent implements OnInit {
       propiedades: this.formBuilder.array([], Validators.required)
     });
 
+    this.cargarPropiedadFormato();
+
     if (this.accion === 'Editar') {
-      this.cargarDatosCampo();
-      this.cargarPropiedadFormato();
+        this.cargarDatosCampo();
+      
     } else {
-      this.formCampos.get('id')?.setValue(0);
-      this.CampoSeleccionado = 0;
-      this.cargarPropiedadFormato();
+        this.formCampos.get('id')?.setValue(0);
+      
+        
     }
   }
 
@@ -63,13 +65,15 @@ export class AdminCampoComponent implements OnInit {
     this.param1 = this.dataSharingService.getParam1();
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
+
     this.idCampo = this.objetoData.data.Id;
 
-    console.log(this.objetoData);
+    //console.log('objetoData',this.objetoData);
 
     this.formCampos.patchValue({
+      id: this.objetoData.data.id,
       nombrecampo: this.objetoData.data.nombrecampo,
-      activo: this.objetoData.data.Activo,
+      activo: this.objetoData.data.activo
     });
 
     console.log(this.formCampos.value);
@@ -94,17 +98,10 @@ export class AdminCampoComponent implements OnInit {
     try {
       this.loadingServer.show();
       const campo = await lastValueFrom(this.ProdrestserviceService.crearCampos(this.formCampos.value));
-
-      this.CampoSeleccionado = campo.id;
-      this.formCampos.patchValue({
-        id: campo.id,
-        nombrecampo: campo.nombrecampo,
-        ...this.formCampos.value
-      });
-
-      this.dataSharingService.setParams(campo.id, campo.nombrecampo, campo);
-      console.log({ campo });
-    } catch (e: any) {
+      
+      console.log('campo: ',campo)
+      
+      } catch (e: any) {
       console.error(e);
       await Swal.fire({
         position: 'center',
@@ -119,12 +116,17 @@ export class AdminCampoComponent implements OnInit {
     this.regresar();
   }
 
-  onCheckboxChange(event: any) {
+  onCheckboxChange(event: any, propiedad:any) {
     const propiedadesArray: FormArray = this.formCampos.get('propiedades') as FormArray;
+    
+    console.log('propiedad', propiedad);
+
+    console.log('propiedadesArray', propiedadesArray.value);
+
     if (event.target.checked) {
-      propiedadesArray.push(this.formBuilder.control(event.target.value));
+      propiedadesArray.push(this.formBuilder.control(propiedad.id));
     } else {
-      const index = propiedadesArray.controls.findIndex(x => x.value === event.target.value);
+      const index = propiedadesArray.controls.findIndex(x => x.value === propiedad.id);
       propiedadesArray.removeAt(index);
     }
   }

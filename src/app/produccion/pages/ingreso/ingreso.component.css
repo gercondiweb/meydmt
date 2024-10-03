@@ -1,0 +1,18 @@
+.btnEquipo{
+    margin-top: auto;
+    padding: inherit;
+}
+
+.list-group{
+    position: absolute; 
+    z-index: 1000; 
+    width: 100%;
+}
+
+.list-group-item {
+    cursor: pointer;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f8f9fa;
+  }

@@ -17,6 +17,11 @@ export class LayoutComponent implements OnInit{
       name: 'Tablero'
     },
     {
+      icon: 'subdirectory_arrow_right',
+      ruta: '/produccion/ingreso',
+      name: 'Ingreso'
+    },
+    {
       icon: 'feed',
       ruta: '/produccion/produccion',
       name: 'Ordenes'

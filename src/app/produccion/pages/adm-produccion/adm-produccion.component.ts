@@ -85,7 +85,7 @@ export class AdmProduccionComponent implements OnInit {
   listPropieCampo:any;
   propieCampo:any[];
 
-  listEstados: any; lEstado:any;
+  lEstado:any;
 
   //este arreglo se alimentara de los cambios que realice el usuario en las propiedades de los campos
   listDatosModificados : any[] = [];
@@ -105,12 +105,13 @@ export class AdmProduccionComponent implements OnInit {
       OIT: ['',[Validators.required]],
       equipo:[],
       estado:[],
-      fechaautorizacion:[],
-      fechaentregacotizacion:[],
-      fechaentrada:[],
-      horaentrada:[],
-      fechaentregapactada:[],
-      fechasalida:[],
+      fechaautorizacion:[moment().format('YYYY-MM-DD')],
+      fechaentregacotizacion:[moment().format('YYYY-MM-DD')],
+      fechaentrada:[moment().format('DD/MM/YYY')],
+      horaentrada:[moment().format('HH:mm')],
+      fechaentregapactada:[moment().format('YYYY-MM-DD')],
+      fechasalida:[moment().format('YYYY-MM-DD')],
+      horasalida:[moment().format('HH:mm')],
       id_cliente:[0,[Validators.required]],
       cliente:[],
       nit:[],
@@ -143,15 +144,13 @@ export class AdmProduccionComponent implements OnInit {
 
       this.cargarOrden();
 
-      this.cargarDetalleOrden();
-
 
     }else{
       this.crearOIT();
       this.frmCabeceraOrden.get('id')?.setValue(0);
     }
 
-    this.frmCabeceraOrden.get('OIT').disable();
+    this.frmCabeceraOrden.get('OIT').disabled;
 
 
   }
@@ -174,6 +173,11 @@ export class AdmProduccionComponent implements OnInit {
       this.restService.getMaestros(this.consultaFormato).subscribe(respuesta=>{
         this.lClientes=respuesta.body[0];
 
+      })
+
+      this.datosCMaestro.opc = 'ESTADO';
+      this.restService.getMaestros(this.datosCMaestro).subscribe(respuesta=>{
+        this.lEstado=respuesta[0];
       })
   }
 
@@ -214,7 +218,7 @@ export class AdmProduccionComponent implements OnInit {
       usuariorecibetaller:this.objetoData.data.usuariorecibetaller
     });
 
-    this.cargarsecciones(this.objetoData.data.id_formato);
+    this.cargarFormato(this.objetoData.data.id_formato);
   }
 
   datosFormato={
@@ -247,7 +251,7 @@ export class AdmProduccionComponent implements OnInit {
 
   }
 
-  cargarsecciones(idFormato : any){
+  cargarFormato(idFormato : any){
     this.datosFormato.opc='SEC-FORMATO';
     this.datosFormato.vIDFORMATO=idFormato;
 
@@ -293,12 +297,6 @@ export class AdmProduccionComponent implements OnInit {
       //console.log('respuesta', respuesta.body[1])
     })
 
-    this.restService.getMaestros(this.consultaSrv).subscribe((datacs: any) => {
-      this.listEstados = datacs;
-      this.lEstado = this.listEstados.body[0];
-
-    });
-
   }
 
   getSeccionesConCampos(): Observable<Seccion[]> {
@@ -315,23 +313,6 @@ export class AdmProduccionComponent implements OnInit {
     );
   }
 
-  secci:any;
-
-  cargarDetalleOrden(){
-
-  }
-
-  formatToJSON(formValue: any): any {
-    const json = {};
-    this.secciones.forEach(seccion => {
-      json[seccion.secciones] = {};
-      seccion.campos.forEach(campo => {
-        json[seccion.secciones][campo.nombre] = formValue[seccion.secciones][campo.nombre];
-      });
-    });
-    return json;
-  }
-
   datoDetalle={
       opc: '',
       vIDORDEN: 0,
@@ -340,16 +321,34 @@ export class AdmProduccionComponent implements OnInit {
       vVALOR: ''
   }
 
-  async guardarOrden(){
-    const id_Orden = this.objetoData.data.id;
-  
-    console.log('Datos MOdificados', this.listDatosModificados)
+  async guardarCabecera(){
     //Guardamos la cabecera y capturamos el insertid
+    const ordenCabecera = await lastValueFrom(this.restService.saveOrden(this.frmCabeceraOrden.value));
+    if (this.accion === 'Editar'){
+      
+      this.guardarDetalleOrden();
 
+      this.frmCabeceraOrden.get('id_formato').disable();
+
+      this.cargarFormato(this.frmCabeceraOrden.get('id_formato').value);
+
+    }else{
+
+    }
+    if (ordenCabecera.data.id > 0){
+      
+    } 
+    
+  }
+
+  async guardarDetalleOrden(){
+    const id_Orden = this.objetoData.data.id;
     //Guardaos el detalle de la orden
 
     // validar si el campo existe en ordendetalle si existe actualizar el valor sino 
     //insertar un nuevo campo en orden detalle
+    console.log('Datos MOdificados', this.listDatosModificados);
+
     this.listDatosModificados.forEach((campos, idexcampo)=>{
       console.log('campos ',campos)
         this.datoDetalle.vIDCAMPFORMATO = campos[1];
