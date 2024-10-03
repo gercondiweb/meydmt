@@ -21,6 +21,7 @@ import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosC
 import { AdmProduccionComponent } from './pages/adm-produccion/adm-produccion.component';
 import { AdminCampoComponent } from './pages/admin-campo/admin-campo.component';
 import { AdminSeccionComponent } from './pages/admin-seccion/admin-seccion.component';
+import { IngresoComponent } from './pages/ingreso/ingreso.component';
 
 
 const routes: Routes = [
@@ -108,6 +109,10 @@ const routes: Routes = [
       {
         path: 'admin-seccion/:accion',
         component:AdminSeccionComponent
+      },
+      {
+        path: 'ingreso',
+        component:IngresoComponent
       },
     ]
   },

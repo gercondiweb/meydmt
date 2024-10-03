@@ -12,7 +12,7 @@
               <mat-icon>reply</mat-icon>
               Regresar
             </button>
-            <button class="btnGuardar" mat-raised-button (click)="guardarOrden()">
+            <button class="btnGuardar" mat-raised-button (click)="guardarCabecera()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
@@ -99,7 +99,7 @@
             </div>
             <div class=" col-2">
               <label class="form-label">Fecha de Autorizacion</label>
-              <input type="date" class="form-control" formControlName="fechaautorizacion" placeholder="">
+              <input type="date" class="form-control" formControlName="fechaautoriza" placeholder="">
             </div>
             <div class=" col-2">
               <label class="form-label">Fecha Entrega Pactada</label>
@@ -116,14 +116,14 @@
               </select>
             </div>
             <div class=" col-2">
-              <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
-              <select class="form-select" formControlName="id_prioridad" aria-label="Prioridad">
-                  <option *ngFor="let estado of lEstado" [value]="estado.id">{{estado.estado}}</option>
+              <label for="exampleFormControlInput1" class="form-label">Estado</label>
+              <select class="form-select" formControlName="estado" aria-label="Estado">
+                  <option *ngFor="let estado of lEstado" [value]="estado.estado">{{estado.descripcion}}</option>
               </select>
             </div>
             <div class=" col-2">
-              <label for="exampleFormControlInput1" class="form-label">Estado</label>
-              <select class="form-select" formControlName="estado" aria-label="Prioridad">
+              <label for="exampleFormControlInput1" class="form-label">Prioridad</label>
+              <select class="form-select" formControlName="id_prioridad" aria-label="Prioridad">
                   <option *ngFor="let priori of prioridad" [value]="priori.codigo">{{priori.prioridad}}</option>
               </select>
             </div>
@@ -219,7 +219,7 @@
               <mat-icon>reply</mat-icon>
               Regresar
             </button>
-            <button class="btnGuardar" mat-raised-button (click)="guardarOrden()">
+            <button class="btnGuardar" mat-raised-button (click)="guardarCabecera()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
