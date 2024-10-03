@@ -1,8 +1,13 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-               [mode]="(isHandset$ | async) ? 'over' : 'side'"
-               [(opened)]="drawerOpened"> 
+  <mat-sidenav 
+    #drawer 
+    class="sidenav" 
+    fixedInViewport 
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" 
+    [(opened)]="drawerOpened"
+    (mouseenter)="drawer.open()" 
+    (mouseleave)="drawer.close()">
 
     <mat-card-header>
       <div mat-card-avatar class="example-header-image" routerLink="/dashboard/tablero">
@@ -29,16 +34,17 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="w-100 d-flex justify-content-between">
-      <div>
-        <ng-container *ngIf="(isHandset$ | async) || !drawerOpened">
-          <button
-            type="button"
-            aria-label="Toggle sidenav"
-            mat-icon-button
-            (click)="drawer.toggle()">
-            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-          </button>
-        </ng-container>
+      <div class="d-flex align-items-center">
+
+        <div class="logo-circle" *ngIf="!drawerOpened">
+          <img src="assets/logo.png" alt="Logo" class="logo-small">
+        </div>
+
+       
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (mouseenter)="drawer.open()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+
       </div>
 
       <div class="d-flex align-items-center">
@@ -48,6 +54,7 @@
         </button>
       </div>
     </mat-toolbar>
+
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

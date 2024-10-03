@@ -7,3 +7,8 @@
 .form-input{
   width: 50px;
 }
+
+.tablacampos{
+  border: beige;
+  border-style: solid;
+}

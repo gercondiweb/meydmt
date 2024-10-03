@@ -1,5 +1,6 @@
 <div class="form-container bg-white p-3">
-  <div class="row d-flex flex-wrap justify-content-between align-items-center p-1 ps-3 pe-3 w-100 mb-2">
+  <div class="row d-flex flex-wrap justify-content-between align-items-start p-1 ps-3 pe-3 w-100 mb-2">
+    <!-- Cambiar align-items-center a align-items-start -->
     <div class="card">
       <div class="card-header">
         <div class="row">
@@ -10,7 +11,7 @@
             <button mat-raised-button color="primary" (click)="regresar()">
               <mat-icon>reply</mat-icon> Regresar
             </button>
-            <button mat-raised-button  class="btnGuardar" (click)="guardarFormato()">
+            <button mat-raised-button class="btnGuardar" (click)="guardarFormato()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
@@ -20,30 +21,28 @@
       <div class="card-body mt-3">
         <form [formGroup]="formFormato">
           <div class="row g-3 mb-4">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <label for="formatoinput" class="form-label">Nombre</label>
-              <input type="text" class="form-control" formControlName="formato" placeholder="Ingresa el nombre del formato" id="formatoinput" required />
+              <input type="text" class="form-control" formControlName="formato"
+                placeholder="Ingresa el nombre del formato" id="formatoinput" required />
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
               <label for="descripcionformatoInput" class="form-label">Descripción</label>
-              <input class="form-control" rows="2" formControlName="descripcionformato" placeholder="Ingresa la descripción del formato" id="descripcionformato" required/>
+              <input class="form-control" rows="2" formControlName="descripcionformato"
+                placeholder="Ingresa la descripción del formato" id="descripcionformato" required />
             </div>
             <div class="col-md-2 d-flex align-items-center">
-              <div class="form-check">
-            <div class="col-md-2 d-flex flex-column mt-3">
               <mat-checkbox class="example-margin" formControlName="activo" [checked]="true">Activo</mat-checkbox>
-            </div>
-              </div>
             </div>
           </div>
         </form>
 
-        <!-- Contenedor para Secciones, Campos y Tabla -->
-        <div class="row mb-4 h-100">
-          <div class="col-3 h-100 d-flex flex-column">
+        <!-- Contenedor-->
+        <div class="row mb-4" style="min-height: 300px;">
+          <div class="col-3 d-flex flex-column">
             <!-- Secciones -->
-            <div class="secciones-container h-100">
-              <nav class="navbar bg-body-tertiary h-100" *ngIf="formatoSeleccionado !== 0">
+            <div class="secciones-container flex-fill">
+              <nav class="navbar bg-body-tertiary flex-fill" *ngIf="formatoSeleccionado !== 0">
                 <div class="container-fluid">
                   <a class="navbar-brand">Secciones</a>
                   <button mat-icon-button color="primary" (click)="agregarSeccion()" style="padding: 4px;">
@@ -51,11 +50,11 @@
                   </button>
                 </div>
                 <div class="col-12 mt-3 overflow-auto" style="max-height: 300px; border: 1px solid white; padding: 10px;">
-                  <span class="block text-sm text-gray-700 font-semibold">Selecciona las secciones a usar:</span>
                   <div class="flex flex-col space-y-2">
                     <div *ngFor="let seccion of listSecciones">
                       <label class="inline-flex items-center text-sm text-gray-700">
-                        <input type="radio" name="seccion" class="form-radio h-5 w-5 text-gray-600" [value]="seccion.seccion" (change)="seleccionarSeccion(seccion.seccion)">
+                        <input type="radio" name="seccion" class="form-radio h-5 w-5 text-gray-600 mr-2"
+                          [value]="seccion.seccion" (change)="seleccionarSeccion(seccion.seccion)">
                         {{ seccion.seccion }}
                       </label>
                     </div>
@@ -65,31 +64,34 @@
             </div>
           </div>
 
-          <div class="col-3 h-100 d-flex flex-column">
+          <div class="col-3 d-flex flex-column">
             <!-- Campos -->
-            <div class="campos-container h-100">
-              <nav class="navbar bg-body-tertiary h-100" *ngIf="formatoSeleccionado !== 0">
+            <div class="campos-container flex-fill">
+              <nav class="navbar bg-body-tertiary flex-fill" *ngIf="formatoSeleccionado !== 0">
                 <div class="container-fluid">
                   <a class="navbar-brand">Campos</a>
                   <button mat-icon-button color="primary" (click)="agregarCampos()" style="padding: 4px;">
                     <mat-icon style="font-size: 20px;">add_circle</mat-icon>
                   </button>
                 </div>
-                <div class="col-12 mt-3 overflow-auto" style="max-height: 300px; border: 1px solid white; padding: 10px;">
-                  <span class="block text-sm text-gray-700 font-semibold">Selecciona los campos a usar:</span>
+                <div class="col-12 mt-3 overflow-auto"
+                  style="max-height: 300px; border: 1px solid white; padding: 10px;">
                   <div class="flex flex-col space-y-2">
                     <div *ngFor="let campo of listCampos">
-                      <label class="inline-flex items-center text-sm text-gray-700">
-                        <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600" [value]="campo.nombrecampo" (change)="seleccionarCampo(campo.nombrecampo, $event)">
-                        {{ campo.nombrecampo }}
-                      </label>
+                      <div class="flex items-center">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600 mr-2"
+                          [value]="campo.nombrecampo" (change)="seleccionarCampo(campo.nombrecampo, $event)">
+                        <label class="text-sm text-gray-700">
+                          {{ campo.nombrecampo }}
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </nav>
             </div>
             <nav class="navbar bg-body-white mt-auto" *ngIf="formatoSeleccionado !== 0">
-              <div class="container-fluid justify-content-end"> 
+              <div class="container-fluid justify-content-end">
                 <button class="btn btn-primary" color="primary" mat-raised-button (click)="guardarCampoFormato()">
                   <mat-icon>arrow_forward</mat-icon>
                   Agregar campos al formato
@@ -98,21 +100,22 @@
             </nav>
           </div>
 
-          <div class="col-6">
+          <div class="col-6 d-flex flex-column">
             <!-- Tabla de Campos -->
-            <div class="componentes-container">
+            <div class="componentes-container flex-fill">
               <nav class="navbar bg-body-tertiary" *ngIf="formatoSeleccionado !== 0">
                 <div class="container-fluid">
-                  <a class="navbar-brand" >Campos Formato</a>
+                  <a class="navbar-brand">Campos Formato</a>
                 </div>
-                <div class="col-12 mt-4 overflow-auto" style="max-height: 300px;">
+                <div class=" tablacampos col-12 mt-4 overflow-auto" style="max-height: 300px;">
                   <div class="relative shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs text-gray-700 uppercase" >
+                      <thead class="text-xs text-gray-700 uppercase">
                         <tr>
                           <th scope="col" class="px-6 py-6">Nombre Sección</th>
                           <th scope="col" class="px-6 py-6">Nombre Campo</th>
                           <th scope="col" class="px-3 py-3">Orden</th>
+                          <th scope="col" class="px-6 py-6">Opciones</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -121,21 +124,34 @@
                             <td class="px-6 py-6">{{ fila.seccion }}</td>
                             <td class="px-6 py-6">{{ fila.nombrecampo }}</td>
                             <td class="px-3 py-3">
-                              <input type="text" class="form-input" name="orden" placeholder="Ingresa el orden" id="orden" [value]="fila.orden" (change)="agregarOrden($event,i)" />
+                              <input type="text" class="form-input" name="orden" placeholder="Ingresa el orden"
+                                id="orden" [value]="fila.orden" (change)="agregarOrden($event, i)" />
+                            </td>
+                            <td class="px-6 py-6">
+                              <div style="display: flex; gap: 8px;">
+                                <button mat-icon-button type="button" class="btn btn-primary">
+                                  <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button type="button" class="btn btn-danger">
+                                  <mat-icon>delete</mat-icon>
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         </ng-container>
                       </tbody>
-                    </table>                    
+                    </table>
                   </div>
-                </div>
-                <div class="container-fluid bg-body-white justify-content-end">
-                  <button class="btnGuardar" color="primary" mat-raised-button style="background-color: #3f51b5; color: white;" (click)="guardarCamposFormato()">
-                    <mat-icon>save</mat-icon> Guardar los campos del formato
-                  </button>
                 </div>
               </nav>
             </div>
+            <nav class="navbar bg-body-white mt-auto" *ngIf="formatoSeleccionado !== 0">
+              <div class="container-fluid justify-content-end">
+                <button class="btnGuardar" mat-raised-button (click)="guardarCamposFormato()">
+                  <mat-icon>save</mat-icon> Guardar los campos del formato
+                </button>
+              </div>
+            </nav>
           </div>
         </div>
       </div>
