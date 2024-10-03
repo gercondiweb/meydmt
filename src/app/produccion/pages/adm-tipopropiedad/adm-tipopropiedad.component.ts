@@ -129,5 +129,6 @@ export class AdmTipopropiedadComponent implements OnInit {
         }finally{
           this.loadingServer.hidden();
         }
+        this.regresar();
   }
 }

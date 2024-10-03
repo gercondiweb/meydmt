@@ -153,6 +153,7 @@ export class AdmPropiedadComponent  implements OnInit{
     }finally{
       this.loadingServer.hidden();
     }
+    this.regresar();
   }
 
  

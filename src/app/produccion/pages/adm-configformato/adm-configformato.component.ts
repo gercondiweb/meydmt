@@ -304,8 +304,16 @@ async guardarCampoFormato() {
 
 async guardarCamposFormato(): Promise<void> {
   if (this.formatoSeleccionado && this.filas.length > 0) {
+    const campoGuardado = new Set<string>(); 
+
     try {
       for (const fila of this.filas) {
+       
+        if (campoGuardado.has(fila.nombrecampo)) {
+          console.warn(`El campo seleccionado "${fila.nombrecampo}" ya ha sido guardado con exito.`);
+          continue; 
+        }
+
         const datosFormato = {
           ...fila,
           idFormato: this.formatoSeleccionado,
@@ -315,7 +323,9 @@ async guardarCamposFormato(): Promise<void> {
         this.gDatosFormato.vCampo = datosFormato.nombrecampo;
         this.gDatosFormato.vOrden = datosFormato.orden;
         this.gDatosFormato.vSeccion = datosFormato.seccion;
-        this.gDatosFormato.vIDFormato= datosFormato.idFormato;
+        this.gDatosFormato.vIDFormato = datosFormato.idFormato;
+
+        campoGuardado.add(fila.nombrecampo);
 
         await lastValueFrom(this.ProdrestserviceService.CrearcampoFormato(this.gDatosFormato));
       }
@@ -325,12 +335,9 @@ async guardarCamposFormato(): Promise<void> {
       console.error('Error al guardar los campos:', error);
     }
   } else {
-    console.error('Error al gruardar los datos');
+    console.error('Error al guardar los datos');
   }
 }
-
-
-
 
 
 
