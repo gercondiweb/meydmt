@@ -16,7 +16,8 @@ import Swal from 'sweetalert2';
 export class AdmrecorridosComponent implements OnInit{
 
   datosConsulta={
-    opc:''
+    opc:'',
+    vID:0
   }
 
   datosRutas={
@@ -57,7 +58,9 @@ export class AdmrecorridosComponent implements OnInit{
       id_zona:[0],
       cdec:[],
       cuenta:[],
-      comentario:['']
+      comentario:[''],
+      precio:[0],
+      costo:[0]
     });
     
     this.cargarmaestros();
@@ -76,6 +79,9 @@ export class AdmrecorridosComponent implements OnInit{
   listVehiculos:any;
   listTipoServicio:any;
   listZona:any;
+
+  listTarifas:any;
+  idCliente:any;
 
   cSelected:any;
 
@@ -118,7 +124,11 @@ export class AdmrecorridosComponent implements OnInit{
      console.log(this.listRutas);
     });
 
-    console.log(this.cantRutas);
+    //Cargamos las tarifas del cliente para filtrar a medida 
+    // que ingresa los valores y asi determinar el precio y costo del servicio
+    this.cargarTarifas(event);
+
+    //console.log(this.cantRutas);
   }
 
   esSeleccionada(codigo: string): boolean {
@@ -194,6 +204,11 @@ export class AdmrecorridosComponent implements OnInit{
   }
 
   async guardar(){
+
+    /*TODO: hacer una validacion de que si el valor del servicio fue digitado no haga la busqueda de la tarifa,
+      es el que muestra la consulta de tarifa lo 
+      coloque y continue con la grabada del registro*/
+
     if (this.formServicioVehiculo.get('id_vehiculo').value !== ''){
       this.formServicioVehiculo.get('estado').setValue('ASG');
     }
@@ -222,6 +237,35 @@ export class AdmrecorridosComponent implements OnInit{
         timer: 1500
       });
     }
+  }
+
+  cargarTarifas(event: any){
+    console.log('Seleccion Cliente ',event.target.value)
+
+    this.idCliente = event.target.value;
+   
+    this.datosConsulta.opc ='TARIFAS';
+    this.datosConsulta.vID = this.idCliente;
+
+    this.restService.consultatransporte(this.datosConsulta).subscribe((data: any) => {
+      this.listTarifas = data.body[0];
+    });
+  }
+
+  async buscarValorTarifa(){
+    //zona, tipovehiculo, 
+   /* const params = {
+      tipoVehiculo: this.formServicioVehiculo.value.tipoVehiculo || null,
+      zona: this.formServicioVehiculo.value.zona || null,
+      origen: this.formServicioVehiculo.value.origen || null,
+      destino: this.formServicioVehiculo.value.destino || null,
+      capacidad: this.formServicioVehiculo.value.capacidad || null,
+    };
+
+    this.valoresTarifa= await lastValueFrom(this.restService.getTarifas(this.consultaTarifa));
+
+    this.formServicioVehiculo.get('precio').setValue(this.valoresTarifa.precio);
+    this.formServicioVehiculo.get('costo').setValue(this.valoresTarifa.costo);*/
   }
 
   regresar(){

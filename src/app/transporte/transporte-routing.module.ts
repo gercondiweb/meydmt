@@ -19,6 +19,8 @@ import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
 import { GastosComponent } from './pages/gastos/gastos.component';
 import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
 import { ForecastComponent } from './pages/forecast/forecast.component';
+import { RutasComponent } from './pages/rutas/rutas.component';
+import { AdmrutasComponent } from './pages/admrutas/admrutas.component';
 
 
 const routes: Routes = [
@@ -50,6 +52,14 @@ const routes: Routes = [
       {
         path: 'admtecnicos/:accion',
         component:AdmTecnicosComponent
+      },
+      {
+        path: 'rutas',
+        component:RutasComponent
+      },
+      {
+        path: 'admrutas/:accion',
+        component:AdmrutasComponent
       },
       {
         path: 'gastos',

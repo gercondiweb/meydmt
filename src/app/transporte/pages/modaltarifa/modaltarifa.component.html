@@ -1,0 +1,71 @@
+<div>
+    <h2 class="titulo" mat-dialog-title>Crear Area</h2>
+  
+    <mat-dialog-content>
+        <form class="sucursal-form" [formGroup]="frmTarifa">
+          <div class="row g-2">
+            <div class="mb-1 col-4">
+                <label for="exampleFormControlInput1" class="form-label">Tipo Tarifa</label>
+                <select class="form-select" formControlName="id_tipotarifa"
+                        aria-label="propietario" >
+                    <option *ngFor="let tipotar of listTipoTarifas" [value]="tipotar.id">{{tipotar.tipotarifa}}</option>
+                </select>
+              </div>
+
+              <div class="mb-1 col-2">
+                <label for="exampleFormControlInput1" class="form-label">Codigo</label>
+                <input type="text" class="form-control" formControlName="codigo"  placeholder="*opcional">
+              </div>
+
+              <div class="mb-1 col-4">
+                  <label for="exampleFormControlInput1" class="form-label">Tipo Vehiculo</label>
+                  <select class="form-select" formControlName="id_tipovehiculo"
+                          aria-label="propietario" >
+                      <option *ngFor="let tipov of listTipoVehiculos" [value]="tipov.idtipovehiculo">{{tipov.tipovehiculo}}</option>
+                  </select>
+                </div>
+              
+              <div class="mb-1 col-6">
+                <label for="exampleFormControlInput1" class="form-label">Origen / Destino</label>
+                <input type="text" class="form-control" formControlName="origendestino"  placeholder="" id="clienteinput">
+              </div>
+
+              <div class="mb-1 col-2">
+                  <label for="exampleFormControlInput1" class="form-label">Zona</label>
+                  <select class="form-select" formControlName="id_zona"
+                          aria-label="propietario" >
+                      <option *ngFor="let zona of listZonas" [value]="zona.idzonas">{{zona.zona}}</option>
+                  </select>
+              </div>
+              
+              <div class="mb-1 col-2">
+                <label for="exampleFormControlInput1" class="form-label">Capacidad</label>
+                <input type="number" class="form-control" formControlName="capacidad"  placeholder="" id="clienteinput">
+              </div>
+
+              <div class="mb-1 col-3">
+                <label for="clienteinput" class="form-label">Valor</label>
+                <input type="number" class="form-control" formControlName="valor"  placeholder="" id="clienteinput">
+              </div>
+
+              <div class="mb-1 col-3">
+                <label for="clienteinput" class="form-label">Costo</label>
+                <input type="number" class="form-control" formControlName="costo"  placeholder="" id="clienteinput">
+              </div>
+
+              <div class="mb-1 col-2">
+                <label for="clienteinput" class="form-label">Fecha de vencimiento</label>
+                <input type="date" class="form-control" formControlName="fechavencimiento"  placeholder="" id="clienteinput">
+              </div>
+          </div>
+        </form>
+  
+    </mat-dialog-content>
+  
+    <div mat-dialog-actions class="pie justify-content-end">
+      <button mat-raised-button color="warn" (click)="regresar()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="guardarTarifa()" cdkFocusInitial>Confirmar</button>
+    </div>
+  </div>
+  
+  

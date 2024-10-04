@@ -1,3 +1,80 @@
-<app-frm-maestro
-[tituloForm]="titulo" [vDataSource]="vDataSource"
-[vColumnas]="columnas" [formAdm]="'/transporte/admtarifas'"></app-frm-maestro>
+<div class="form-container bg-white p-3">
+
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+      <div class="card p-0">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h2>{{titulo}}</h2>
+            </div>
+            <div class="col text-end">
+              <button mat-raised-button color="primary" (click)="crearTarifasCliente()">
+                <mat-icon>add_circle</mat-icon>
+                Crear Nuevo
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="mb-1 col-8">
+                    <label for="nitinput" class="form-label">Cliente</label>
+                    <select class="form-select" aria-label="propietario" aria-placeholder="Seleccione cliente..."
+                                (change)="cargarTarifas($event)">
+                                <option selected>Seleccione cliente</option>
+                        <option *ngFor="let cli of listClientes" [value]="cli.Id"
+                            >{{cli.Cliente}}</option>
+                    </select>
+                  </div>
+            </div>
+          <div class="row">
+            
+            <table mat-table [dataSource]="vDataSource" matSort matSortActive="created" matSortDisableClear
+              matSortDirection="desc">
+              <ng-container *ngFor="let column of columnas" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef>{{ column | titlecase }}</th>
+                <!--td mat-cell *matCellDef="let element">{{ element[column] }}</!--td-->
+                <td mat-cell *matCellDef="let element">
+                  <!-- Validar si el nombre de la columna contiene "fecha" y aplicar el formato adecuado -->
+                  <ng-container *ngIf="column.includes('fecha')||column.includes('Fecha'); else defaultCell">
+                    {{ element[column] | date: 'yyyy-MM-dd' }}
+                  </ng-container>
+                  <!-- Validar si el nombre de la columna es "foto" y mostrar la imagen -->
+                  <ng-template #defaultCell>
+                    <ng-container *ngIf="column === 'foto'; else textCell">
+                      <img [src]="element[column]" alt="Foto" class="img-thumbnail" width="100">
+                    </ng-container>
+                    <!-- Mostrar el contenido normal si no es una columna de fecha ni de foto -->
+                    <ng-template #textCell>
+                      {{ element[column] !== undefined && element[column] !== null ? element[column] : 'N/A' }}
+                    </ng-template>
+                  </ng-template>
+
+                </td>
+              </ng-container>
+              <!-- Columna de opciones -->
+              <ng-container matColumnDef="opciones">
+                <th mat-header-cell *matHeaderCellDef> Opciones </th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button (click)="editarTarifa(element)"
+                  type="button" class="btn btn-primary" >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <button mat-icon-button (click)="eliminarTarifa(element)"
+                  type="button" class="btn btn-danger" >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="columnas.concat('opciones')"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnas.concat('opciones');"></tr>
+
+            </table>
+          
+          </div>
+        </div>
+  
+      </div>
+    </span>
+  </div>

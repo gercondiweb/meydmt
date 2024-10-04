@@ -11,6 +11,11 @@ import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
 import { RecorridosComponent } from './pages/recorridos/recorridos.component';
 import { AdmrecorridosComponent } from './pages/admrecorridos/admrecorridos.component';
 import { ForecastComponent } from './pages/forecast/forecast.component';
+import { ModaltarifaComponent } from './pages/modaltarifa/modaltarifa.component';
+import { RutasComponent } from './pages/rutas/rutas.component';
+import { AdmrutasComponent } from './pages/admrutas/admrutas.component';
+import { PropietariosComponent } from './pages/propietarios/propietarios.component';
+import { AdmpropietariosComponent } from './pages/admpropietarios/admpropietarios.component';
 
 
 
@@ -23,12 +28,18 @@ import { ForecastComponent } from './pages/forecast/forecast.component';
     AdmtarifasComponent,
     RecorridosComponent,
     AdmrecorridosComponent,
-    ForecastComponent
+    ForecastComponent,
+    ModaltarifaComponent,
+    RutasComponent,
+    AdmrutasComponent,
+    PropietariosComponent,
+    AdmpropietariosComponent
   ],
   imports: [
     CommonModule,
     TransporteRoutingModule,
     SharedModule
+
   ],
   providers:[
 

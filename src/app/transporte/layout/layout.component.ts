@@ -36,6 +36,11 @@ export class LayoutComponent implements OnInit{
       },
       {
         icon: 'feed',
+        ruta: '/transporte/rutas',
+        name: 'Rutas'
+      },
+      {
+        icon: 'feed',
         ruta: '/transporte/tarifas',
         name: 'Tarifas'
       },
