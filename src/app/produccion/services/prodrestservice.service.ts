@@ -78,8 +78,7 @@ export class ProdrestserviceService {
     return this.http.post('campoformato/operacion', datosConsulta); 
   }
   public CrearcampoFormato(datosConsulta:any):Observable<any>{
-    return this.http.post<{ body: { formato: any }}>('campoformato/operacion',datosConsulta)
-    .pipe( map( ({ body }) => body ) );
+    return this.http.post('campoformato/operacion',datosConsulta);
   }
 
   public saveOrdenDetalle(datos:any): Observable<any>{

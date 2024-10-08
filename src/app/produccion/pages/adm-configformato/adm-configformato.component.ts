@@ -20,6 +20,16 @@ import { AdmCamposComponent } from '../adm-campos/adm-campos.component';
 })
 export class AdmConfigformatoComponent implements OnInit {
 
+  //CAMPO FORMATO
+  seccionSeleccionada: string | null = null;
+  camposSeleccionados: string[] = [];
+  filas: { id:number; seccion: string; nombrecampo: string; orden: string }[] = [];
+
+
+  listFilas: any;
+
+  vIDFormato: any;
+
   private readonly loadingServer = inject(LoadingService);
   public formSeccionesCampos!: FormGroup;
   accion : any;
@@ -114,16 +124,15 @@ export class AdmConfigformatoComponent implements OnInit {
   agregarOrden( event : Event ,index: number) {
     const input = event.target as HTMLInputElement;
     const { value } = input;
-    this.filas[index].orden = value;
+    this.listFilas[index].orden = value;
   }
 
   cargarDatosFormato(){
     this.param1 = this.dataSharingService.getParam1();
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
-    this.idFormato = this.objetoData.data.Id;
-
-    console.log(this.objetoData);
+    
+    this.idFormato = this.objetoData.data.id; 
   
     this.formFormato.patchValue({
       formato: this.objetoData.data.formato,
@@ -136,8 +145,9 @@ export class AdmConfigformatoComponent implements OnInit {
      this.consultaformato.vID=this.objetoData.data.id;
      console.log(this.consultaformato)
     this.ProdrestserviceService.getFormatos(this.consultaformato).subscribe(respuesta => {
-      this.filas = respuesta.body[0];
-      console.log('VER',this.filas);
+      //this.filas = respuesta.body[0];
+      this.listFilas = respuesta.body[0];
+      console.log('VER',this.listFilas);
     }); 
   }
 
@@ -264,10 +274,6 @@ async guardarFormato(){
   }
 }
 
-//CAMPO FORMATO
-seccionSeleccionada: string | null = null;
-camposSeleccionados: string[] = [];
-filas: { seccion: string; nombrecampo: string; orden: string }[] = [];
 seleccionarSeccion(seccion: string) {
   this.seccionSeleccionada = seccion;
 }
@@ -286,7 +292,8 @@ async guardarCampoFormato() {
     const orden = this.formSeccionesCampos.get('orden')?.value || '';
 
     this.camposSeleccionados.forEach( (campo, i) => {
-      this.filas.push({
+      this.listFilas.push({
+        id:null,
         seccion: this.seccionSeleccionada,
         nombrecampo: campo,
         orden: orden
@@ -303,42 +310,31 @@ async guardarCampoFormato() {
 
 
 async guardarCamposFormato(): Promise<void> {
-  if (this.formatoSeleccionado && this.filas.length > 0) {
-    const campoGuardado = new Set<string>(); 
+  if (this.formatoSeleccionado && this.listFilas.length > 0) {
+    
+      console.log('valor id',this.listFilas);
+      
+        for (const fila of this.listFilas) {
+          
+          if (fila.id == null) {
 
-    try {
-      for (const fila of this.filas) {
-       
-        if (campoGuardado.has(fila.nombrecampo)) {
-          console.warn(`El campo seleccionado "${fila.nombrecampo}" ya ha sido guardado con exito.`);
-          continue; 
-        }
+            this.gDatosFormato.vCampo = fila.nombrecampo;
+            this.gDatosFormato.vOrden = fila.orden;
+            this.gDatosFormato.vSeccion = fila.seccion;
+            this.gDatosFormato.vIDFormato = this.idFormato;
 
-        const datosFormato = {
-          ...fila,
-          idFormato: this.formatoSeleccionado,
-        };
-        console.log('Guardando datos:', datosFormato);
+            console.log('Guardando datos:', this.idFormato);
+            try {
+              await lastValueFrom(this.ProdrestserviceService.CreaÑrcampoFormato(this.gDatosFormato));
+            } catch (error) {
+              console.error('Error al guardar los campos:', error);
+          }
+          }
 
-        this.gDatosFormato.vCampo = datosFormato.nombrecampo;
-        this.gDatosFormato.vOrden = datosFormato.orden;
-        this.gDatosFormato.vSeccion = datosFormato.seccion;
-        this.gDatosFormato.vIDFormato = datosFormato.idFormato;
-
-        campoGuardado.add(fila.nombrecampo);
-
-        await lastValueFrom(this.ProdrestserviceService.CrearcampoFormato(this.gDatosFormato));
-      }
-
-      console.log('Campos guardados exitosamente');
-    } catch (error) {
-      console.error('Error al guardar los campos:', error);
-    }
-  } else {
-    console.error('Error al guardar los datos');
-  }
+      } 
+    
+  } 
 }
-
 
 
 }
