@@ -287,7 +287,7 @@ seleccionarCampo(nombrecampo: string, event: Event) {
   }
 }
 
-async guardarCampoFormato() {
+async guardarListaCampoFormato() {
   if (this.seccionSeleccionada && this.camposSeleccionados.length > 0) {
     const orden = this.formSeccionesCampos.get('orden')?.value || '';
 
@@ -325,7 +325,7 @@ async guardarCamposFormato(): Promise<void> {
 
             console.log('Guardando datos:', this.idFormato);
             try {
-              await lastValueFrom(this.ProdrestserviceService.CreaÑrcampoFormato(this.gDatosFormato));
+              await lastValueFrom(this.ProdrestserviceService.CrearcampoFormato(this.gDatosFormato));
             } catch (error) {
               console.error('Error al guardar los campos:', error);
           }
