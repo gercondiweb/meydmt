@@ -163,5 +163,17 @@ export class RestService {
     return this.http.post('serviciostr', datos);
   }
 
+  public rutas(datos:any):Observable<any>{
+    return this.http.post('rutas', datos);
+  }
+
+  public getRutas(datos:any):Observable<any>{
+    return this.http.post('rutas/consulta', datos);
+  }
+
+  public gastos(datos:any):Observable<any>{
+    return this.http.post('gastos', datos);
+  }
+
 
 }

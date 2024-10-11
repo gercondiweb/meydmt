@@ -1,1 +1,52 @@
-<p>admgastos works!</p>
+<div>
+    <h2 class="titulo" mat-dialog-title>Gastos</h2>
+  
+    <mat-dialog-content>
+      <form class="ticket-form" [formGroup]="formGasto">
+
+        <div class="row">
+          <div class="mb-3 col-4">
+            <label for="clienteinput" class="form-label">Placa</label>
+            <select class="form-select" formControlName="id_tecnico" aria-label="Tecnicos Disponibles" >
+                <option *ngFor="let placa of listVehiculo" [value]="placa.id">{{placa.placa}}</option>
+            </select>
+          </div>
+        
+
+          <div class="mb-3 col-4">
+            <label for="clienteinput" class="form-label">Fecha</label>
+            <input type="date" class="form-control" formControlName="fecha" [readonly]="true">
+          </div>
+        
+
+          <div class="mb-3 col-4">
+            <label for="clienteinput" class="form-label">Tipo de Gasto</label>
+            <select class="form-select" formControlName="id_tipogasto" aria-label="Tecnicos Disponibles" >
+                <option *ngFor="let tipo of listTipoGastos" [value]="tipo.id">{{tipo.tipogasto}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="mb-3">
+            <label for="exInput1" class="form-label">Descripcion del Servicio</label>
+            <textarea class="form-control" rows="2" formControlName="descripcion" placeholder="Detalle del servicio que solicita"></textarea>
+          </div>
+  
+          <div class="mb-3 col-6">
+            <label for="exampleFormControlInput1" class="form-label">Valor</label>
+            <input type="number" class="form-control" formControlName="hora" [value]="0">
+          </div>
+  
+        </div>
+  
+      </form>
+  
+  
+    </mat-dialog-content>
+  
+    <div mat-dialog-actions class="pie justify-content-end">
+      <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="grabar()" cdkFocusInitial>Guardar</button>
+    </div>
+  </div>
+  

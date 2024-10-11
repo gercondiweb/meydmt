@@ -16,6 +16,8 @@ import { RutasComponent } from './pages/rutas/rutas.component';
 import { AdmrutasComponent } from './pages/admrutas/admrutas.component';
 import { PropietariosComponent } from './pages/propietarios/propietarios.component';
 import { AdmpropietariosComponent } from './pages/admpropietarios/admpropietarios.component';
+import { GastosComponent } from './pages/gastos/gastos.component';
+import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
 
 
 
@@ -33,7 +35,9 @@ import { AdmpropietariosComponent } from './pages/admpropietarios/admpropietario
     RutasComponent,
     AdmrutasComponent,
     PropietariosComponent,
-    AdmpropietariosComponent
+    AdmpropietariosComponent,
+    GastosComponent,
+    AdmgastosComponent
   ],
   imports: [
     CommonModule,

@@ -46,6 +46,12 @@
           type="button" class="btn btn-danger" >
             <mat-icon>delete</mat-icon>
           </button>
+
+          <button mat-icon-button (click)="eliminarElemento(element)"
+          type="button" class="btn btn-warning" *ngIf="manejaGastos" >
+            <mat-icon>receipt_long</mat-icon>
+          </button>
+
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="columnas.concat('opciones')"></tr>

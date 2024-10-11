@@ -19,6 +19,7 @@ export class TabladinamicaTrComponent {
  @Input() formMaestro: any;
  @Input() filtro : boolean = true;
  @Input() manejaDoc : boolean = false;
+ @Input() manejaGastos : boolean = true;
 
  applyFilter(event: Event) {
    const filterValue = (event.target as HTMLInputElement).value;
