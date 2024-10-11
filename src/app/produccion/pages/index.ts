@@ -13,6 +13,7 @@ export * from './adm-propiedad/adm-propiedad.component';
 export * from './adm-tipopropiedad/adm-tipopropiedad.component';
 export * from './admin-campo/admin-campo.component';
 export * from './admin-seccion/admin-seccion.component';
+export * from './consulta-integral/consulta-integral.component';
 
 
 

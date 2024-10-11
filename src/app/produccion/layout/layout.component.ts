@@ -27,6 +27,11 @@ export class LayoutComponent implements OnInit{
       name: 'Ordenes'
     },
     {
+      icon: 'subdirectory_arrow_right',
+      ruta: '/produccion/consulta-integral',
+      name: 'Consulta Integral'
+    },
+    {
       icon: 'domain',
       ruta: '/produccion/clientes',
       name: 'Clientes'

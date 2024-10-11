@@ -14,6 +14,7 @@ import {
   AdmCamposComponent,
   AdmPropiedadComponent,
   AdmTipopropiedadComponent,
+  ConsultaIntegralComponent,
   
  
 } from './pages';
@@ -113,6 +114,10 @@ const routes: Routes = [
       {
         path: 'ingreso',
         component:IngresoComponent
+      },
+      {
+        path: 'consulta-integral',
+        component:ConsultaIntegralComponent
       },
     ]
   },

@@ -16,6 +16,7 @@ import { NavegacionComponent,
           CampoOrdenComponent,
           ModalComponent,
           PaginationComponent,
+          TablaConsultaComponent,
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -47,6 +48,7 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     CampoOrdenComponent,
     ModalComponent,
     PaginationComponent,
+    TablaConsultaComponent,
   ],
   imports: [
     CommonModule,
@@ -85,6 +87,7 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     CampoOrdenComponent,
     ModalComponent,
     PaginationComponent,
+    TablaConsultaComponent,
   ]
 })
 export class SharedModule { }
