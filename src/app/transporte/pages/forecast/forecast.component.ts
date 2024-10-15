@@ -6,12 +6,32 @@ interface Vehicle {
   status: { [key: string]: string }; // Key: Day of the month, Value: Status ('assigned' or 'available')
 }
 
+interface VehicleStatus {
+  time: string; // Formato '08:00'
+  available: number;
+  occupied: number;
+  maintenance: number;
+  details: {
+    available: string[]; // Lista de placas disponibles
+    occupied: string[];  // Lista de placas ocupadas
+    maintenance: string[];  // Lista de placas en mantenimiento
+  };
+}
+
 @Component({
   selector: 'app-forecast',
   templateUrl: './forecast.component.html',
   styleUrl: './forecast.component.css'
 })
 export class ForecastComponent implements OnInit{
+
+  // En el componente padre
+vehicleStatuses: VehicleStatus[] = [
+  { time: '08:00', available: 5, occupied: 3, maintenance: 2, details: { available: ['ABC123', 'XYZ456'], occupied: ['DEF789'], maintenance: ['GHI012', 'JKL345'] } },
+  { time: '08:15', available: 6, occupied: 2, maintenance: 2, details: { available: ['MNO678', 'PQR234'], occupied: ['STU567'], maintenance: ['VWX890'] } },
+  // Más registros...
+];
+
 
   days: string[] = []; // Array para almacenar los días completos (YYYY-MM-DD)
   filteredDays: string[] = [];

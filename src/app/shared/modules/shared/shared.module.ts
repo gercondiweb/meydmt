@@ -13,7 +13,8 @@ import { NavegacionComponent,
           PdfComponent,
           DemograficoComponent,
           NavegacionprodComponent,
-          CampoOrdenComponent
+          CampoOrdenComponent,
+          VistaserviciosComponent
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -44,7 +45,8 @@ import { TabladinamicaTrComponent } from '../../components/tabladinamica-tr/tabl
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    TabladinamicaTrComponent
+    TabladinamicaTrComponent,
+    VistaserviciosComponent
   ],
   imports: [
     CommonModule,
@@ -81,7 +83,8 @@ import { TabladinamicaTrComponent } from '../../components/tabladinamica-tr/tabl
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    TabladinamicaTrComponent
+    TabladinamicaTrComponent,
+    VistaserviciosComponent
   ]
 })
 export class SharedModule { }

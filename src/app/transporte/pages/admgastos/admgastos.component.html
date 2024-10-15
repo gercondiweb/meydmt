@@ -7,7 +7,7 @@
         <div class="row">
           <div class="mb-3 col-4">
             <label for="clienteinput" class="form-label">Placa</label>
-            <select class="form-select" formControlName="id_tecnico" aria-label="Tecnicos Disponibles" >
+            <select class="form-select" formControlName="id_vehiculo" aria-label="Tecnicos Disponibles" >
                 <option *ngFor="let placa of listVehiculo" [value]="placa.id">{{placa.placa}}</option>
             </select>
           </div>
@@ -34,7 +34,7 @@
   
           <div class="mb-3 col-6">
             <label for="exampleFormControlInput1" class="form-label">Valor</label>
-            <input type="number" class="form-control" formControlName="hora" [value]="0">
+            <input type="number" class="form-control" formControlName="valor" [value]="0">
           </div>
   
         </div>

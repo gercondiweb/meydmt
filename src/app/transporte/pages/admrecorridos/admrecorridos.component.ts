@@ -41,12 +41,15 @@ export class AdmrecorridosComponent implements OnInit{
 
   ngOnInit(): void {
 
+    const fechaInicio = new Date();
+
     this.accion = this.route.snapshot.paramMap.get('accion') || '';
 
     this.formServicioVehiculo = this.fb.group({
       id: [0],
-      fecha:[''],
+      fecha:[fechaInicio.toISOString().substring(0, 10)],
       hora:[''],
+      horafin:[''],
       estado:[''],
       origen:[],
       destino:[],
@@ -59,7 +62,7 @@ export class AdmrecorridosComponent implements OnInit{
       cdec:[],
       cuenta:[],
       comentario:[''],
-      precio:[0],
+      valor:[0],
       costo:[0]
     });
     
@@ -95,13 +98,23 @@ export class AdmrecorridosComponent implements OnInit{
     this.datosRutas.opc='RUTASEL';
     this.datosRutas.vID = parseInt(codigo);
     this.restService.consultatransporte(this.datosRutas).subscribe(respuesta=>{
+      
       this.listRutas = respuesta.body[0];
+
       this.formServicioVehiculo.patchValue({
         hora: this.listRutas[0].hora,
+        horafin: this.listRutas[0].horafin,
         id_tiposervicio: this.listRutas[0].id_tiposervicio,
         id_zona: this.listRutas[0].id_zona,
         origen: this.listRutas[0].origen,
-        destino: this.listRutas[0].destino
+        destino: this.listRutas[0].destino,
+        id_vehiculo: this.listRutas[0].id_vehiculo,
+        id_conductor: this.listRutas[0].id_conductor,
+        id_cliente: this.listRutas[0].id_cliente,
+        cdec: this.listRutas[0].cdec,
+        cuenta: this.listRutas[0].cuenta,
+        valor: this.listRutas[0].valor,
+        costo: this.listRutas[0].costo
       });
     });
   }
@@ -188,6 +201,10 @@ export class AdmrecorridosComponent implements OnInit{
       id: this.objetoData.data.id,
       fecha:this.objetoData.data.fecha.split('T')[0],
       hora:this.objetoData.data.hora,
+      horafin:this.objetoData.data.horafin,
+      precio:this.objetoData.data.precio,
+      costo:this.objetoData.data.costo,
+      valor:this.objetoData.data.valor,
       estado:this.objetoData.data.estado,
       origen:this.objetoData.data.origen,
       destino:this.objetoData.data.destino,

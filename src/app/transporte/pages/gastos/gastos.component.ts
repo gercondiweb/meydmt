@@ -46,15 +46,15 @@ export class GastosComponent implements OnInit{
 
   datosConsulta={
     opc:'',
-    vFechainicio:'',
-    vFechafin:''
+    vFechaInicio:'',
+    vFechaFin:''
   }
 
   cargargastos(fechainicio:string, fechafin:string){
 
     this.datosConsulta.opc='GASTOS';
-    this.datosConsulta.vFechainicio=fechainicio;
-    this.datosConsulta.vFechafin=fechafin;
+    this.datosConsulta.vFechaInicio=fechainicio;
+    this.datosConsulta.vFechaFin=fechafin;
 
     this.restService.consultatransporte(this.datosConsulta).subscribe(respuesta=>{
       this.listGastos=respuesta.body[0];

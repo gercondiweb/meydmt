@@ -20,7 +20,7 @@
           </div>
   
         </div>
-        <div class="card-body  mt-4">
+        <div class="card-body  mt-2">
           <form [formGroup]="formRuta">
             <div class="row g-2">
               <div class="mb-3 col-3">
@@ -50,6 +50,31 @@
               </div>
 
               <div class="mb-3 col-2">
+                <label for="exampleFormControlInput1" class="form-label">Hora Fin</label>
+                <input type="time" class="form-control" formControlName="horafin"  placeholder="">
+              </div>
+
+              <div class="mb-3 col-3">
+                <label for="clienteinput" class="form-label">Placa</label>
+                <select class="form-select" formControlName="id_tiposervicio"
+                        aria-label="propietario" >
+                    <option *ngFor="let ts of listVehiculos" [value]="ts.id">{{ts.placa}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-3">
+                <label for="exampleFormControlInput1" class="form-label">Valor</label>
+                <input type="number" class="form-control" formControlName="valor">
+              </div>
+
+              <div class="mb-3 col-3">
+                <label for="exampleFormControlInput1" class="form-label">Costo</label>
+                <input type="number" class="form-control" formControlName="costo"  placeholder="">
+              </div>
+
+              
+
+              <div class="mb-3 col-3">
                 <label for="clienteinput" class="form-label">Zona</label>
                 <select class="form-select" formControlName="id_zona"
                         aria-label="propietario" >

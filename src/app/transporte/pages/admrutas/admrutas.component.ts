@@ -5,11 +5,13 @@ import { DataSharingService } from '@/app/dashboard/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-admrutas',
   templateUrl: './admrutas.component.html',
-  styleUrl: './admrutas.component.css'
+  styleUrl: './admrutas.component.css',
+  providers: [CurrencyPipe]
 })
 export class AdmrutasComponent {
 
@@ -24,6 +26,7 @@ export class AdmrutasComponent {
   listTipoServ:any;
   listZonas:any;
   listCli:any;
+  listVehiculos: any;
 
   listUsu:any;
   columnUsu=['nombre', 'direccion', 'telefono', 'referencia']
@@ -33,7 +36,8 @@ export class AdmrutasComponent {
     private route: ActivatedRoute,
     private dataSharingService: DataSharingService,  // Servicio para compartir datos entre componentes
     private restService: RestService,
-    private router: Router
+    private router: Router,
+    private currencyPipe: CurrencyPipe
   ){}
 
   ngOnInit(): void {
@@ -43,11 +47,15 @@ export class AdmrutasComponent {
       id:[0],
       nombre: [''],
       hora: [''],
+      horafin:[''],
       origen: [''],
       destino: [''],
       id_tiposervicio: [0],
       id_zona: [0],
-      id_cliente:[0]
+      id_cliente:[0],
+      id_vehiculo:[0],
+      valor:[0],
+      costo:[0]
     });
 
     this.cargarMaestros();
@@ -77,6 +85,9 @@ export class AdmrutasComponent {
     this.restService.getMaestros({opc:'CLI'}).subscribe(respuesta=>{
       this.listCli = respuesta.body[0];
     });
+    this.restService.getMaestros({opc:'VEHICULO'}).subscribe(respuesta=>{
+      this.listVehiculos = respuesta.body[0];
+    });
   }
 
   cargarDatosRuta(){
@@ -89,11 +100,15 @@ export class AdmrutasComponent {
       id:this.objetoData.data.id,
       nombre: this.objetoData.data.nombre,
       hora: this.objetoData.data.hora,
+      horafin:this.objetoData.data.horafin,
       origen: this.objetoData.data.origen,
       destino: this.objetoData.data.destino,
       id_tiposervicio: this.objetoData.data.id_tiposervicio,
       id_zona: this.objetoData.data.id_zona,
-      id_cliente:this.objetoData.data.id_cliente
+      id_cliente:this.objetoData.data.id_cliente,
+      id_vehiculo:this.objetoData.data.id_vehiculo,
+      valor : this.objetoData.data.valor,
+      costo : this.objetoData.data.costo
     });
   }
 

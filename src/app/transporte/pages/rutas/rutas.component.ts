@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class RutasComponent implements OnInit {
 
   titulo = ['Administrador de Rutas'];
-  columnas = ['cliente', 'nombre', 'hora','origen','destino','zona'];
+  columnas = ['cliente', 'nombre', 'hora','origen','destino','tipo'];
   vDataSource!: MatTableDataSource<any,any>;
 
   listRutas : any;

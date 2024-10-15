@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataSharingService } from '../../../dashboard/services/services/data-sharing.service';
+import { AdmgastosComponent } from '@/app/transporte/pages/admgastos/admgastos.component';
+import { AdmdocumentosComponent } from '@/app/transporte/pages/admdocumentos/admdocumentos.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface ElementoTabla {
   nombre: string;
@@ -20,6 +23,8 @@ export class TabladinamicaTrComponent {
  @Input() filtro : boolean = true;
  @Input() manejaDoc : boolean = false;
  @Input() manejaGastos : boolean = true;
+ @Input() esDialogo : boolean = false;
+ @Input() admDialogo: Type<any>;
 
  applyFilter(event: Event) {
    const filterValue = (event.target as HTMLInputElement).value;
@@ -28,7 +33,8 @@ export class TabladinamicaTrComponent {
 
  constructor(private route: ActivatedRoute,
              private router: Router,
-             private dataSharingService: DataSharingService){}
+             private dataSharingService: DataSharingService,
+             private dialog: MatDialog){}
 
  editarElemento(elemento: ElementoTabla) {
    // Lógica para editar el elemento
@@ -40,8 +46,25 @@ export class TabladinamicaTrComponent {
 
    this.dataSharingService.setParams(param1, param2, data);
 
+   if(this.esDialogo){
+
+    const dialogRef = this.dialog.open(this.admDialogo, {
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation : false,
+      width : '900px',
+      data: {
+        tipo: 'EDITAR',
+        data: elemento,
+      }
+    });
+
+
+   }else{
+
    const route = '/' + this.formMaestro + '/';
    this.router.navigate([route,'Editar']);
+  }
 
    console.log('Editar:', elemento);
  }

@@ -175,5 +175,9 @@ export class RestService {
     return this.http.post('gastos', datos);
   }
 
+  public saveDocVehiculo(datos:any):Observable<any>{
+    return this.http.post('documento', datos);
+  }
+
 
 }

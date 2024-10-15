@@ -18,6 +18,9 @@ import { PropietariosComponent } from './pages/propietarios/propietarios.compone
 import { AdmpropietariosComponent } from './pages/admpropietarios/admpropietarios.component';
 import { GastosComponent } from './pages/gastos/gastos.component';
 import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
+import { Calendario1Component } from './pages/calendario1/calendario1.component';
+import { AdmdocumentosComponent } from './pages/admdocumentos/admdocumentos.component';
+import { Calendario2Component } from './pages/calendario2/calendario2.component';
 
 
 
@@ -37,7 +40,10 @@ import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
     PropietariosComponent,
     AdmpropietariosComponent,
     GastosComponent,
-    AdmgastosComponent
+    AdmgastosComponent,
+    Calendario1Component,
+    Calendario2Component,
+    AdmdocumentosComponent
   ],
   imports: [
     CommonModule,

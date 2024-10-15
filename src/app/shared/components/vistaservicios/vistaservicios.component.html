@@ -1,0 +1,27 @@
+<div class="vehicle-status-container">
+    <div *ngFor="let status of vehicleStatuses" class="status-row">
+      <div class="status-time">{{ status.time }}</div>
+      <div 
+        class="status-circle available" 
+        [style.backgroundColor]="getColor('available')" 
+        [matTooltip]="getDetails(status.details.available)"
+        matTooltipPosition="above">
+        {{ status.available }}
+      </div>
+      <div 
+        class="status-circle occupied" 
+        [style.backgroundColor]="getColor('occupied')" 
+        [matTooltip]="getDetails(status.details.occupied)"
+        matTooltipPosition="above">
+        {{ status.occupied }}
+      </div>
+      <div 
+        class="status-circle maintenance" 
+        [style.backgroundColor]="getColor('maintenance')" 
+        [matTooltip]="getDetails(status.details.maintenance)"
+        matTooltipPosition="above">
+        {{ status.maintenance }}
+      </div>
+    </div>
+  </div>
+  

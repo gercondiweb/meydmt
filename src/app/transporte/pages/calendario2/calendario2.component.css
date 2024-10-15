@@ -1,0 +1,25 @@
+.mat-header-cell,
+.mat-cell {
+  text-align: center;
+  min-width: 100px;
+}
+.mat-header-row,
+.mat-row {
+  height: 50px;
+}
+
+.status-container {
+  display: flex;
+  gap: 8px;
+}
+
+.status-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8rem;
+}

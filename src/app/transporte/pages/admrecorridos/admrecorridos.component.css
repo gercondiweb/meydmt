@@ -17,4 +17,11 @@
     color: white;
     font-style: italic;
   }
-  
+  .datoServicio{
+    background-color: rgb(242, 242, 241);
+    border-radius: 10px;
+  }
+
+  .divCostos{
+    margin-left: 0px;
+  }

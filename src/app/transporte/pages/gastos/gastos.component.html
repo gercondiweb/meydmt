@@ -1,65 +1,62 @@
 <div class="form-container bg-white p-3">
-    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
-      <div class="card">
-        <div class="card-header">
-  
-          <div class="row p-0">
-            <div class="col-6">
-              <h2>Gastos de Vehiculos</h2>
-            </div>
-            <div class="col-6 text-end">
-              <button mat-raised-button class="btnGuardar" (click)="agregarGasto('')">
-                <mat-icon>add</mat-icon>
-                Add
-              </button>
-            </div>
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1  pe-3 w-100 mb-2">
+      
+      <div class="col-2">
+        <div class="card">
+          <div class="card-header">
+            <h2>Filtros</h2>
           </div>
-  
-        </div>
-        <div class="card-body  mt-2">
-          <form [formGroup]="formGasto">
-            <div class="row g-2">
-
-              <div class="mb-3 col-3">
+          <div class="card-body">
+            <form [formGroup]="formGasto">
+              <div class="mb-3 row">
                 <label for="clienteinput" class="form-label">Placa del Vehiculo</label>
                 <input type="text" class="form-control" formControlName="placa"  placeholder="">
               </div>
 
-              <div class="mb-3 col-3">
+              <div class="mb-3 row">
                 <label for="clienteinput" class="form-label">Fecha Inicial</label>
                 <input type="date" class="form-control" formControlName="fechainicio"  placeholder="">
               </div>
 
-              <div class="mb-3 col-3">
+              <div class="mb-3 row">
                 <label for="exampleFormControlInput1" class="form-label">Fecha Fin</label>
                 <input type="date" class="form-control" formControlName="fechafin"  placeholder="">
               </div>
-
-              <div class="col-3 text-start p-4">
-                <button mat-raised-button color="primary" (click)="filtrarGastos()">
-                  <mat-icon>filter_alt</mat-icon>
-                  Filtrar
-                </button>
-              </div>
-  
-            </div>
-          </form>
-          <div class="row rowUsuarios">
-            <nav class="navbar sticky-top bg-body-tertiary">
-              <div class="container-fluid titulobarra bg-slate-700" >
-                <a class="navbar-brand" style="color: #fff;">Historico de Gastos</a>  
-              </div>
-  
-            </nav>
-  
-            <app-tabladinamica [columnas]="columnGastos"
-                    [dataSource]="listGastos"
-                    [filtro]="false"
-            ></app-tabladinamica>
+              
+            </form>
           </div>
         </div>
+      </div>
+      <div class="col">
+        <div class="card">
+            <div class="card-header">
+      
+              <div class="row p-0">
+                <div class="col-6">
+                  <h2>Gastos de Vehiculos</h2>
+                </div>
+                <div class="col-6 text-end">
+                  <button mat-raised-button class="btnGuardar" (click)="agregarGasto('')">
+                    <mat-icon>add</mat-icon>
+                    Nuevo
+                  </button>
+                </div>
+              </div>
+      
+            </div>
+            <div class="card-body  mt-2">
+              <div class="row rowUsuarios">
+      
+                <app-tabladinamica-tr [columnas]="columnGastos"
+                        [dataSource]="listGastos"
+                        [filtro]="false"
+                        [formMaestro]="'/transporte/admgastos'"
+                        [esDialogo]="true"
+                ></app-tabladinamica-tr>
+              </div>
+            </div>
+        </div>
     </div>
-    
          
     </span>
 </div>

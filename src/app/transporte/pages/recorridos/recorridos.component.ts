@@ -18,6 +18,8 @@ export class RecorridosComponent implements OnInit{
 
   listDatos: any; datos:any;
   listServicios:any; servicios:any;
+  listServFiltrado:any;
+
   colum = ['id', 'fecha', 'hora', 'tipo', 'cliente', 'placa','estado'];
 
   cards: any[] = [
@@ -61,6 +63,8 @@ export class RecorridosComponent implements OnInit{
     .subscribe(respuesta=>{
       this.listServicios = respuesta;
       this.servicios = this.listServicios.body[0];
+      this.listServFiltrado=this.servicios;
+      console.log(this.listServFiltrado);
     });
   }
 
@@ -69,7 +73,33 @@ export class RecorridosComponent implements OnInit{
       this.router.navigate([route,'Crear']);
   }
 
-  filtrar(estado : string){
+  filtrarEstado(estado : string){
+    this.listServFiltrado = this.servicios;
+    
+    switch(estado){
+      case 'Solicitados':
+        this.listServFiltrado= this.listServFiltrado.filter(servicio=>servicio.estado==='ASG'||servicio.estado==='ONR');
+        break;
+      case 'En Ejecucion':
+        this.listServFiltrado= this.listServFiltrado.filter(servicio=>servicio.estado==='INI');
+        break;
+      case 'Cancelados':
+        //this.datosBusqueda.estado = 'Cancelado';
+        break;
+      case 'Ejecutados':
+        //this.datosBusqueda.estado = 'Ejecutado';
+        break;
+      case 'Asignados':
+        //this.datosBusqueda.estado = 'Asignado';
+        break;
+      case 'Aplazado':
+        //this.datosBusqueda.estado = 'Aplazado';
+        break;
+    }
+
+  }
+
+  filtrarOtros(){
 
   }
 }

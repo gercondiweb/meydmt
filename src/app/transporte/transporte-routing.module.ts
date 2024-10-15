@@ -21,6 +21,8 @@ import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
 import { ForecastComponent } from './pages/forecast/forecast.component';
 import { RutasComponent } from './pages/rutas/rutas.component';
 import { AdmrutasComponent } from './pages/admrutas/admrutas.component';
+import { Calendario1Component } from './pages/calendario1/calendario1.component';
+import { Calendario2Component } from './pages/calendario2/calendario2.component';
 
 
 const routes: Routes = [
@@ -120,6 +122,14 @@ const routes: Routes = [
       {
         path: 'forecast',
         component:ForecastComponent
+      },
+      {
+        path: 'calendario',
+        component:Calendario1Component
+      },
+      {
+        path: 'calendario2',
+        component:Calendario2Component
       },
     ]
   },

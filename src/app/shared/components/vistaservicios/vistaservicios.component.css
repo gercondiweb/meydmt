@@ -1,0 +1,41 @@
+.vehicle-status-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .status-time {
+    width: 60px;
+    font-weight: bold;
+  }
+  
+  .status-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .available {
+    background-color: green;
+  }
+  
+  .occupied {
+    background-color: red;
+  }
+  
+  .maintenance {
+    background-color: orange;
+  }
+  

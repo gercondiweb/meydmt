@@ -21,6 +21,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatTooltip } from '@angular/material/tooltip';
 
 
 
@@ -53,7 +54,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatCheckboxModule,
     MatTabsModule,
-    CommonModule
+    CommonModule,
+    MatTooltip
   ],
   exports: [
     MatIcon,
@@ -80,7 +82,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatCheckboxModule,
     MatTabsModule,
-    MatSort
+    MatSort,
+    MatTooltip
   ]
 })
 export class MaterialModulModule { }

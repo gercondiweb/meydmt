@@ -13,4 +13,5 @@ export * from './pdf/pdf.component';
 export * from './demografico/demografico.component';
 export * from './navegacionprod/navegacionprod.component';
 export * from './campo-orden/campo-orden.component';
+export * from './vistaservicios/vistaservicios.component';
 
