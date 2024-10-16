@@ -1,9 +1,10 @@
-import { DataSharingService, RestService } from '@/app/dashboard/services';
+import { RestService } from '@/app/transporte/services/rest.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModaltarifaComponent } from '../modaltarifa/modaltarifa.component';
+import { DataSharingService } from '../../services/data-sharing.service';
 
 @Component({
   selector: 'app-tarifas',

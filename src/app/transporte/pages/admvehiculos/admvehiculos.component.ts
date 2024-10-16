@@ -1,5 +1,5 @@
 import { DataSharingService } from '@/app/dashboard/services/services/data-sharing.service';
-import { RestService } from '@/app/dashboard/services/services/rest.service';
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -8,6 +8,8 @@ import { Console } from 'console';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 import { AdmdocumentosComponent } from '../admdocumentos/admdocumentos.component';
+import { RestService } from '../../services/rest.service';
+import { AnyMxRecord } from 'dns';
 
 @Component({
   selector: 'app-admvehiculos',
@@ -164,57 +166,13 @@ export class AdmvehiculosComponent implements OnInit{
 
   validarPlaca(){
 
-    let continuar = false;
-
-      this.datosConsulta.opc='CPLACA';
-      this.datosConsulta.vplaca = this.formVehiculo.get('placa')?.value;
-      this.datosConsulta.vid_propietario = this.formVehiculo.get('id_proveedor')?.value;
-
-     /*  this.restService.consultatransporte(this.datosConsulta).subscribe(respuesta=>{
-          if(respuesta.body[0].length > 0){
-            //alert('La placa ingresada ya se encuentra en uso.');
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: 'La placa ingresada ya se encuentra en uso.',
-              showConfirmButton: false,
-              timer: 1500
-            });
-            return;
-          }else{
-            this.placaExiste=false;
-          }
-        });
-            continuar=true;
-          }
-        }); */
-
-        if(continuar){
-
-        //const res = await lastValueFrom(this.restService.vehiculos(this.formVehiculo.value));
-
-       // this.response = res;
-        if(!this.response.error){
-          await Swal.fire({
-            position: "center",
-            icon: "success",
-            title: this.response.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          this.registroGuardado = true;
-          this.formVehiculo.get('placa').disable();
-        }
-      }
   }
 
   agregarFoto(){
 
   }
-  
-  agregarDocumento(elemento: any){
 
-  agregarDocumento(){
+  agregarDocumento(elemento:any){
     //mostrar modal para agregar documento
     const dialogRef = this.dialog.open(AdmdocumentosComponent, {
       disableClose: true,

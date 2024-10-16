@@ -14,13 +14,7 @@ import { NavegacionComponent,
           DemograficoComponent,
           NavegacionprodComponent,
           CampoOrdenComponent,
-<<<<<<< HEAD
           VistaserviciosComponent
-=======
-          ModalComponent,
-          PaginationComponent,
-          TablaConsultaComponent,
->>>>>>> origin/dev-juliana
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -51,14 +45,9 @@ import { TabladinamicaTrComponent } from '../../components/tabladinamica-tr/tabl
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-<<<<<<< HEAD
+    CampoOrdenComponent,
     TabladinamicaTrComponent,
     VistaserviciosComponent
-=======
-    ModalComponent,
-    PaginationComponent,
-    TablaConsultaComponent,
->>>>>>> origin/dev-juliana
   ],
   imports: [
     CommonModule,
@@ -95,14 +84,8 @@ import { TabladinamicaTrComponent } from '../../components/tabladinamica-tr/tabl
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-<<<<<<< HEAD
     TabladinamicaTrComponent,
     VistaserviciosComponent
-=======
-    ModalComponent,
-    PaginationComponent,
-    TablaConsultaComponent,
->>>>>>> origin/dev-juliana
   ]
 })
 export class SharedModule { }

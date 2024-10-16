@@ -21,6 +21,7 @@ import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
 import { Calendario1Component } from './pages/calendario1/calendario1.component';
 import { AdmdocumentosComponent } from './pages/admdocumentos/admdocumentos.component';
 import { Calendario2Component } from './pages/calendario2/calendario2.component';
+import { TablerotranspComponent } from './pages/tablerotransp/tablerotransp.component';
 
 
 
@@ -43,7 +44,8 @@ import { Calendario2Component } from './pages/calendario2/calendario2.component'
     AdmgastosComponent,
     Calendario1Component,
     Calendario2Component,
-    AdmdocumentosComponent
+    AdmdocumentosComponent,
+    TablerotranspComponent
   ],
   imports: [
     CommonModule,

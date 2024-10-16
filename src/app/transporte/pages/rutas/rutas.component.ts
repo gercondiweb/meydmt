@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '@/app/dashboard/services';
+import { RestService } from '@/app/transporte/services/rest.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 
