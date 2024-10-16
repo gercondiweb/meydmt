@@ -175,7 +175,7 @@ export class AdmContratosComponent implements OnInit{
       console.log('CLIENTES ',this.listClientes.body[0])
     });
   }
-
+  
   regresar(){
     this.router.navigateByUrl('/dashboard/contratos');
   }

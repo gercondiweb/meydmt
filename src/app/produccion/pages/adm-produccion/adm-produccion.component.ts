@@ -1,22 +1,31 @@
 import { DataSharingService } from '@/app/dashboard/services';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdrestserviceService } from '../../services/prodrestservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, lastValueFrom, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import  moment from 'moment'
+import Swal from 'sweetalert2';
 
 export interface Campo {
   id: string;
   id_seccion: string;
   nombre: string;
+  tipo: string;
 }
 
 export interface Seccion {
   id: string;
   secciones: string;
   campos: Campo[]; // Relacionar los campos de cada sección
+}
+
+export interface datosOrden {
+  idCampoFormato : number,
+  idPropiedad : number,
+  valor : any
 }
 
 @Component({
@@ -27,6 +36,7 @@ export interface Seccion {
 export class AdmProduccionComponent implements OnInit {
 
   frmCabeceraOrden: FormGroup;
+  frmDetalleOrden: FormGroup;
 
   accion : any;
   activarSecciones: any = true;
@@ -42,6 +52,15 @@ export class AdmProduccionComponent implements OnInit {
     opc : ''
   }
 
+  consultaSrv={
+    opc:'ESTPROD'
+  }
+
+  consultaFormato={
+    opc:'',
+    vID:0
+  }
+
   listPrioridad : any;
   prioridad : any[];
 
@@ -51,37 +70,55 @@ export class AdmProduccionComponent implements OnInit {
   listSecciones : any;
   secciones : any[];
 
+  listClientes : any;
+  lClientes : any[];
+
   listCampos : any;
   campos : any[];
 
+  lCamposC : any;
+  camposC : any[];
+
+  listValCampos : any;
+  valCampos : any[];
+
+  listPropieCampo:any;
+  propieCampo:any[];
+
+  lEstado:any;
+
+  //este arreglo se alimentara de los cambios que realice el usuario en las propiedades de los campos
+  listDatosModificados : any[] = [];
 
   constructor(
     private dataSharingService: DataSharingService,
     private router: Router,
     private route: ActivatedRoute,
     private restService : ProdrestserviceService,
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     public dialog: MatDialog) { }
 
   ngOnInit() {
 
-    this.frmCabeceraOrden = this.formBuilder.group({
+    this.frmCabeceraOrden = this.fb.group({
       id : [0,[Validators.required]],
       OIT: ['',[Validators.required]],
       equipo:[],
       estado:[],
-      fechaautorizacion:[],
-      fechaentregacotizacion:[],
-      fechaentrada:[],
-      horaentrada:[],
-      fechaentregapactada:[],
-      fechasalida:[],
+      fechaautorizacion:[moment().format('YYYY-MM-DD')],
+      fechaentregacotizacion:[moment().format('YYYY-MM-DD')],
+      fechaentrada:[moment().format('DD/MM/YYY')],
+      horaentrada:[moment().format('HH:mm')],
+      fechaentregapactada:[moment().format('YYYY-MM-DD')],
+      fechasalida:[moment().format('YYYY-MM-DD')],
+      horasalida:[moment().format('HH:mm')],
       id_cliente:[0,[Validators.required]],
       cliente:[],
       nit:[],
       direccion:[],
       correo:[],
       telefono:[],
+      celular:[],
       autoriza:[],
       id_formato:[],
       id_prioridad:[],
@@ -94,8 +131,7 @@ export class AdmProduccionComponent implements OnInit {
       usuariorecibetaller:[]
     });
 
-
-
+    this.frmDetalleOrden = this.fb.group({});
 
     this.accion = this.route.snapshot.paramMap.get('accion') || '';
 
@@ -104,12 +140,17 @@ export class AdmProduccionComponent implements OnInit {
     if(this.accion === "Editar"){
       this.activarSecciones = true;
 
+      this.frmCabeceraOrden.get('id_formato').disable();
+
       this.cargarOrden();
-      this.cargarDetalleOrden();
+
 
     }else{
+      this.crearOIT();
       this.frmCabeceraOrden.get('id')?.setValue(0);
     }
+
+    this.frmCabeceraOrden.get('OIT').disabled;
 
 
   }
@@ -126,6 +167,18 @@ export class AdmProduccionComponent implements OnInit {
         this.listFormatos=respuesta;
         this.formatos=this.listFormatos.body[0];
       })
+
+      this.consultaFormato.opc='CLI'; //lee los campos del formato
+
+      this.restService.getMaestros(this.consultaFormato).subscribe(respuesta=>{
+        this.lClientes=respuesta.body[0];
+
+      })
+
+      this.datosCMaestro.opc = 'ESTADO';
+      this.restService.getMaestros(this.datosCMaestro).subscribe(respuesta=>{
+        this.lEstado=respuesta[0];
+      })
   }
 
   cargarOrden(){
@@ -133,6 +186,7 @@ export class AdmProduccionComponent implements OnInit {
     this.param2 = this.dataSharingService.getParam2();
     this.objetoData = this.dataSharingService.getData();
 
+    console.log(this.objetoData)
 
     this.frmCabeceraOrden.patchValue({
       id : this.objetoData.data.id,
@@ -151,6 +205,7 @@ export class AdmProduccionComponent implements OnInit {
       direccion:this.objetoData.data.direccion,
       correo:this.objetoData.data.correo,
       telefono:this.objetoData.data.telefono,
+      celular:'',
       autoriza:this.objetoData.data.autoriza,
       id_formato:this.objetoData.data.id_formato,
       prioridad:this.objetoData.data.id_prioridad,
@@ -163,7 +218,7 @@ export class AdmProduccionComponent implements OnInit {
       usuariorecibetaller:this.objetoData.data.usuariorecibetaller
     });
 
-    this.cargarsecciones(this.objetoData.data.id_formato);
+    this.cargarFormato(this.objetoData.data.id_formato);
   }
 
   datosFormato={
@@ -173,7 +228,30 @@ export class AdmProduccionComponent implements OnInit {
     vIDFORMATO:0
   }
 
-  cargarsecciones(idFormato : any){
+  consecutivoOit: any;
+
+  async crearOIT(){
+    this.datosFormato.opc='LAST-CONSECUT';
+    const idorden = await lastValueFrom(this.restService.getOrdenes(this.datosFormato));
+
+    console.log(idorden);
+
+    let numero = idorden.body[0][0].id + 1;
+
+    numero = numero.toString().padStart(4,'0');
+
+    const mesActual= moment().format('MM');
+    const anioActual=moment().format('YYYY');
+
+    console.log(numero);
+
+    this.consecutivoOit = `${numero}-${mesActual}-${anioActual}`;
+
+    this.frmCabeceraOrden.get('OIT').setValue(this.consecutivoOit);
+
+  }
+
+  cargarFormato(idFormato : any){
     this.datosFormato.opc='SEC-FORMATO';
     this.datosFormato.vIDFORMATO=idFormato;
 
@@ -182,14 +260,41 @@ export class AdmProduccionComponent implements OnInit {
       this.secciones=this.listSecciones.body[0];
     })
 
-    this.datosFormato.opc='CAMPOS-FORMATO';
+    /*this.consultaFormato.opc='CAMPO-FORMATO'; //lee los campos del formato
+    this.consultaFormato.vID=idFormato;
+
+    this.restService.getCampos(this.consultaFormato).subscribe(respuesta=>{
+      this.lCamposC=respuesta;
+      this.camposC=this.lCamposC.body[0];
+
+    })*/
+
+    this.datosFormato.opc='CAMPOS-FORMATO'; //carga todos los valores de los campos del formato
     this.datosFormato.vIDFORMATO=idFormato;
 
     this.restService.getOrdenes(this.datosFormato).subscribe(respuesta=>{
       this.listCampos=respuesta;
       this.campos=this.listCampos.body[0];
 
-      console.log('CAMPOS',this.campos);
+    })
+
+    this.datosFormato.opc='VALOR-CAMPOS'; //carga todos los valores de los campos del formato
+    this.datosFormato.vIDFORMATO=idFormato;
+    this.datosFormato.vID = this.objetoData.data.id;
+
+    this.restService.getOrdenes(this.datosFormato).subscribe(respuesta=>{
+      this.listValCampos=respuesta;
+      this.valCampos=this.listValCampos.body[0];
+
+    })
+
+    this.datosFormato.opc='PROPIE-CAMPO';
+    this.datosFormato.vIDFORMATO=idFormato;
+
+    this.restService.getOrdenes(this.datosFormato).subscribe(respuesta=>{
+      this.listPropieCampo=respuesta;
+      this.propieCampo=this.listPropieCampo.body[1];
+      //console.log('respuesta', respuesta.body[1])
     })
 
   }
@@ -208,19 +313,120 @@ export class AdmProduccionComponent implements OnInit {
     );
   }
 
-  secci:any;
-
-  cargarDetalleOrden(){
-
+  datoDetalle={
+      opc: '',
+      vIDORDEN: 0,
+      vIDCAMPFORMATO: 0,
+      vIDPROPIEDAD: 0,
+      vVALOR: ''
   }
 
-  async guardarOrden(){
+  async guardarCabecera(){
+    //Guardamos la cabecera y capturamos el insertid
+    const ordenCabecera = await lastValueFrom(this.restService.saveOrden(this.frmCabeceraOrden.value));
+    if (this.accion === 'Editar'){
+      
+      this.guardarDetalleOrden();
 
+      this.frmCabeceraOrden.get('id_formato').disable();
 
+      this.cargarFormato(this.frmCabeceraOrden.get('id_formato').value);
+
+    }else{
+
+    }
+    if (ordenCabecera.data.id > 0){
+      
+    } 
+    
+  }
+
+  async guardarDetalleOrden(){
+    const id_Orden = this.objetoData.data.id;
+    //Guardaos el detalle de la orden
+
+    // validar si el campo existe en ordendetalle si existe actualizar el valor sino 
+    //insertar un nuevo campo en orden detalle
+    console.log('Datos MOdificados', this.listDatosModificados);
+
+    this.listDatosModificados.forEach((campos, idexcampo)=>{
+      console.log('campos ',campos)
+        this.datoDetalle.vIDCAMPFORMATO = campos[1];
+        this.datoDetalle.vIDORDEN = id_Orden;
+        this.datoDetalle.vIDPROPIEDAD = campos[2];
+        this.datoDetalle.vVALOR = campos[3];
+
+        if(campos[0] !== null){
+          // actualizar orden detalle
+          this.datoDetalle.opc = 'UPD-DORDEN';
+          try{
+            const campo = lastValueFrom(this.restService.saveOrdenDetalle(this.datoDetalle));
+          }catch(e: any){
+              console.log(e)       
+          }
+
+        }else{
+          // insertar nuevo campo en orden detalle
+          this.datoDetalle.opc = 'INS-DORDEN';
+          try{
+            const campo = lastValueFrom(this.restService.saveOrdenDetalle(this.datoDetalle));
+          }catch(e: any){
+              console.log(e)       
+          }
+          console.log('Insertar: ', campos[3])
+          
+        }
+    });
+    this.listDatosModificados = [];
   }
 
   regresar(){
     this.router.navigateByUrl('/produccion/produccion');
+  }
+
+  vNit :any;
+  selectCli(event: any){
+    const selectedId = (event.target as HTMLSelectElement).value;
+    // Buscar el cliente seleccionado por ID
+    const selectedClient = this.lClientes.find(cli => cli.Id === +selectedId);
+    // Si se encuentra, actualizar el valor del input NIT
+    if (selectedClient) {
+      this.frmCabeceraOrden.patchValue({
+        nit: selectedClient.Nit
+      });
+    } else {
+      this.frmCabeceraOrden.patchValue({
+        nit: ''
+      });
+    }
+  }
+  
+  
+
+  onChange(event: any, idordendetalle:any, campo: any, propiedad: any, escheck: boolean ){
+    
+    let nuevoValor : any;
+
+    if(escheck){
+      nuevoValor = event.target.checked ? 1 : 0;
+    } else{
+      nuevoValor = event.target.value;
+    }
+    let nuevoArreglo :any[] = [idordendetalle, campo, propiedad, nuevoValor];
+
+    console.log('id_ordendetalle =',idordendetalle,  'id_campo = ', campo, ' id_propiedad= ', propiedad, ' Nuevo Valor = ', nuevoValor);
+    
+    // Validamos si en el arreglo existe un campo con el mismo id y propiedad
+    // Si existe, actualizamos el valor
+    // Si no, agregamos un nuevo objeto al arreglo con el id_campo y propiedad y el nuevo valor
+    let item = this.listDatosModificados.find( d => d[0] === campo && d[1] === propiedad);
+    if(item){
+      item[2] = nuevoValor;
+    }else{
+     // this.listDatosModificados.push(campo,propiedad,nuevoValor);
+      this.listDatosModificados.push(nuevoArreglo);
+    }
+
   }
 
 }

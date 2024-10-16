@@ -10,12 +10,79 @@ export class ProdrestserviceService {
 
   constructor(private http: HttpClient) { }
 
+  public saveOrden(datosOrden:any): Observable<any>{
+    return this.http.post('orden', datosOrden); 
+  }
+
   public getOrdenes(datosConsulta:any): Observable<any>{
-    return this.http.post('ordenes/consultasorden', datosConsulta); // GET http://localhost:4000/api/ordenes
+    return this.http.post('orden/consultasorden', datosConsulta); 
   }
 
   public getMaestros(datosMaestro:any): Observable<any>{
-    return this.http.post('consultaservicio/serv', datosMaestro); // GET http://localhost:4000/api/clientes
+    return this.http.post('consultaservicio/serv', datosMaestro); 
+  }
+
+  public getFormatos(datosConsulta:any): Observable<any>{
+    return this.http.post('formatos/consultaformato', datosConsulta); 
+  }
+
+  public crearFormato( datosConsulta: any ):Observable<any>{
+    console.log(datosConsulta);
+    return this.http.post<{ body: { formato: any }}>('formatos',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+
+  public getCampos(datosConsulta:any): Observable<any>{
+    return this.http.post('campoformato/consulta', datosConsulta); 
+  }
+
+  public crearCampos(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('campos',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+
+  public getSeccion(datosConsulta:any): Observable<any>{
+    return this.http.post('consultaservicio/serv', datosConsulta); 
+  }
+
+  public crearSeccion(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('secciones',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+  public getPropiedades(datosConsulta:any): Observable<any>{
+    return this.http.post('consultaservicio/serv', datosConsulta); 
+  }
+
+  public crearPropiedades(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('propiedad',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+  public getTipoPropiedades(datosConsulta:any): Observable<any>{
+    return this.http.post('consultaservicio/serv', datosConsulta); 
+  }
+
+  public crearTipoPropiedades(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('tipopropiedad',datosConsulta)
+    .pipe( map( ({ body }) => body ) );
+  }
+  public getOrden(datosConsulta:any): Observable<any>{
+    return this.http.post('campoformato/consulta', datosConsulta); 
+  }
+
+  public crearOrden(datosConsulta:any):Observable<any>{
+    return this.http.post<{ body: { formato: any }}>('campoformato',datosConsulta)
+    .pipe( map( ({ body }) => body ) ); 
+  }
+
+  public getCrearcampoFormato(datosConsulta:any): Observable<any>{
+    return this.http.post('campoformato/operacion', datosConsulta); 
+  }
+  public CrearcampoFormato(datosConsulta:any):Observable<any>{
+    return this.http.post('campoformato/operacion',datosConsulta);
+  }
+
+  public saveOrdenDetalle(datos:any): Observable<any>{
+    return this.http.post('ordendetalle/operacion', datos); 
   }
 
 }

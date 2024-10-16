@@ -105,7 +105,7 @@ export class AdmvehiculosComponent implements OnInit{
       this.vPropie = rta.body[0];
       this.listPropie = this.vPropie;
     })
-    
+
   }
 
   cargarDatos(){
@@ -137,6 +137,10 @@ export class AdmvehiculosComponent implements OnInit{
       this.vDocV = rta.body[0];
       this.listDocV = this.vDocV;
     })
+   /*    this.restService.consultatransporte(this.datosConsulta).subscribe((rta: any) => {
+        this.vDocV = rta.body[0];
+        this.listDocV = this.vDocV;
+      }) */
   }
 
   async guardarVehiculo(){
@@ -159,11 +163,14 @@ export class AdmvehiculosComponent implements OnInit{
   }
 
   validarPlaca(){
+
+    let continuar = false;
+
       this.datosConsulta.opc='CPLACA';
       this.datosConsulta.vplaca = this.formVehiculo.get('placa')?.value;
       this.datosConsulta.vid_propietario = this.formVehiculo.get('id_proveedor')?.value;
 
-      this.restService.consultatransporte(this.datosConsulta).subscribe(respuesta=>{
+     /*  this.restService.consultatransporte(this.datosConsulta).subscribe(respuesta=>{
           if(respuesta.body[0].length > 0){
             //alert('La placa ingresada ya se encuentra en uso.');
             Swal.fire({
@@ -178,6 +185,27 @@ export class AdmvehiculosComponent implements OnInit{
             this.placaExiste=false;
           }
         });
+            continuar=true;
+          }
+        }); */
+
+        if(continuar){
+
+        //const res = await lastValueFrom(this.restService.vehiculos(this.formVehiculo.value));
+
+       // this.response = res;
+        if(!this.response.error){
+          await Swal.fire({
+            position: "center",
+            icon: "success",
+            title: this.response.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.registroGuardado = true;
+          this.formVehiculo.get('placa').disable();
+        }
+      }
   }
 
   agregarFoto(){
@@ -185,6 +213,8 @@ export class AdmvehiculosComponent implements OnInit{
   }
   
   agregarDocumento(elemento: any){
+
+  agregarDocumento(){
     //mostrar modal para agregar documento
     const dialogRef = this.dialog.open(AdmdocumentosComponent, {
       disableClose: true,

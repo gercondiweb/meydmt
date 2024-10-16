@@ -1,0 +1,132 @@
+<div class="form-container bg-white p-3">
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+      <div class="card">
+        <div class="card-header">
+  
+          <div class="row">
+            <div class="col-6">
+              <h2>Registro de Ingreso de Equipo</h2>
+            </div>
+            <div class="col-6 text-end">
+              
+              <button class="btnGuardar" mat-raised-button (click)="guardarCabecera()">
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+
+            </div>
+          </div>
+  
+        </div>
+        <div class="card-body">
+          <form [formGroup]="frmOrden">
+            <div class="row g-2">
+              <div class=" col-4">
+                <label for="nitinput" class="form-label">OIT</label>
+                <input type="text" class="form-control" formControlName="OIT" id="oitinput">
+              </div>
+              <div class=" col-4">
+                <label for="clienteinput" class="form-label">Cliente</label>
+                <select class="form-select" formControlName="id_cliente" aria-label="Prioridad" >
+                  <option *ngFor="let cli of lClientes" [value]="cli.Id">{{cli.Cliente}}
+                  </option>
+                </select>
+              </div>
+              
+              <div class="form-group col-4">
+                <label for="clienteinput" class="form-label">Equipo</label>
+                <input type="text" class="form-control" formControlName="equipo"  
+                        style="text-transform: uppercase;">    
+              </div>
+              <div class="form-group col-4">
+                <label for="clienteinput" class="form-label">Tag</label>
+                <input type="text" class="form-control" formControlName="tag"  
+                        style="text-transform: uppercase;">    
+              </div>
+              <div class="form-group col-4">
+                <label for="clienteinput" class="form-label">Ubicación</label>
+                <input type="text" class="form-control" formControlName="ubicacion"  
+                        style="text-transform: uppercase;">    
+              </div>
+              <div class=" col-4">
+                <label for="clienteinput" class="form-label">Prioridad</label>
+                <select class="form-select" formControlName="id_prioridad" aria-label="Prioridad" >
+                  <option *ngFor="let pri of lPrioridad" [value]="pri.codigo">{{pri.prioridad}}
+                  </option>
+                </select>
+              </div>
+              
+  
+              <div class=" col-2">
+                <label for="exampleFormControlInput1" class="form-label">Solicitud</label>
+                <input type="text" class="form-control" formControlName="solicitud"  
+                        style="text-transform: uppercase;">
+              </div>
+  
+              <div class=" col-4">
+                  <label for="exampleFormControlInput1" class="form-label">Autorizador</label>
+                  <input type="text" class="form-control" formControlName="autoriza" 
+                        style="text-transform: uppercase;">
+              </div>
+  
+              <div class=" col-6">
+                <label for="exampleFormControlInput1" class="form-label">Correo</label>
+                <input type="email" class="form-control" formControlName="correo" 
+                        placeholder="example@yourcompany.com">
+              </div>
+  
+              <div class=" col-2">
+                  <label for="exampleFormControlInput1" class="form-label">Celular</label>
+                  <input type="text" class="form-control" formControlName="celular" placeholder="">
+              </div>
+  
+              <div class="mt-2 col-2">
+                <label class="form-label">Fecha Entrada</label>
+                <input type="date" class="form-control" formControlName="fechaentrada" placeholder="">
+              </div>
+              <div class=" col-2">
+                <label class="form-label">Hora Entrada</label>
+                <input type="time" class="form-control" formControlName="horaentrada" placeholder="">
+              </div>
+              <div class=" col-6">
+                <label for="exampleFormControlInput1" class="form-label">Tipo Formato</label>
+                <select class="form-select" formControlName="id_formato" aria-label="Prioridad">
+                  <option *ngFor="let formato of lFormatos" [value]="formato.id">{{formato.formato}}</option>
+                </select>
+              </div>
+              
+              <div class=" col-3">
+                  <label for="exampleFormControlInput1" class="form-label">Usuario Entrega Campo</label>
+                  <input type="text" class="form-control" formControlName="usuarioentregacampo" 
+                  style="text-transform: uppercase;" placeholder="">
+              </div>
+              <div class=" col-3">
+                  <label for="exampleFormControlInput1" class="form-label">Usuario Entrega Taller</label>
+                  <input type="text" class="form-control" formControlName="usuarioentregataller" 
+                  style="text-transform: uppercase;" placeholder="">
+              </div>
+              <div class=" col-3">
+                  <label for="exampleFormControlInput1" class="form-label">Usuario Recibe Campo</label>
+                  <input type="text" class="form-control" formControlName="usuariorecibecampo" 
+                  style="text-transform: uppercase;" placeholder="">
+              </div>
+              <div class=" col-3">
+                <label for="exampleFormControlInput1" class="form-label">Usuario Recibe Taller</label>
+                <input type="text" class="form-control" formControlName="usuariorecibetaller" 
+                style="text-transform: uppercase;" placeholder="">
+            </div>
+
+            <div class="form-group">
+                <label for="clienteinput" class="form-label">Descripcion</label>
+                <input type="text" class="form-control" formControlName="descripcion"  
+                        style="text-transform: uppercase;">    
+              </div>
+
+
+            </div>
+  
+          </form>
+        </div>
+      </div>
+      </span>
+</div>

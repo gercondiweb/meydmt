@@ -1,0 +1,14 @@
+.btnGuardar{
+  background: green;
+  color: white;
+  margin-left: 5px;
+}
+
+.form-input{
+  width: 50px;
+}
+
+.tablacampos{
+  border: beige;
+  border-style: solid;
+}

@@ -1,3 +1,21 @@
 export * from './tableroprod/tableroprod.component';
 export * from './produccion/produccion.component';
 export * from './adm-produccion/adm-produccion.component';
+export * from './formatos/formatos.component';
+export * from './secciones/secciones.component';
+export * from './propiedades/propiedades.component';
+export * from './campos/campos.component';
+export * from './tipopropiedades/tipopropiedades.component';
+export * from './adm-configformato/adm-configformato.component';
+export * from './adm-seccion/adm-seccion.component';
+export * from './adm-campos/adm-campos.component';
+export * from './adm-propiedad/adm-propiedad.component';
+export * from './adm-tipopropiedad/adm-tipopropiedad.component';
+export * from './admin-campo/admin-campo.component';
+export * from './admin-seccion/admin-seccion.component';
+export * from './consulta-integral/consulta-integral.component';
+
+
+
+
+

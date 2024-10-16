@@ -1,8 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [(opened)]="drawerOpened">
 
     <mat-card-header>
       <div mat-card-avatar class="example-header-image" routerLink="/dashboard/tablero">
@@ -13,36 +11,45 @@
     <mat-toolbar>Meyd-MT</mat-toolbar>
 
     <mat-nav-list>
-      @for(item of items; track item){
-        <app-item-navigate [itemNav]="item" />
+      <ng-container *ngFor="let item of items; trackBy: trackByFn">
+        <app-item-navigate [itemNav]="item" (click)="toggleDrawer()"></app-item-navigate>
         <mat-divider></mat-divider>
-        @if(item.submenu){
-          @for(subitem of item.submenu; track subitem){
-            <app-item-navigate class="submenu" [itemNav]="subitem"></app-item-navigate>
+        <ng-container *ngIf="item.submenu">
+          <ng-container *ngFor="let subitem of item.submenu; trackBy: trackByFn">
+            <app-item-navigate class="submenu" [itemNav]="subitem" (click)="toggleDrawer()"></app-item-navigate>
             <mat-divider></mat-divider>
-          }
-        }
-      }
+          </ng-container>
+        </ng-container>
+      </ng-container>
     </mat-nav-list>
 
   </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary" class="w- 100 d-flex justify-content-end">
-      @if (isHandset$ | async) {
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-      }
 
-      <button type="button" class="flex-center btn btn-outline-light" (click)="logOut()">
-        <mat-icon>exit_to_app</mat-icon>
-        Salir
-      </button>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="w-100 d-flex justify-content-between">
+      <div class="d-flex align-items-center">
+
+
+        <div class="logo-circle" *ngIf="!drawerOpened">
+          <img src="assets/logo.png" alt="Logo" class="logo-small">
+        </div>
+
+
+        <ng-container *ngIf="(isHandset$ | async) || !drawerOpened">
+          <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+        </ng-container>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <button type="button" class="flex-center btn btn-outline-light" (click)="logOut()">
+          <mat-icon>exit_to_app</mat-icon>
+          Salir
+        </button>
+      </div>
     </mat-toolbar>
-    <ng-content/>
+
+    <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

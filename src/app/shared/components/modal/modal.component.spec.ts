@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FrmMaestroComponent } from './frm-maestro.component';
+import { ModalComponent } from './modal.component';
 
-describe('FrmMaestroComponent', () => {
-  let component: FrmMaestroComponent;
-  let fixture: ComponentFixture<FrmMaestroComponent>;
+describe('ModalComponent', () => {
+  let component: ModalComponent;
+  let fixture: ComponentFixture<ModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FrmMaestroComponent]
+      imports: [ModalComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FrmMaestroComponent);
+    fixture = TestBed.createComponent(ModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

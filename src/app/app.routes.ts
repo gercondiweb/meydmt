@@ -20,6 +20,12 @@ export const routes: Routes = [
         path:'produccion',
         loadChildren: () => import('./produccion/produccion.module')
         .then(m => m.ProduccionModule)
+ 
+      },
+      {
+        path:'inicio',
+        loadChildren: ()=> import('./inicio/inicio.module')
+        .then(m => m.InicioModule)
       },
       {
         path:'transporte',
@@ -34,6 +40,11 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'auth',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        redirectTo: 'inicio/home',
         pathMatch: 'full'
       }
 ];

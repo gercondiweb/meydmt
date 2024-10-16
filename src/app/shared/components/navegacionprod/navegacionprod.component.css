@@ -35,3 +35,54 @@
 button {
   cursor: pointer;
 }
+
+.logo-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; 
+  background-color: white; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.logo-small {
+  height: 25px;
+  width: 25px; 
+}
+
+.sidenav {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidenav.mat-drawer-closed {
+  width: 60px;
+}
+
+.mat-nav-list .mat-icon {
+  font-size: 24px;
+  margin-right: 16px;
+}
+
+.mat-nav-list .mat-icon + span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.mat-nav-list .mat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.mat-nav-list .mat-list-item span {
+  display: none;
+}
+
+.mat-nav-list .mat-list-item span[ng-reflect-ng-if="true"] {
+  display: inline;
+}
+
+

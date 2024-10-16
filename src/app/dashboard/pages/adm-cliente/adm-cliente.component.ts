@@ -146,7 +146,7 @@ export class AdmClienteComponent implements OnInit {
     this.consultaCliente.opc = 'AREAS';
     this.consultaCliente.vIDCLIENTE = this.objetoData.data.Id;;
 
-    console.log(this.consultaCliente)
+    //console.log(this.consultaCliente)
 
     this.restService.getClientes(this.consultaCliente).subscribe((data: any) => {
       this.vArea = data.body[0];
@@ -235,7 +235,7 @@ export class AdmClienteComponent implements OnInit {
       width : '900px',
       data: {
         tipo: 'Crear',
-        idSucur: vId
+        idSucursal: vId
       }
 
     });
@@ -248,7 +248,7 @@ export class AdmClienteComponent implements OnInit {
     });
   }
 
-  editarArea(){
+  editarArea(vID:any, vIdSucur: any){
     const dialogRef = this.dialog.open(AdmAreasComponent, {
       disableClose: true,
       autoFocus: true,
@@ -256,7 +256,8 @@ export class AdmClienteComponent implements OnInit {
       width : '900px',
       data: {
         tipo: 'Editar',
-        data: this.dataSharingService.getData()
+        idArea: vID,
+        idSucursal: vIdSucur
       }
 
     });

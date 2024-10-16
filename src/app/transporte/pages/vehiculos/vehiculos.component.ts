@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './vehiculos.component.css'
 })
 export class VehiculosComponent implements OnInit {
-  
+
   titulo :any[] = ['Vehiculos Registrados'];
   vDataSource!: MatTableDataSource<any,any>;
   columnas =['id','placa', 'tipo','capacidad', 'id_estado', 'proveedor', 'activo'];
@@ -19,8 +19,8 @@ export class VehiculosComponent implements OnInit {
 
   datosConsulta={
     opc: 'ALL',
-    vplaca: 0, 
-    vID: 0, 
+    vplaca: 0,
+    vID: 0,
     vid_propietario:0
   }
 
@@ -35,10 +35,10 @@ export class VehiculosComponent implements OnInit {
 
   consultarVehiculos(){
     this.datosConsulta.opc='ALL';
-    this.restService.consultatransporte(this.datosConsulta).subscribe((data:any)=>  {
+  /*   this.restService.consultatransporte(this.datosConsulta).subscribe((data:any)=>  {
       this.vVehiculos = data.body[0];
       this.vDataSource = this.vVehiculos;
-    })
+    }) */
   }
 
 }
