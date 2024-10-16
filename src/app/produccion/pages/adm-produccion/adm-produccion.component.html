@@ -29,7 +29,7 @@
             </div>
             <div class=" col-4">
               <label for="clienteinput" class="form-label">Cliente</label>
-              <select class="form-select" formControlName="cliente" aria-label="Prioridad" 
+              <select class="form-select" formControlName="id_cliente" aria-label="Prioridad" 
                 (change)="selectCli($event)">
                 <option *ngFor="let cli of lClientes" [value]="cli.Id">{{cli.Cliente}}
                 </option>
@@ -42,7 +42,7 @@
             </div>
             <div class=" col-4">
               <label for="nitinput" class="form-label">Nit</label>
-              <input type="text" class="form-control" formControlName="nit"  placeholder="">
+              <input readonly type="text" class="form-control" formControlName="nit"  placeholder="">
             </div>
 
             <div class=" col-6">
@@ -72,7 +72,7 @@
 
             <div class=" col-4">
                 <label for="exampleFormControlInput1" class="form-label">Autorizador</label>
-                <input type="text" class="form-control" formControlName="autoriza" >
+                <input style="text-transform:uppercase;" type="text" class="form-control" formControlName="autoriza" >
             </div>
 
             <div class=" col-6">
@@ -99,7 +99,7 @@
             </div>
             <div class=" col-2">
               <label class="form-label">Fecha de Autorizacion</label>
-              <input type="date" class="form-control" formControlName="fechaautoriza" placeholder="">
+              <input type="date" class="form-control" formControlName="fechaautorizacion" placeholder="">
             </div>
             <div class=" col-2">
               <label class="form-label">Fecha Entrega Pactada</label>
@@ -130,19 +130,19 @@
             
             <div class=" col-4">
                 <label for="exampleFormControlInput1" class="form-label">Usuario Entrega Campo</label>
-                <input type="text" class="form-control" formControlName="usuarioentregacampo" placeholder="">
+                <input style="text-transform:uppercase;" type="text" class="form-control" formControlName="usuarioentregacampo" placeholder="">
             </div>
             <div class=" col-4">
                 <label for="exampleFormControlInput1" class="form-label">Usuario Entrega Taller</label>
-                <input type="text" class="form-control" formControlName="usuarioentregataller" placeholder="">
+                <input style="text-transform:uppercase;" type="text" class="form-control" formControlName="usuarioentregataller" placeholder="">
             </div>
             <div class=" col-4">
                 <label for="exampleFormControlInput1" class="form-label">Usuario Recibe Campo</label>
-                <input type="text" class="form-control" formControlName="usuariorecibecampo" placeholder="">
+                <input style="text-transform:uppercase;" type="text" class="form-control" formControlName="usuariorecibecampo" placeholder="">
             </div>
             <div class=" col-4">
               <label for="exampleFormControlInput1" class="form-label">Usuario Recibe Taller</label>
-              <input type="text" class="form-control" formControlName="usuariorecibetaller" placeholder="">
+              <input style="text-transform:uppercase;" type="text" class="form-control" formControlName="usuariorecibetaller" placeholder="">
           </div>
           </div>
 

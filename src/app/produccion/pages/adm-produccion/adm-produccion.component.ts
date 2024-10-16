@@ -384,15 +384,23 @@ export class AdmProduccionComponent implements OnInit {
     this.router.navigateByUrl('/produccion/produccion');
   }
 
+  vNit :any;
   selectCli(event: any){
-    
-    this.lClientes.filter(cliente => cliente.Id===event.target.value)
-    const nitv = this.lClientes.values;
-
-    console.log(nitv);
-    
-    this.frmCabeceraOrden.get('nit').setValue(nitv);
+    const selectedId = (event.target as HTMLSelectElement).value;
+    // Buscar el cliente seleccionado por ID
+    const selectedClient = this.lClientes.find(cli => cli.Id === +selectedId);
+    // Si se encuentra, actualizar el valor del input NIT
+    if (selectedClient) {
+      this.frmCabeceraOrden.patchValue({
+        nit: selectedClient.Nit
+      });
+    } else {
+      this.frmCabeceraOrden.patchValue({
+        nit: ''
+      });
+    }
   }
+  
   
 
   onChange(event: any, idordendetalle:any, campo: any, propiedad: any, escheck: boolean ){

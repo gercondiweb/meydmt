@@ -99,7 +99,9 @@ export class AdmConfigformatoComponent implements OnInit {
       activo : [1,[Validators.required]]
     });
 
-    //console.log(this.accion)
+      this.cargarSeccionFormato();
+      this.cargarCampoFormato();
+      this.cargarPropiedadFormato();
 
     if(this.accion === "Editar"){
 
@@ -107,16 +109,10 @@ export class AdmConfigformatoComponent implements OnInit {
       this.formFormato.controls['formato'];
       this.formFormato.get('id')?.setValue(this.objetoData.data.id);
       this.formatoSeleccionado = this.objetoData.data.id;
-      this.cargarSeccionFormato();
-      this.cargarCampoFormato();
-      this.cargarPropiedadFormato();
-
+      
     }else{
       this.formFormato.get('id')?.setValue(0);
       this.formatoSeleccionado = 0;
-      this.cargarSeccionFormato();
-      this.cargarCampoFormato();
-      this.cargarPropiedadFormato();
     }
 
   }
