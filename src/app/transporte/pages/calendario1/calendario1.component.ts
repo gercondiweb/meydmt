@@ -1,8 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RestService } from '../../services/rest.service';
+import { lastValueFrom } from 'rxjs';
 
 interface Vehicle {
   plate: string;
   status: { [time: string]: 'ocupado' | 'disponible' | 'mantenimiento' };
+}
+
+interface Vehiculo{
+  id_vehiculo: number;
+  placa: string;
+  estado: { [time: string]: 'ASG' | 'INI' | 'MTO' };
 }
 
 interface VehicleStatus {
@@ -11,19 +19,50 @@ interface VehicleStatus {
   time: string;
 }
 
+interface estadoVehiculos {
+  id_vehiculo: number;
+  placa: string;
+  estado: 'ASG' | 'INI' | 'MTO';
+  time: string;
+}
+
 @Component({
   selector: 'app-calendario1',
   templateUrl: './calendario1.component.html',
   styleUrl: './calendario1.component.css'
 })
-export class Calendario1Component {
+export class Calendario1Component implements OnInit{
 
   timeSlots: string[] = [];
-  vehicles: Vehicle[] = [];
+  vehicles: Vehiculo[] = [];
 
-  constructor() {
+  datosConsulta={
+    opc:'',
+    vID: 0,
+    vFechaInicio: ''
+  }
+
+  constructor(
+    private restService: RestService
+  ) {
     this.initializeTimeSlots();
     this.initializeVehicles();
+  }
+
+  ngOnInit(): void {
+    console.log('ANTES vehicles', this.vehicles )
+    this.cargarServicios()
+    console.log('DESPUES vehicles', this.vehicles )
+  }
+
+  async cargarServicios(){
+    this.datosConsulta.opc='SERPLAHORA';
+    this.datosConsulta.vFechaInicio=new Date().toISOString().substring(0, 10);
+    const serviciosHora= await lastValueFrom(this.restService.consultatransporte(this.datosConsulta));
+
+    this.vehicles = serviciosHora.body[0]
+    console.log('cargar Servicio: ',this.vehicles);
+
   }
 
   // Genera los intervalos de 15 minutos para un día
@@ -41,31 +80,37 @@ export class Calendario1Component {
 
   // Simulación de datos de vehículos y su estado por cada intervalo de tiempo
   initializeVehicles() {
+    //this.cargarServicios();
+    console.log('vehicles', this.vehicles )
+
     this.vehicles = [
       {
-        plate: 'ABC123',
-        status: {
-          '08:00': 'disponible',
-          '08:15': 'ocupado',
-          '08:30': 'mantenimiento',
+        id_vehiculo:3,
+        placa: 'EGN918',
+        estado: {
+          '19:00': 'MTO',
+          '19:15': 'INI',
+          '19:30': 'INI',
           // Más horarios y estados...
         }
       },
       {
-        plate: 'DEF456',
-        status: {
-          '08:00': 'ocupado',
-          '08:15': 'disponible',
-          '08:30': 'ocupado',
+        id_vehiculo:2,
+        placa: 'EGN917',
+        estado: {
+          '09:00': 'MTO',
+          '09:15': 'INI',
+          '09:30': 'INI',
           // Más horarios y estados...
         }
       },
       {
-        plate: 'GHI789',
-        status: {
-          '08:00': 'mantenimiento',
-          '08:15': 'ocupado',
-          '08:30': 'disponible',
+        id_vehiculo:1,
+        placa: 'EGN916',
+        estado: {
+          '08:00': 'MTO',
+          '08:15': 'INI',
+          '08:30': 'ASG',
           // Más horarios y estados...
         }
       },
@@ -79,12 +124,11 @@ export class Calendario1Component {
     return `${hours}:${minutes}`;
   }
 
-  getStatusColor(status: 'ocupado' | 'disponible' | 'mantenimiento' | undefined): string {
+  getStatusColor(status: 'INI' | 'ASG' | 'MTO' | undefined): string {
     switch (status) {
-      case 'ocupado': return '#FF6347'; // Rojo
-      case 'disponible': return '#32CD32'; // Verde
-      case 'mantenimiento': return '#FFD700'; // Amarillo
-      default: return '#E0E0E0'; // Gris claro para intervalos sin estado definido
+      case 'INI': return '#FF6347'; // Rojo
+      case 'MTO': return '#FFD700'; // Amarillo
+      default: return '#32CD32'; // Gris claro para intervalos sin estado definido
     }
   }
   agregarServicio(){

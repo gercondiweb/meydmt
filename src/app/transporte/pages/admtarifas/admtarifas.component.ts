@@ -123,9 +123,9 @@ export class AdmtarifasComponent implements OnInit {
     this.formTarifa.get('id_cliente').enable();
     const newtarifa= await lastValueFrom(this.restService.getTarifas(this.formTarifa.value));
     this.formTarifa.get('id_cliente').disable();
-    console.log(newtarifa);
+    console.log(newtarifa.body);
 
-    this.listTarifas.push(newtarifa.data);
+    this.listTarifas.push(newtarifa.data.body);
 
   }
 

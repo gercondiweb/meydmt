@@ -29,21 +29,22 @@
       
             </div>
             <div class="card-body  mt-2">
-              <div class="row rowUsuarios">
+              <div class="row rowUsuarios"> 
       
                 <table class="table table-bordered">
                     <thead>
                       <tr>
                         <th>Hora</th>
-                        <th *ngFor="let vehicle of vehicles">{{ vehicle.plate }}</th>
+                        <th *ngFor="let vehicle of vehicles">{{ vehicle.placa }}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let time of timeSlots">
                         <td>{{ time }}</td>
                         <td *ngFor="let vehicle of vehicles"
-                            [style.backgroundColor]="getStatusColor(vehicle.status[time])">
-                          {{ vehicle.status[time] || 'disponible' }}
+                            [style.backgroundColor]="getStatusColor(vehicle.estado[time])">
+                          {{ vehicle.estado[time] || 'INI' }}
+                          
                         </td>
                       </tr>
                     </tbody>

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-
-import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosComponent } from '../dashboard/pages';
 import { TablerotranspComponent } from './pages/tablerotransp/tablerotransp.component';
 import { LayoutComponent } from './layout/layout.component';
 import { TipovehiculoComponent } from './pages/tipovehiculo/tipovehiculo.component';
@@ -23,6 +21,11 @@ import { RutasComponent } from './pages/rutas/rutas.component';
 import { AdmrutasComponent } from './pages/admrutas/admrutas.component';
 import { Calendario1Component } from './pages/calendario1/calendario1.component';
 import { Calendario2Component } from './pages/calendario2/calendario2.component';
+import { AdmdocumentosComponent } from './pages/admdocumentos/admdocumentos.component';
+import { AdmTecnicosComponent } from './pages/adm-tecnicos/adm-tecnicos.component';
+import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';
+import { AdmClienteComponent } from './pages/adm-cliente/adm-cliente.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 
 
 const routes: Routes = [
@@ -130,6 +133,10 @@ const routes: Routes = [
       {
         path: 'calendario2',
         component:Calendario2Component
+      },
+      {
+        path: 'admdocumentos/:accion',
+        component:AdmdocumentosComponent
       },
     ]
   },

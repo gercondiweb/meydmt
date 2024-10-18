@@ -1,4 +1,4 @@
-import { RestService } from '@/app/dashboard/services';
+import { RestService } from '@/app/transporte/services/rest.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -35,10 +35,10 @@ export class VehiculosComponent implements OnInit {
 
   consultarVehiculos(){
     this.datosConsulta.opc='ALL';
-  /*   this.restService.consultatransporte(this.datosConsulta).subscribe((data:any)=>  {
+    this.restService.consultatransporte(this.datosConsulta).subscribe((data:any)=>  {
       this.vVehiculos = data.body[0];
       this.vDataSource = this.vVehiculos;
-    }) */
+    }) 
   }
 
 }

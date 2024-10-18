@@ -22,6 +22,11 @@ import { Calendario1Component } from './pages/calendario1/calendario1.component'
 import { AdmdocumentosComponent } from './pages/admdocumentos/admdocumentos.component';
 import { Calendario2Component } from './pages/calendario2/calendario2.component';
 import { TablerotranspComponent } from './pages/tablerotransp/tablerotransp.component';
+import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';
+import { InformesComponent } from './pages/informes/informes.component';
+import { AdmTecnicosComponent } from './pages/adm-tecnicos/adm-tecnicos.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
+import { AdmClienteComponent } from './pages/adm-cliente/adm-cliente.component';
 
 
 
@@ -45,7 +50,13 @@ import { TablerotranspComponent } from './pages/tablerotransp/tablerotransp.comp
     Calendario1Component,
     Calendario2Component,
     AdmdocumentosComponent,
-    TablerotranspComponent
+    TablerotranspComponent,
+    TecnicosComponent,
+    AdmTecnicosComponent,
+    InformesComponent,
+    AdmdocumentosComponent,
+    ClientesComponent,
+    AdmClienteComponent
   ],
   imports: [
     CommonModule,

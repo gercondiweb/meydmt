@@ -1,0 +1,35 @@
+.titulo{
+  background: #99a0c2;
+  color: white;
+}
+
+.container {
+  position: relative; 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 0 10px;
+  background: #99a0c2;
+}
+
+.cerrar {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: white; 
+  cursor: pointer; 
+  padding: 0; 
+  width: 30px; 
+  height: 30px; 
+  line-height: 30px;
+  text-align: center; 
+}
+
+.cerrar:hover {
+  color: red; 
+}
+
+
+.pie{
+  background: #00000052;
+}

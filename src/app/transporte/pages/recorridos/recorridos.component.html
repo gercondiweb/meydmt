@@ -64,21 +64,6 @@
         <div class="card-body">
           
           <div class="container text-center">
-            <!--div class="row portacards">
-              <ul class="flex">
-                @for (card of cards; track $index) {
-                <li>
-                    <button class="focus:outline-none focus:bg-yellow-200 p-2 rounded-l-md border border-r-0 bg-white flex flex-col items-center w-30 ml-2">
-                      <p class="font-semibold text-lg">{{ card.value }}</p>
-                      <p class="text-sm text-gray-600">
-                        {{ card.title }}
-                      </p>
-                    </button>
-                </li>
-                
-              }
-              </ul>
-            </div-->
           </div>
           <app-tabladinamica-tr [filtro]="false" [columnas]="colum" 
                   [dataSource]="listServFiltrado" [formMaestro]="'transporte/admrecorridos'"></app-tabladinamica-tr>

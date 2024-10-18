@@ -83,12 +83,12 @@ export class LayoutComponent implements OnInit{
       },
       {
         icon: 'group',
-        ruta: '/produccion/tecnicos',
+        ruta: '/transporte/tecnicos',
         name: 'Conductores'
       },
       {
         icon: 'monitoring',
-        ruta: '/produccion/informes',
+        ruta: '/transporte/informes',
         name: 'Informes'
       }
      ]

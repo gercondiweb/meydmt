@@ -5,6 +5,7 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Escribe algo que describa lo que buscas" #input>
       </mat-form-field>
     </div>
+
     <table mat-table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
       matSortDirection="desc">
       <ng-container *ngFor="let column of columnas" [matColumnDef]="column">
@@ -20,6 +21,7 @@
             <ng-container *ngIf="column === 'foto'; else textCell">
               <img [src]="element[column]" alt="Foto" class="img-thumbnail" width="100">
             </ng-container>
+          
             <!-- Mostrar el contenido normal si no es una columna de fecha ni de foto -->
             <ng-template #textCell>
               {{ element[column] !== undefined && element[column] !== null ? element[column] : 'N/A' }}

@@ -35,12 +35,11 @@ export class AdmdocumentosComponent {
 
   ngOnInit(): void {
     
-console.log('GERMAN ',this.data.tipo)
       //Inicializar formulario de documentos
       this.formDocs = this.formBuilder.group({
         id:[0],
-        id_vehiculo:[''],
-        id_documento:[''],
+        id_vehiculo:[0],
+        id_documento:[0],
         documento:[''],
         fechaexpedido:[],
         fechavence:[],
@@ -51,6 +50,7 @@ console.log('GERMAN ',this.data.tipo)
       });
 
       this.cargarDocumentos();
+      
       if(this.data.tipo='EDITAR'){
         this.mostrarDatos();
       }
@@ -69,6 +69,9 @@ console.log('GERMAN ',this.data.tipo)
   }
   cargarDocumentos() {
 
+    this.formDocs.get('id_vehiculo').setValue(this.data.id_vehiculo);
+    console.log(this.data.id_vehiculo)
+
     this.consultaDocumentos.opc='DOC';
     this.restService.getMaestros(this.consultaDocumentos).subscribe(res=>{
       this.listDocumentos=res.body[0];
@@ -78,9 +81,6 @@ console.log('GERMAN ',this.data.tipo)
     this.restService.getMaestros(this.consultaDocumentos).subscribe(res=>{
       this.listVehiculos=res.body[0]; 
     });
-
-    this.formDocs.get('id_vehiculo').setValue(this.data.id_vehiculo);
-    //this.formDocs.get('id_vehiculo').disabled;
    
   }
 
@@ -92,7 +92,7 @@ console.log('GERMAN ',this.data.tipo)
       this.formDocs.get('id')?.setValue(0);
       this.formDocs.get('activo')?.setValue(1);
     }else{
-      this.formDocs.get('id')?.setValue(this.objetoData.data.id);
+      this.formDocs.get('id')?.setValue(this.data.id);
     }
     //console.log(this.formTecEsp.value)
 

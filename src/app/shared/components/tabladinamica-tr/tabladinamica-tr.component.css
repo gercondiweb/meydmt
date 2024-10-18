@@ -16,4 +16,29 @@
   .img-thumbnail{
     border-radius : 50%;
   }
+
+  .estado-circulo {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+  }
+  
+  .estado-verde {
+    background-color: green;
+  }
+  
+  .estado-rojo {
+    background-color: red;
+  }
+  
+  .estado-icono {
+    color: green;
+    font-size: 16px;
+  }
+
+  .estado-azul{
+    color: rgb(62, 108, 172);
+  }
+  
   
