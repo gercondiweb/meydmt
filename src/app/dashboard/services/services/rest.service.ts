@@ -151,5 +151,9 @@ export class RestService {
     return this.http.post('tiposervicio', datoTS); // POST http://localhost:4000/api/tiposervicio
   }
 
+  public getTarifas(datos:any):Observable<any>{
+    return this.http.post('tarifas', datos);
+  }
+
 
 }

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-
-import { AdmClienteComponent, AdmTecnicosComponent, ClientesComponent, TecnicosComponent } from '../dashboard/pages';
 import { TablerotranspComponent } from './pages/tablerotransp/tablerotransp.component';
 import { LayoutComponent } from './layout/layout.component';
 import { TipovehiculoComponent } from './pages/tipovehiculo/tipovehiculo.component';
@@ -17,6 +15,17 @@ import { AdmrecorridosComponent } from './pages/admrecorridos/admrecorridos.comp
 import { TarifasComponent } from './pages/tarifas/tarifas.component';
 import { AdmgastosComponent } from './pages/admgastos/admgastos.component';
 import { GastosComponent } from './pages/gastos/gastos.component';
+import { AdmtarifasComponent } from './pages/admtarifas/admtarifas.component';
+import { ForecastComponent } from './pages/forecast/forecast.component';
+import { RutasComponent } from './pages/rutas/rutas.component';
+import { AdmrutasComponent } from './pages/admrutas/admrutas.component';
+import { Calendario1Component } from './pages/calendario1/calendario1.component';
+import { Calendario2Component } from './pages/calendario2/calendario2.component';
+import { AdmdocumentosComponent } from './pages/admdocumentos/admdocumentos.component';
+import { AdmTecnicosComponent } from './pages/adm-tecnicos/adm-tecnicos.component';
+import { TecnicosComponent } from './pages/tecnicos/tecnicos.component';
+import { AdmClienteComponent } from './pages/adm-cliente/adm-cliente.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 
 
 const routes: Routes = [
@@ -50,6 +59,14 @@ const routes: Routes = [
         component:AdmTecnicosComponent
       },
       {
+        path: 'rutas',
+        component:RutasComponent
+      },
+      {
+        path: 'admrutas/:accion',
+        component:AdmrutasComponent
+      },
+      {
         path: 'gastos',
         component:GastosComponent
       },
@@ -63,7 +80,7 @@ const routes: Routes = [
       },
       {
         path: 'admtarifas/:accion',
-        component:AdmClienteComponent
+        component:AdmtarifasComponent
       },
       {
         path: 'vehiculos',
@@ -104,6 +121,22 @@ const routes: Routes = [
       {
         path: 'admrecorridos/:accion',
         component:AdmrecorridosComponent
+      },
+      {
+        path: 'forecast',
+        component:ForecastComponent
+      },
+      {
+        path: 'calendario',
+        component:Calendario1Component
+      },
+      {
+        path: 'calendario2',
+        component:Calendario2Component
+      },
+      {
+        path: 'admdocumentos/:accion',
+        component:AdmdocumentosComponent
       },
     ]
   },

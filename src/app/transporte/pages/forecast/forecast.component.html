@@ -1,0 +1,56 @@
+<div class="container">
+  <h2 class="text-center">Vehicle Fleet Forecast</h2>
+
+  <!-- Selectores de fechas -->
+  <div class="row mb-3">
+    <div class="col">
+      <mat-form-field>
+        <input matInput [matDatepicker]="pickerStart" placeholder="Start Date" [(ngModel)]="startDate" (ngModelChange)="onDateChange()">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field>
+        <input matInput [matDatepicker]="pickerEnd" placeholder="End Date" [(ngModel)]="endDate" (ngModelChange)="onDateChange()">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- Filtro para seleccionar vehículo -->
+    <div class="col">
+      <label for="vehicleSelect">Select Vehicle</label>
+      <select id="vehicleSelect" [(ngModel)]="selectedVehicle" (ngModelChange)="onVehicleChange()" class="form-control">
+        <option value="">All Vehicles</option>
+        <option *ngFor="let vehicle of vehicles" [value]="vehicle.name">{{ vehicle.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Tabla del forecast -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Vehicle</th>
+          <th *ngFor="let day of filteredDays">{{ day }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehicle of filteredVehicles">
+          <td>{{ vehicle.name }}</td>
+          <td *ngFor="let day of filteredDays">
+            <span [ngClass]="getStatus(vehicle, day)" class="badge badge-pill">
+              {{ getStatusText(vehicle, day) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <app-vistaservicios [vehicleStatuses]="vehicleStatuses"></app-vistaservicios>
+    
+  </div>
+</div>

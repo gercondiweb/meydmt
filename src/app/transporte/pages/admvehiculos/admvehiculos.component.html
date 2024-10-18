@@ -37,13 +37,13 @@
               </div>
 
               <div class="mb-3 col-6">
-                <label for="clienteinput" class="form-label">Marca</label>
-                <input type="text" class="form-control" formControlName="marca"  placeholder="" id="clienteinput">
+                <label for="marcainput" class="form-label">Marca</label>
+                <input type="text" class="form-control" formControlName="marca"  placeholder="" id="marcainput">
               </div>
 
               <div class="mb-3 col-3">
-                <label for="clienteinput" class="form-label">Linea</label>
-                <input type="text" class="form-control" formControlName="linea"  placeholder="" id="clienteinput">
+                <label for="lineainput" class="form-label">Linea</label>
+                <input type="text" class="form-control" formControlName="linea"  placeholder="" id="lineainput">
               </div>
 
               <div class="mb-3 col-2">
@@ -94,13 +94,13 @@
         <nav class="navbar sticky-top bg-body-tertiary">
           <div class="container-fluid">
             <a class="navbar-brand">Imagenes del Vehiculo</a>
-            <button mat-raised-button color="primary" (click)="agregarFoto()">
+            <button mat-raised-button color="primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
               <mat-icon>add_circle</mat-icon>
               Agregar Imagen
             </button>
           </div>
         </nav>
-        <div class="flex gap-8 flex-wrap justify-center bg-gray-300 h-screen py-10">
+        <div class="flex gap-8 flex-wrap justify-center bg-gray-300 py-10">
               
           <div
               class="transform  rounded-xl h-40 w-40 sm:h-64 sm:w-64 bg-white shadow-xl transition duration-300 hover:scale-105">
@@ -128,23 +128,36 @@
       <div class="row">
         <nav class="navbar sticky-top bg-body-tertiary">
           <div class="container-fluid">
-            <a class="navbar-brand">Imagenes del Vehiculo</a>
-            <button mat-raised-button color="primary" (click)="agregarDocumento()">
+            <a class="navbar-brand">Documentos del Vehiculo</a>
+            <button mat-raised-button color="primary" (click)="agregarDocumento('')">
               <mat-icon>add_circle</mat-icon>
               Agregar Documento
             </button>
           </div>
         </nav>
+        
         <div class="row">
-          <app-tabladinamica [columnas]="columnDocs"
+          <app-tabladinamica-tr [columnas]="columnDocs"
                 [dataSource]="listDocV"
                 [filtro]="false"
-          ></app-tabladinamica>
+                [esDialogo]="true"
+                [admDialogo]="componente"
+          ></app-tabladinamica-tr>
         </div>
       </div>                
   
     </div>
     </span>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      ...
+    </div>
   </div>
   
   

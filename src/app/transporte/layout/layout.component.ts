@@ -26,8 +26,28 @@ export class LayoutComponent implements OnInit{
       },
       {
         icon: 'feed',
+        ruta: '/transporte/calendario',
+        name: 'Calendario'
+      },
+      {
+        icon: 'car',
+        ruta: '/transporte/calendario2',
+        name: 'Agenda Flota'
+      },
+      {
+        icon: 'feed',
+        ruta: '/transporte/forecast',
+        name: 'Forecast'
+      },
+      {
+        icon: 'feed',
         ruta: '/transporte/gastos',
         name: 'Gastos'
+      },
+      {
+        icon: 'feed',
+        ruta: '/transporte/rutas',
+        name: 'Rutas'
       },
       {
         icon: 'feed',
@@ -63,12 +83,12 @@ export class LayoutComponent implements OnInit{
       },
       {
         icon: 'group',
-        ruta: '/produccion/tecnicos',
+        ruta: '/transporte/tecnicos',
         name: 'Conductores'
       },
       {
         icon: 'monitoring',
-        ruta: '/produccion/informes',
+        ruta: '/transporte/informes',
         name: 'Informes'
       }
      ]

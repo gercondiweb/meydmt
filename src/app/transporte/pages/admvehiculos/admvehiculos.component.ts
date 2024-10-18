@@ -1,12 +1,15 @@
 import { DataSharingService } from '@/app/dashboard/services/services/data-sharing.service';
-import { RestService } from '@/app/dashboard/services/services/rest.service';
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Console } from 'console';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
+import { AdmdocumentosComponent } from '../admdocumentos/admdocumentos.component';
+import { RestService } from '../../services/rest.service';
+import { AnyMxRecord } from 'dns';
 
 @Component({
   selector: 'app-admvehiculos',
@@ -18,6 +21,10 @@ export class AdmvehiculosComponent implements OnInit{
   formVehiculo !: FormGroup;
 
   dVehiculo: any;
+
+  placaExiste: boolean;
+
+  componente = AdmdocumentosComponent;
 
   accion:any;
   response: any;
@@ -48,7 +55,8 @@ export class AdmvehiculosComponent implements OnInit{
     private restService:RestService,
     private dataSharingService: DataSharingService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -71,6 +79,10 @@ export class AdmvehiculosComponent implements OnInit{
 
     if(this.accion === 'Editar'){
       this.cargarDatos();
+      this.buscarDocs();
+    }else{
+      this.formVehiculo.get('id')?.setValue(0);
+      this.formVehiculo.get('activo')?.setValue(1);
     }
   }
 
@@ -100,7 +112,7 @@ export class AdmvehiculosComponent implements OnInit{
 
   cargarDatos(){
     this.dVehiculo = this.dataSharingService.getData();
-      console.log('DATOS: ',this.dVehiculo);
+      //console.log('DATOS: ',this.dVehiculo);
 
       this.formVehiculo.patchValue({
         id: this.dVehiculo.data.id,
@@ -115,10 +127,18 @@ export class AdmvehiculosComponent implements OnInit{
         modelo: this.dVehiculo.data.modelo
       });
 
-      //buscamos los documentos del vehiculo y los mostramos en una tabla
-      this.datosConsulta.opc ='DOCS';
-      this.datosConsulta.vID = this.dVehiculo.data.id;
+      
+  }
 
+  buscarDocs(){
+    //buscamos los documentos del vehiculo y los mostramos en una tabla
+    this.datosConsulta.opc ='DOCS';
+    this.datosConsulta.vID = this.dVehiculo.data.id;
+
+    this.restService.consultatransporte(this.datosConsulta).subscribe((rta: any) => {
+      this.vDocV = rta.body[0];
+      this.listDocV = this.vDocV;
+    })
    /*    this.restService.consultatransporte(this.datosConsulta).subscribe((rta: any) => {
         this.vDocV = rta.body[0];
         this.listDocV = this.vDocV;
@@ -127,33 +147,9 @@ export class AdmvehiculosComponent implements OnInit{
 
   async guardarVehiculo(){
 
-    let continuar = false;
+        const res = await lastValueFrom(this.restService.vehiculos(this.formVehiculo.value));
 
-      this.datosConsulta.opc='CPLACA';
-      this.datosConsulta.vplaca = this.formVehiculo.get('placa')?.value;
-      this.datosConsulta.vid_propietario = this.formVehiculo.get('id_proveedor')?.value;
-
-     /*  this.restService.consultatransporte(this.datosConsulta).subscribe(respuesta=>{
-          if(respuesta.body[0].length > 0){
-            //alert('La placa ingresada ya se encuentra en uso.');
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: 'La placa ingresada ya se encuentra en uso.',
-              showConfirmButton: false,
-              timer: 1500
-            });
-            return;
-          }else{
-            continuar=true;
-          }
-        }); */
-
-        if(continuar){
-
-        //const res = await lastValueFrom(this.restService.vehiculos(this.formVehiculo.value));
-
-       // this.response = res;
+        this.response = res;
         if(!this.response.error){
           await Swal.fire({
             position: "center",
@@ -165,15 +161,38 @@ export class AdmvehiculosComponent implements OnInit{
           this.registroGuardado = true;
           this.formVehiculo.get('placa').disable();
         }
-      }
+      
+  }
+
+  validarPlaca(){
+
   }
 
   agregarFoto(){
 
   }
 
-  agregarDocumento(){
+  agregarDocumento(elemento:any){
     //mostrar modal para agregar documento
+    const dialogRef = this.dialog.open(AdmdocumentosComponent, {
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation : false,
+      width : '900px',
+      data: {
+        tipo: 'Crear',
+        id_vehiculo: this.formVehiculo.get('id')?.value,
+        data: elemento,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe( (data2) => {
+      this.listDocV.push(data2)
+      console.log(data2);
+
+      this.listDocV=[];
+      this.buscarDocs();
+    });
   }
 
   regresar(){

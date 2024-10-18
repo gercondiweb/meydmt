@@ -1,0 +1,31 @@
+.form-container{
+    width: 100%;
+    height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .foto{
+
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: absolute;
+    top: 20%;
+    left: 83%;
+
+  }
+.imagen{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.btnGuardar{
+  background: green;
+  color: white;
+  margin-left: 5px;
+}
+
+.titulobarra{
+  color: white;
+}

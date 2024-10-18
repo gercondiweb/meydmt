@@ -14,9 +14,7 @@ import { NavegacionComponent,
           DemograficoComponent,
           NavegacionprodComponent,
           CampoOrdenComponent,
-          ModalComponent,
-          PaginationComponent,
-          TablaConsultaComponent,
+          VistaserviciosComponent
            } from '../../components';
 import { ItemNavigateComponent } from '../../components/item-navigate/item-navigate.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -25,6 +23,7 @@ import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LoadingFullComponent } from '../../components/loading-full/loading-full.component';
 import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.component';
+import { TabladinamicaTrComponent } from '../../components/tabladinamica-tr/tabladinamica-tr.component';
 
 
 
@@ -46,9 +45,9 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    ModalComponent,
-    PaginationComponent,
-    TablaConsultaComponent,
+    CampoOrdenComponent,
+    TabladinamicaTrComponent,
+    VistaserviciosComponent
   ],
   imports: [
     CommonModule,
@@ -85,9 +84,8 @@ import { BuscaLupaComponent } from '../../components/busca-lupa/busca-lupa.compo
     DemograficoComponent,
     NavegacionprodComponent,
     CampoOrdenComponent,
-    ModalComponent,
-    PaginationComponent,
-    TablaConsultaComponent,
+    TabladinamicaTrComponent,
+    VistaserviciosComponent
   ]
 })
 export class SharedModule { }

@@ -4,7 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -21,6 +21,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatTooltip } from '@angular/material/tooltip';
 
 
 
@@ -28,6 +29,7 @@ import {MatTabsModule} from '@angular/material/tabs';
   declarations: [
   ],
   imports: [
+    MatIcon,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -52,9 +54,11 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatCheckboxModule,
     MatTabsModule,
-    CommonModule
+    CommonModule,
+    MatTooltip
   ],
   exports: [
+    MatIcon,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -78,7 +82,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatCheckboxModule,
     MatTabsModule,
-    MatSort
+    MatSort,
+    MatTooltip
   ]
 })
 export class MaterialModulModule { }

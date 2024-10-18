@@ -1,1 +1,64 @@
-<p>gastos works!</p>
+<div class="form-container bg-white p-3">
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1  pe-3 w-100 mb-2">
+      
+      <div class="col-2">
+        <div class="card">
+          <div class="card-header">
+            <h2>Filtros</h2>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="formGasto">
+              <div class="mb-3 row">
+                <label for="clienteinput" class="form-label">Placa del Vehiculo</label>
+                <input type="text" class="form-control" formControlName="placa"  placeholder="">
+              </div>
+
+              <div class="mb-3 row">
+                <label for="clienteinput" class="form-label">Fecha Inicial</label>
+                <input type="date" class="form-control" formControlName="fechainicio"  placeholder="">
+              </div>
+
+              <div class="mb-3 row">
+                <label for="exampleFormControlInput1" class="form-label">Fecha Fin</label>
+                <input type="date" class="form-control" formControlName="fechafin"  placeholder="">
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+            <div class="card-header">
+      
+              <div class="row p-0">
+                <div class="col-6">
+                  <h2>Gastos de Vehiculos</h2>
+                </div>
+                <div class="col-6 text-end">
+                  <button mat-raised-button class="btnGuardar" (click)="agregarGasto('')">
+                    <mat-icon>add</mat-icon>
+                    Nuevo
+                  </button>
+                </div>
+              </div>
+      
+            </div>
+            <div class="card-body  mt-2">
+              <div class="row rowUsuarios">
+      
+                <app-tabladinamica-tr [columnas]="columnGastos"
+                        [dataSource]="listGastos"
+                        [filtro]="false"
+                        [formMaestro]="'/transporte/admgastos'"
+                        [esDialogo]="true"
+                ></app-tabladinamica-tr>
+              </div>
+            </div>
+        </div>
+    </div>
+         
+    </span>
+</div>
+            
+

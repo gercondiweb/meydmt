@@ -1,0 +1,20 @@
+.assigned {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .available {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  table {
+    th, td {
+      text-align: center;
+      vertical-align: middle;
+    }
+  
+    td {
+      width: 40px;
+    }
+  }

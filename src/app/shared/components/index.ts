@@ -12,12 +12,6 @@ export * from './cargardocs/cargardocs.component';
 export * from './pdf/pdf.component';
 export * from './demografico/demografico.component';
 export * from './navegacionprod/navegacionprod.component';
-export * from './modal/modal.component';
 export * from './campo-orden/campo-orden.component';
-export * from './pagination/pagination.component';
-export * from './tabla-consulta/tabla-consulta.component';
-
-
-
-
+export * from './vistaservicios/vistaservicios.component';
 

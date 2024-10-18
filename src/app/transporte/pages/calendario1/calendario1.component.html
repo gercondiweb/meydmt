@@ -1,0 +1,61 @@
+<div class="form-container bg-white p-3">
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1  pe-3 w-100 mb-2">
+      
+      <div class="col-2">
+        <div class="card">
+          <div class="card-header">
+            <h2>Filtros</h2>
+          </div>
+          <div class="card-body">
+            
+          </div>
+        </div>
+      </div>  
+      <div class="col">
+        <div class="card">
+            <div class="card-header">
+      
+              <div class="row p-0">
+                <div class="col-6">
+                  <h2>Gastos de Vehiculos</h2>
+                </div>
+                <div class="col-6 text-end">
+                  <button mat-raised-button class="btnGuardar" (click)="agregarServicio()">
+                    <mat-icon>add</mat-icon>
+                    Nuevo
+                  </button>
+                </div>
+              </div>
+      
+            </div>
+            <div class="card-body  mt-2">
+              <div class="row rowUsuarios"> 
+      
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Hora</th>
+                        <th *ngFor="let vehicle of vehicles">{{ vehicle.placa }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let time of timeSlots">
+                        <td>{{ time }}</td>
+                        <td *ngFor="let vehicle of vehicles"
+                            [style.backgroundColor]="getStatusColor(vehicle.estado[time])">
+                          {{ vehicle.estado[time] || 'INI' }}
+                          
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+              </div>
+            </div>
+        </div>
+    </div>
+         
+    </span>
+</div>  
+    
+  

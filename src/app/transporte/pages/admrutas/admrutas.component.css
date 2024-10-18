@@ -1,0 +1,9 @@
+.titulobarra{
+    padding: 10px
+}
+
+.btnGuardar{
+    background: green;
+    color: white;
+    margin-left: 5px;
+  }

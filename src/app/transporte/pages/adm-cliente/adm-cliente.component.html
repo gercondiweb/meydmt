@@ -1,0 +1,82 @@
+<div class="form-container bg-white p-3">
+  <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+    <div class="card">
+      <div class="card-header">
+
+        <div class="row">
+          <div class="col-6">
+            <h2>Administrar Cliente</h2>
+          </div>
+          <div class="col-6 text-end">
+            <button mat-raised-button color="primary" (click)="regresar()">
+              <mat-icon>reply</mat-icon>
+              Regresar
+            </button>
+            <button mat-raised-button class="btnGuardar" (click)="guardarCliente()">
+              <mat-icon>save</mat-icon>
+              Guardar
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-body  mt-3">
+        <form [formGroup]="formCliente">
+          <div class="row g-2">
+            <div class="mb-3 col-4">
+              <label for="nitinput" class="form-label">Nit/ Rfc</label>
+              <input type="text" class="form-control" formControlName="nit" placeholder="" id="nitinput"/>
+            </div>
+            <div class="mb-3 col-8">
+              <label for="clienteinput" class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="cliente"  placeholder="" id="clienteinput">
+            </div>
+
+            <div class="mb-3 col-12">
+              <label for="exampleFormControlInput1" class="form-label">Direccion</label>
+              <input type="text" class="form-control" formControlName="direccion"  placeholder="">
+            </div>
+
+            <div class="mb-3 col-9">
+              <label for="exampleFormControlInput1" class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="example@yourcompany.com">
+            </div>
+
+
+            <div class="mb-3 col-3">
+              <label for="exampleFormControlInput1" class="form-label">Telefono</label>
+              <input type="text" class="form-control" formControlName="telefono"  placeholder="">
+            </div>
+
+            <div class="col-12">
+
+              <app-demografico [iPais]="formCliente.get('id_pais').value"
+                               [iDepartamento]="formCliente.get('id_departamento').value"
+                               [iCiudad]="formCliente.get('id_ciudad').value"
+                               [iZip]="formCliente.get('zip').value"
+                               [iAccion]="accion">
+              </app-demografico>
+
+            </div>
+
+            <div class="mb-3 col-3">
+              <div class="form-check">
+                <input class="form-check-input" formControlName="activo" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">
+                  Activo
+                </label>
+                <div class="invalid-feedback">
+                  You must agree before submitting.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+    </div>  
+  </div>
+
+  </span>
+</div>
+
+

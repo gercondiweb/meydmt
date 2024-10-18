@@ -1,0 +1,120 @@
+<div class="form-container bg-white p-3">
+    <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
+      <div class="card">
+        <div class="card-header">
+  
+          <div class="row p-0">
+            <div class="col-6">
+              <h2>Administrar Rutas</h2>
+            </div>
+            <div class="col-6 text-end">
+              <button mat-raised-button color="primary" (click)="regresar()">
+                <mat-icon>reply</mat-icon>
+                Regresar
+              </button>
+              <button mat-raised-button class="btnGuardar" *ngIf="activarGuardar" (click)="guardarRuta()">
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </div>
+          </div>
+  
+        </div>
+        <div class="card-body  mt-2">
+          <form [formGroup]="formRuta">
+            <div class="row g-2">
+              <div class="mb-3 col-3">
+                <label for="nitinput" class="form-label">Ruta</label>
+                <input type="text" class="form-control" formControlName="nombre" placeholder="" id="nitinput"/>
+              </div>
+
+              <div class="mb-3 col-3">
+                <label for="clienteinput" class="form-label">Cliente</label>
+                <select class="form-select" formControlName="id_cliente"
+                        aria-label="propietario" >
+                    <option *ngFor="let cli of listCli" [value]="cli.Id">{{cli.Cliente}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-2">
+                <label for="clienteinput" class="form-label">Tipo de Servicio</label>
+                <select class="form-select" formControlName="id_tiposervicio"
+                        aria-label="propietario" >
+                    <option *ngFor="let ts of listTipoServ" [value]="ts.id">{{ts.tiposervicio}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-2">
+                <label for="exampleFormControlInput1" class="form-label">Hora de la Ruta</label>
+                <input type="time" class="form-control" formControlName="hora"  placeholder="">
+              </div>
+
+              <div class="mb-3 col-2">
+                <label for="exampleFormControlInput1" class="form-label">Hora Fin</label>
+                <input type="time" class="form-control" formControlName="horafin"  placeholder="">
+              </div>
+
+              <div class="mb-3 col-3">
+                <label for="clienteinput" class="form-label">Placa</label>
+                <select class="form-select" formControlName="id_tiposervicio"
+                        aria-label="propietario" >
+                    <option *ngFor="let ts of listVehiculos" [value]="ts.id">{{ts.placa}}</option>
+                </select>
+              </div>
+
+              <div class="mb-3 col-3">
+                <label for="exampleFormControlInput1" class="form-label">Valor</label>
+                <input type="number" class="form-control" formControlName="valor">
+              </div>
+
+              <div class="mb-3 col-3">
+                <label for="exampleFormControlInput1" class="form-label">Costo</label>
+                <input type="number" class="form-control" formControlName="costo"  placeholder="">
+              </div>
+
+              
+
+              <div class="mb-3 col-3">
+                <label for="clienteinput" class="form-label">Zona</label>
+                <select class="form-select" formControlName="id_zona"
+                        aria-label="propietario" >
+                    <option *ngFor="let ls of listZonas" [value]="ls.idzona">{{ls.zona}}</option>
+                </select>
+              </div>
+  
+              <div class="mb-3 col-12">
+                <label for="exampleFormControlInput1" class="form-label">Origen</label>
+                <input type="text" class="form-control" formControlName="origen"  placeholder="">
+              </div>
+  
+              <div class="mb-3 col-12">
+                <label for="exampleFormControlInput1" class="form-label">Destino</label>
+                <input type="text" class="form-control" formControlName="destino">
+              </div>
+  
+            </div>
+          </form>
+          <div class="row rowUsuarios" *ngIf="activarBotones">
+            <nav class="navbar sticky-top bg-body-tertiary">
+              <div class="container-fluid titulobarra bg-slate-700" >
+                <a class="navbar-brand" style="color: #fff;">Usuarios de la Ruta</a>
+                <button mat-raised-button class="btnGuardar" (click)="agregarUsuario()">
+                  <mat-icon>add_circle</mat-icon>
+                  Agregar Usuarios
+                </button>
+              </div>
+  
+            </nav>
+  
+            <app-tabladinamica [columnas]="columnUsu"
+                    [dataSource]="listUsu"
+                    [filtro]="false"
+            ></app-tabladinamica>
+          </div>
+        </div>
+    </div>
+    
+         
+    </span>
+</div>
+            
