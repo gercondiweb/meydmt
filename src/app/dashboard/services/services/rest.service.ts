@@ -66,7 +66,11 @@ export class RestService {
 
   public spServicios(datosConsulta:any):Observable<any>{
     //console.log('DATOS CONSULTA ', datosConsulta)
-    return this.http.post('consultaservicio/servicios', datosConsulta);
+    return this.http.post('consultaservicio/serv', datosConsulta);
+  }
+
+  public consultaOpeTick(datosConsulta:any):Observable<any>{
+    return this.http.post('operacionestikets/consulta', datosConsulta);
   }
 
   public crearTkt(datosConsulta:any):Observable<any>{

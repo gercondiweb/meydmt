@@ -11,6 +11,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, switchAll } from 'rxjs';
+import { AdmComentsComponent } from '@/app/dashboard/pages';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export interface ElementoTablaDetalle {
@@ -80,8 +81,27 @@ export class TablaDetalleComponent implements OnChanges {
 
     this.dataSharingService.setParams(param1, param2, data);
 
-    const route = '/dashboard/admtickets'  ;
-    this.router.navigate([route,'editar']);
+   
+      // Lógica para editar el elemento
+      const dialogRef = this.dialog.open(AdmComentsComponent, {
+        disableClose: true,
+        autoFocus: true,
+        closeOnNavigation : false,
+        width : '900px',
+        data: {
+          tipo: 'Crear',
+          data: element,
+        }
+      });
+  
+      dialogRef.afterClosed().subscribe((data) => {
+        console.log(data);
+        //this.comentarios.push(data);
+      });
+    
+
+    //const route = '/dashboard/admtickets'  ;
+    //this.router.navigate([route,'editar']);
   }
 
   eliminarElemento(elemento: ElementoTablaDetalle) {

@@ -9,3 +9,9 @@
 .nServCont{
   color: white;
 }
+
+.btnGuardar{
+  background: green;
+  color: white;
+  margin-left: 5px;
+}

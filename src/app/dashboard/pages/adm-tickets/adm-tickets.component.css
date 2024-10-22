@@ -16,7 +16,7 @@
   border: 1px solid #6fcf28;
   line-height: 1.7;
   position: relative;
-  height: 40%;
+  
   margin-bottom: 20px;
   border-radius: 10px;
 }
@@ -28,7 +28,7 @@
   border: 1px solid #6fcf28;
   line-height: 1.7;
   position: relative;
-  height: 50%;
+  
   margin-bottom: 20px;
   border-radius: 10px;
 }
@@ -81,4 +81,10 @@
 img, svg {
   vertical-align: middle;
   width: 300px;
+}
+
+.btnGuardar{
+  background: green;
+  color: white;
+  margin-left: 5px;
 }

@@ -1,6 +1,6 @@
   <div class="form-container bg-white p-3">
   <span class="row d-flex flew-wrap justify-content-between align-item-center p-1 ps-3 pe-3 w-100 mb-2">
-    <div class="card">
+    <div class="card  p-0">
       <div class="card-header">
 
         <div class="row">
@@ -9,11 +9,11 @@
             <h1 *ngIf="accion != 'crear'">Ticket # {{ticketSeleccionado}}</h1>
           </div>
           <div class="col-6 text-end">
-            <button mat-raised-button color="succes"  (click)="regresar()">
+            <button mat-raised-button color="primary"  (click)="regresar()">
               <mat-icon>reply</mat-icon>
               Regresar
             </button>
-            <button mat-raised-button color="primary" (click)="guardarTicket()">
+            <button mat-raised-button class="btnGuardar" (click)="guardarTicket()">
               <mat-icon>save</mat-icon>
               Guardar
             </button>
@@ -173,6 +173,8 @@
               </div>
             </div>
 
+          </mat-tab>
+          <mat-tab label="Insumos Utilizados"> 
           </mat-tab>
         </mat-tab-group>
 

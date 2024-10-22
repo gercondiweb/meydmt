@@ -4,4 +4,10 @@
   overflow-y: auto;
 }
 
+.btnGuardar{
+  background: green;
+  color: white;
+  margin-left: 5px;
+}
+
 

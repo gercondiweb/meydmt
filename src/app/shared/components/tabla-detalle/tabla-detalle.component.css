@@ -54,3 +54,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 .despliegue{
   background: #f2f2f2;
 }
+
+.btnAsig{
+  background-color: rgb(220, 160, 20);
+  color: white;
+}
